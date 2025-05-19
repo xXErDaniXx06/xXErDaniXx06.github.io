@@ -47,6 +47,11 @@ header nav a {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+.main-nav a.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .language-switcher {
   position: absolute;
   top: 1rem;

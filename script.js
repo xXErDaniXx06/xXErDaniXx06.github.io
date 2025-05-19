@@ -1,9 +1,18 @@
 function toggleDaltonicMode() {
-  document.body.classList.toggle('daltonic');
+  const isDaltonic = localStorage.getItem('daltonic') === 'true';
+  document.body.classList.toggle('daltonic', !isDaltonic);
+  localStorage.setItem('daltonic', !isDaltonic);
   const button = document.getElementById('daltonicMode');
-  const isDaltonic = document.body.classList.contains('daltonic');
-  button.textContent = isDaltonic ? 'Modo Normal' : 'Modo Daltónico';
+  button.textContent = !isDaltonic ? 'Modo Normal' : 'Modo Daltónico';
 }
+
+// Apply daltonic mode on page load if it was enabled
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('daltonic') === 'true') {
+    document.body.classList.add('daltonic');
+    document.getElementById('daltonicMode').textContent = 'Modo Normal';
+  }
+});
 
 // Initialize section highlighting
 document.addEventListener('DOMContentLoaded', () => {
