@@ -28,6 +28,47 @@ header nav a {
   font-weight: bold;
 }
 
+.main-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.main-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.main-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.language-switcher {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.accessibility-controls {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 100;
+}
+
+#daltonicMode {
+  padding: 0.5rem 1rem;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 main {
   max-width: 900px;
   margin: auto;
@@ -63,4 +104,22 @@ footer {
   margin-top: 2rem;
   background-color: #003366;
   color: white;
+}
+
+/* Daltonic mode colors */
+body.daltonic {
+  background-color: #ffffff;
+}
+
+body.daltonic header {
+  background-color: #000000;
+}
+
+body.daltonic h2 {
+  color: #000000;
+  border-bottom-color: #666666;
+}
+
+body.daltonic a {
+  color: #000000;
 }

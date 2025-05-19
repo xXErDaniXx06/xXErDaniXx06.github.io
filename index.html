@@ -8,20 +8,32 @@
 </head>
 <body>
   <header>
-    <h1>Daniel Carrasco García</h1>
+    <div class="header-top">
+      <h1>Daniel Carrasco García</h1>
+      <div class="language-switcher">
+        <a href="#es">ES</a> | <a href="#en">EN</a>
+      </div>
+    </div>
     <p>Estudiante de Ingeniería Informática · Universidad de Málaga</p>
-    <nav>
-      <a href="#es">Español</a> | <a href="#en">English</a>
+    <nav class="main-nav">
+      <a href="#about">Sobre mí</a>
+      <a href="#projects">Proyectos</a>
+      <a href="#skills">Habilidades</a>
+      <a href="#contact">Contacto</a>
     </nav>
   </header>
 
+  <div class="accessibility-controls">
+    <button id="daltonicMode" onclick="toggleDaltonicMode()">Modo Daltónico</button>
+  </div>
+
   <main id="es">
-    <section>
+    <section id="about">
       <h2>Sobre mí</h2>
       <p>Soy estudiante de Ingeniería Informática en la Universidad de Málaga. Me apasiona la tecnología, el desarrollo de software y los proyectos prácticos que resuelven problemas reales.</p>
     </section>
 
-    <section>
+    <section id="projects">
       <h2>Proyectos</h2>
       <article>
         <h3>Crypto Portfolio App</h3>
@@ -30,7 +42,7 @@
       </article>
     </section>
 
-    <section>
+    <section id="skills">
       <h2>Habilidades</h2>
       <ul>
         <li>Lenguajes: Arduino, Java, C++, HTML, CSS, Python</li>
@@ -39,11 +51,12 @@
       </ul>
     </section>
 
-    <section>
+    <section id="contact">
       <h2>Contacto</h2>
       <p>Email personal: <a href="mailto:danielcarrascogarcia18@gmail.com">danielcarrascogarcia18@gmail.com</a></p>
       <p>Email universitario: <a href="mailto:carrascodani06@uma.es">carrascodani06@uma.es</a></p>
       <p>LinkedIn: <a href="https://www.linkedin.com/in/daniel-carrasco-garc%C3%ADa-568952286" target="_blank">Daniel Carrasco García</a></p>
+      <p>Instagram: <a href="https://www.instagram.com/_daniel.carrasco" target="_blank">@_daniel.carrasco</a></p>
     </section>
   </main>
 
