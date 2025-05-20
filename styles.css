@@ -3,6 +3,9 @@ body {
   margin: 0;
   background-color: #f0f8ff;
   color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -56,6 +59,27 @@ header nav a {
   position: absolute;
   top: 1rem;
   right: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.language-switcher a {
+  color: white;
+  text-decoration: none;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.language-switcher a.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+}
+
+.language-switcher span {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0.2rem;
 }
 
 .accessibility-controls {
@@ -82,6 +106,7 @@ main {
   border-radius: 8px;
   margin-top: 2rem;
   box-shadow: 0 0 15px rgba(0, 51, 102, 0.2);
+  flex: 1;
 }
 
 section {
@@ -153,7 +178,8 @@ body.daltonic a {
   .language-switcher {
     position: static;
     text-align: center;
-    margin-top: 1rem;
+    margin: 1rem auto;
+    display: inline-block;
   }
 
   main {

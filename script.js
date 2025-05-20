@@ -1,10 +1,41 @@
 function toggleDaltonicMode() {
   const isDaltonic = localStorage.getItem('daltonic') === 'true';
+  const currentLang = document.documentElement.lang;
   document.body.classList.toggle('daltonic', !isDaltonic);
   localStorage.setItem('daltonic', !isDaltonic);
   const button = document.getElementById('daltonicMode');
-  button.textContent = !isDaltonic ? 'Modo Normal' : 'Modo Daltónico';
+  button.textContent = !isDaltonic ? 
+    translations[currentLang].normalMode : 
+    translations[currentLang].daltonicMode;
 }
+
+// Language-specific text
+const translations = {
+  es: {
+    daltonicMode: 'Modo Daltónico',
+    normalMode: 'Modo Normal'
+  },
+  en: {
+    daltonicMode: 'Colorblind Mode',
+    normalMode: 'Normal Mode'
+  }
+};
+
+// Update initial button text based on language
+document.addEventListener('DOMContentLoaded', () => {
+  const currentLang = document.documentElement.lang;
+  const isDaltonic = localStorage.getItem('daltonic') === 'true';
+  const button = document.getElementById('daltonicMode');
+  
+  if (isDaltonic) {
+    document.body.classList.add('daltonic');
+    button.textContent = translations[currentLang].normalMode;
+  } else {
+    button.textContent = translations[currentLang].daltonicMode;
+  }
+  
+  setActiveLanguage();
+});
 
 // Apply daltonic mode on page load if it was enabled
 document.addEventListener('DOMContentLoaded', () => {
@@ -36,3 +67,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// Language switcher functionality
+function setActiveLanguage() {
+  const currentLang = document.documentElement.lang;
+  const langLinks = document.querySelectorAll('.language-switcher a');
+  
+  langLinks.forEach(link => {
+    link.classList.remove('active');
+    if ((currentLang === 'es' && link.getAttribute('href').indexOf('_en') === -1) ||
+        (currentLang === 'en' && link.getAttribute('href').indexOf('_en') !== -1)) {
+      link.classList.add('active');
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', setActiveLanguage);
