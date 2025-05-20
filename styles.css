@@ -128,3 +128,79 @@ body.daltonic h2 {
 body.daltonic a {
   color: #000000;
 }
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .main-nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .main-nav a {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+  }
+
+  .language-switcher {
+    position: static;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  main {
+    padding: 1rem;
+    margin: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  header p {
+    font-size: 0.9rem;
+  }
+
+  .accessibility-controls {
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+
+  #daltonicMode {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  section {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Make images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Improve table responsiveness */
+table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+/* Improve form responsiveness */
+input, textarea, button {
+  max-width: 100%;
+  box-sizing: border-box;
+}
