@@ -186,6 +186,25 @@ body.daltonic a {
     padding: 1rem;
     margin: 1rem;
   }
+
+  .achievements-list li {
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .about-content {
+    text-align: left;
+  }
+
+  .profile-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .profile-image {
+    width: 150px;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -229,4 +248,46 @@ table {
 input, textarea, button {
   max-width: 100%;
   box-sizing: border-box;
+}
+
+.achievements-list {
+  list-style: none;
+  padding: 0;
+}
+
+.achievements-list li {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border-left: 4px solid #003366;
+  transition: transform 0.2s ease;
+}
+
+.achievements-list li:hover {
+  transform: translateX(10px);
+  background-color: #e9ecef;
+}
+
+.about-content {
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.about-content p {
+  margin-bottom: 1.5rem;
+}
+
+.profile-container {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+}
+
+.profile-image {
+  width: 200px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
