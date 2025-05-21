@@ -13,11 +13,11 @@ function toggleDaltonicMode() {
 const translations = {
   es: {
     daltonicMode: 'Modo Daltónico',
-    normalMode: 'Modo Normal'
+    normalMode: 'Modo no Daltónico'
   },
   en: {
     daltonicMode: 'Colorblind Mode',
-    normalMode: 'Normal Mode'
+    normalMode: 'Non colorblind Mode'
   }
 };
 
