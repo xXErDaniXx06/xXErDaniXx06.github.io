@@ -114,8 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const button = coll[i];
     const content = button.nextElementSibling;
     
+    // Hide content by default
+    content.style.display = "none";
+    
     // Set initial text
-    button.textContent = translations[document.documentElement.lang].hideDescription;
+    button.textContent = translations[document.documentElement.lang].showDescription;
     
     button.addEventListener("click", function() {
       this.classList.toggle("active");
