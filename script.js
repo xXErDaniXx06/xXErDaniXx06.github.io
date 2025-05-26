@@ -111,17 +111,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const coll = document.getElementsByClassName("collapsible");
   
   for (let i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
+    const button = coll[i];
+    const content = button.nextElementSibling;
+    
+    // Set initial text
+    button.textContent = translations[document.documentElement.lang].hideDescription;
+    
+    button.addEventListener("click", function() {
       this.classList.toggle("active");
-      const content = this.nextElementSibling;
-      
-      if (content.style.maxHeight) {
-        content.style.maxHeight = null;
-        this.textContent = translations[document.documentElement.lang].showDescription;
-      } else {
-        content.style.maxHeight = content.scrollHeight + "px";
-        this.textContent = translations[document.documentElement.lang].hideDescription;
-      }
+      content.style.display = content.style.display === "none" ? "block" : "none";
+      this.textContent = content.style.display === "none" ? 
+        translations[document.documentElement.lang].showDescription : 
+        translations[document.documentElement.lang].hideDescription;
     });
   }
 });
