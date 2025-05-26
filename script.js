@@ -7,17 +7,27 @@ function toggleDaltonicMode() {
   button.textContent = !isDaltonic ? 
     translations[currentLang].normalMode : 
     translations[currentLang].daltonicMode;
+
+  // Update meta theme color for mobile
+  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+  if (metaThemeColor) {
+    metaThemeColor.content = !isDaltonic ? '#000000' : '#003366';
+  }
 }
 
 // Language-specific text
 const translations = {
   es: {
     daltonicMode: 'Modo Daltónico',
-    normalMode: 'Modo no Daltónico'
+    normalMode: 'Modo no Daltónico',
+    showDescription: 'Ver descripción completa',
+    hideDescription: 'Ocultar descripción'
   },
   en: {
     daltonicMode: 'Colorblind Mode',
-    normalMode: 'Non colorblind Mode'
+    normalMode: 'Non colorblind Mode',
+    showDescription: 'Show full description',
+    hideDescription: 'Hide description'
   }
 };
 
@@ -94,4 +104,61 @@ document.addEventListener('DOMContentLoaded', () => {
       this.alt = 'Profile image placeholder';
     };
   }
+});
+
+// Collapsible functionality
+document.addEventListener('DOMContentLoaded', () => {
+  const coll = document.getElementsByClassName("collapsible");
+  
+  for (let i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      const content = this.nextElementSibling;
+      
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+        this.textContent = translations[document.documentElement.lang].showDescription;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        this.textContent = translations[document.documentElement.lang].hideDescription;
+      }
+    });
+  }
+});
+
+// Improve mobile touch feedback
+document.addEventListener('DOMContentLoaded', () => {
+  const interactiveElements = document.querySelectorAll('a, button, .collapsible');
+  
+  interactiveElements.forEach(element => {
+    element.addEventListener('touchstart', function() {
+      this.style.opacity = '0.7';
+    });
+    
+    element.addEventListener('touchend', function() {
+      this.style.opacity = '1';
+    });
+  });
+
+  // Add loading states
+  const loadingElements = document.querySelectorAll('.profile-image, .project-card, .achievements-list li');
+  loadingElements.forEach(element => {
+    element.classList.add('loading');
+    element.addEventListener('load', function() {
+      this.classList.remove('loading');
+    });
+  });
+
+  // Improve scroll performance
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        // Update active sections
+        updateActiveSection();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
 });

@@ -33,10 +33,193 @@
   <main>
     <section id="projects">
       <h2>Projects</h2>
-      <article>
+      <article class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <h3>CO₂ Sensor</h3>
+            <img src="images/sensordeco2.jpg" alt="Implemented CO₂ Sensor" class="project-image">
+          </div>
+        </div>
+        <button class="collapsible">View full description</button>
+        <div class="content">
+          <p>The CO₂ Sensor project, developed by 3rd year ESO students at I.E.S. Kursaal in Algeciras, aims to monitor air quality in classrooms by measuring carbon dioxide (CO₂) levels. This initiative was particularly important during the COVID-19 pandemic to ensure proper ventilation in closed spaces.</p>
+          
+          <p>The system is based on the MH-Z19B sensor, which uses non-dispersive infrared (NDIR) technology to measure CO₂ levels. The ESP8266 microcontroller (NodeMCU) is used for data processing and transmission. Additional sensors, such as DHT11/DHT22, measure temperature and humidity, while the OLED display SSD1306 provides real-time data visualization. The collected data is transmitted to the ThingSpeak platform for remote monitoring and analysis.</p>
+        </div>
+        
+        <div class="project-details">
+          <h4>Technologies used:</h4>
+          <ul>
+            <li>MH-Z19B Sensor (NDIR)</li>
+            <li>ESP8266 Microcontroller (NodeMCU)</li>
+            <li>DHT11/DHT22 Sensors</li>
+            <li>OLED Display SSD1306</li>
+            <li>ThingSpeak Platform</li>
+          </ul>
+          
+          <h4>Key features:</h4>
+          <ul>
+            <li>Real-time monitoring of CO₂, temperature, and humidity</li>
+            <li>Automatic data transmission to ThingSpeak</li>
+            <li>Graph visualization</li>
+            <li>ThingSpeak Channel: 1335280</li>
+          </ul>
+        </div>
+        
+        <div class="project-links">
+          <a href="https://co2-kursaal.webnode.es/" target="_blank" class="project-link">View Project</a>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <h3>SmartDoor</h3>
+            <img src="images/smartdoor.jpg" alt="SmartDoor Project" class="project-image">
+          </div>
+        </div>
+        <button class="collapsible">View full description</button>
+        <div class="content">
+          <p>The Smart Door project, developed by 4th year ESO students at IES Kursaal in Algeciras, focuses on designing an energy-efficient housing adapted to the extreme conditions of Antarctica. The initiative aims to optimize resource consumption, especially in heating, and facilitate the work of researchers in this environment.</p>
+          
+          <p>One of the main innovations of the project is an entry system that minimizes heat loss by avoiding direct contact with the exterior. This results in a significant reduction in generator usage, which, in addition to saving fuel, helps reduce environmental pollution associated with supply transportation by ship.</p>
+          
+          <p>The project is interdisciplinary, covering various areas of knowledge. In geology and history, materials used in Antarctic shelter construction and their historical context were investigated. From physics, the thermal behavior and structural resistance of a spherical housing were analyzed. In technology, electronic components were incorporated to automate the entry system. Architecture and materials engineering focused on the structural design of the base, while biology provided information on human needs and the use of plant materials in construction.</p>
+        </div>
+        
+        <div class="project-details">
+          <h4>Research Areas:</h4>
+          <ul>
+            <li>Energy Efficiency</li>
+            <li>Architectural Design</li>
+            <li>Thermal Physics</li>
+            <li>Automation</li>
+            <li>Materials Engineering</li>
+            <li>Environmental Sustainability</li>
+          </ul>
+        </div>
+        
+        <div class="project-links">
+          <a href="https://smartdoor-kursaal.webnode.es/" target="_blank" class="project-link">View Project</a>
+        </div>
+      </article>
+
+      <article class="project-card">
         <h3>Crypto Portfolio App</h3>
         <p>Web application to visualize and manage a cryptocurrency portfolio in real-time.</p>
-        <a href="https://github.com/xXErDaniXx06/crypto-portfolio.git" target="_blank">View on GitHub</a>
+        <div class="project-links">
+          <a href="https://github.com/xXErDaniXx06/crypto-portfolio.git" target="_blank" class="project-link">View on GitHub</a>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <h3>Kursaatélite</h3>
+            <video class="project-video" controls>
+              <source src="images/videos/kursaatelite-demo.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <button class="collapsible">View full description</button>
+        <div class="content">
+          <p>Kursaatélite is an experimental satellite project developed by students at IES Kursaal in Algeciras. The project involves designing and building a satellite in CanSat format, which is a miniaturized satellite integrated within the volume and shape of a soda can.</p>
+          
+          <p>The satellite is equipped with sensors to measure fine particles (PM 0.5), ionizing radiation levels, temperature, and humidity. It also includes a GPS system for location tracking and an imaging system for capturing atmospheric images. The data collected by the satellite will help evaluate the environmental conditions and potential habitability of Mars.</p>
+          
+          <p>The project is part of the broader KursaalMars initiative, which aims to explore Mars from various scientific and technological perspectives. Kursaatélite will provide valuable data to understand the challenges and possibilities of human exploration and settlement on the red planet.</p>
+        </div>
+        
+        <div class="project-details">
+          <h4>Key features:</h4>
+          <ul>
+            <li>Experimental satellite design and construction</li>
+            <li>Micrometeorite collection system</li>
+            <li>Temperature, pressure, and humidity sensors</li>
+            <li>GPS location system</li>
+            <li>Atmospheric image capture</li>
+            <li>Collaboration with Por una Sonrisa association</li>
+          </ul>
+        </div>
+        
+        <div class="project-links">
+          <a href="https://kursaatelite.webnode.es/" target="_blank" class="project-link">View Project</a>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <h3>DustNet</h3>
+            <iframe class="project-video"
+              src="https://www.youtube.com/embed/CxjY2TDe6Y0"
+              title="DustNet Project Video"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+        <button class="collapsible">View full description</button>
+        <div class="content">
+          <p>DustNet is an innovative project that involves creating a network of low-cost sensors to measure air quality, specifically focusing on particulate matter. The project aims to provide real-time data on air pollution levels and contribute to environmental monitoring and research.</p>
+          
+          <p>The DustNet sensors are designed to be affordable and accessible, allowing for widespread deployment and data collection. The project emphasizes the importance of open-source hardware and software, enabling anyone to participate in the development and expansion of the network.</p>
+          
+          <p>By providing free access to the hardware designs, software, and an online database for data sharing, DustNet promotes environmental education and awareness. The project also encourages the involvement of educational centers, fostering a sense of community and collaboration in addressing environmental challenges.</p>
+        </div>
+        
+        <div class="project-details">
+          <h4>Key features:</h4>
+          <ul>
+            <li>Network of air particle measurement stations</li>
+            <li>Free hardware and software</li>
+            <li>Accessible online database</li>
+            <li>Complete technical documentation</li>
+            <li>Focus on environmental education</li>
+            <li>Implementation in educational centers</li>
+          </ul>
+        </div>
+        
+        <div class="project-links">
+          <a href="https://dustnet.webnode.es/" target="_blank" class="project-link">View Project</a>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-header">
+          <div class="project-title">
+            <h3>KursaalMars</h3>
+            <img src="images/kursaalmars-team.jpg" alt="KursaalMars Team" class="project-image">
+          </div>
+        </div>
+        <button class="collapsible">View full description</button>
+        <div class="content">
+          <p>The KursaalMars project, developed by students at IES Kursaal in Algeciras, focuses on studying Mars from various scientific and technological perspectives. Through this initiative, students explore aspects such as the formation, geological structure, atmospheric characteristics, and the possibility of life on Mars, raising questions about the habitability of the red planet.</p>
+          
+          <p>One of the project's highlighted components is the development of KursaaTélite, an experimental satellite designed in CanSat format. This device incorporates sensors to measure fine particles (PM 0.5), ionizing radiation levels, temperature, and humidity. The goal is to evaluate how these factors can affect human health, especially in vulnerable groups, and determine the viability of life in Mars-like conditions.</p>
+          
+          <p>Additionally, students have conducted various experiments to understand physical phenomena relevant to space exploration. These include simulating the Curie temperature, which demonstrates how certain materials lose their magnetism at specific temperatures, and studies on water evaporation under low-pressure conditions, replicating the Martian environment.</p>
+
+          <p>The project also addresses the challenges associated with human travel to Mars, such as exposure to high radiation levels due to the lack of a protective magnetic field, low atmospheric pressure, and low temperatures. These conditions represent significant challenges for human survival and require innovative solutions for future crewed missions.</p>
+        </div>
+        
+        <div class="project-details">
+          <h4>Research Areas:</h4>
+          <ul>
+            <li>Experimental Satellite (KursaaTélite)</li>
+            <li>Particle and Radiation Measurement</li>
+            <li>Space Physics Experiments</li>
+            <li>Martian Habitability Studies</li>
+            <li>Environmental Simulations</li>
+            <li>Space Exploration Challenges</li>
+          </ul>
+        </div>
+        
+        <div class="project-links">
+          <a href="https://kursaalmarte.webnode.es/" target="_blank" class="project-link">View Project</a>
+        </div>
       </article>
     </section>
   </main>
