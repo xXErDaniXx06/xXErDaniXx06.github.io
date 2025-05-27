@@ -33,10 +33,84 @@
   <main>
     <section id="contact">
       <h2>Contacto</h2>
-      <p>Email personal: <a href="mailto:danielcarrascogarcia18@gmail.com">danielcarrascogarcia18@gmail.com</a></p>
-      <p>Email universitario: <a href="mailto:carrascodani06@uma.es">carrascodani06@uma.es</a></p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/daniel-carrasco-garc%C3%ADa-568952286" target="_blank">Daniel Carrasco García</a></p>
-      <p>Instagram: <a href="https://www.instagram.com/_daniel.carrasco" target="_blank">@_daniel.carrasco</a></p>
+      
+      <div class="contact-container">
+        <!-- Información de contacto -->
+        <div class="contact-info">
+          <div class="contact-card">
+            <h3>Información Personal</h3>
+            <ul class="contact-list">
+              <li><i class="icon">📍</i> Málaga/Algeciras-Cádiz, España</li>
+              <li><i class="icon">🕓</i> GMT+2 (Madrid)</li>
+              <li><i class="icon">📞</i> +34 633 120 603</li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Correo Electrónico</h3>
+            <ul class="contact-list">
+              <li><i class="icon">📧</i> <a href="mailto:danielcarrascogarcia18@gmail.com">danielcarrascogarcia18@gmail.com</a></li>
+              <li><i class="icon">🎓</i> <a href="mailto:carrascodani06@uma.es">carrascodani06@uma.es</a></li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Redes Sociales</h3>
+            <ul class="contact-list social-links">
+              <li><i class="icon">🔗</i> <a href="https://www.linkedin.com/in/daniel-carrasco-garc%C3%ADa-568952286" target="_blank">LinkedIn</a></li>
+              <li><i class="icon">🐙</i> <a href="https://github.com/xXErDaniXx06" target="_blank">GitHub</a></li>
+              <li><i class="icon">🐦</i> <a href="https://twitter.com/_carrascodaniel" target="_blank">Twitter</a></li>
+              <li><i class="icon">📸</i> <a href="https://instagram.com/_daniel.carrasco" target="_blank">Instagram</a></li>
+              <li><i class="icon">📝</i> <a href="https://danielcarrascogarcia.me" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Disponibilidad</h3>
+            <ul class="contact-list">
+              <li><i class="icon">📅</i> Reuniones: Lunes a viernes, 17:00–20:00</li>
+              <li><i class="icon">💼</i> Acepto proyectos freelance</li>
+              <li><i class="icon">🎯</i> Abierto a oportunidades laborales</li>
+              <li><i class="icon">🗣️</i> Idiomas: Español (nativo), Inglés (C1), Francés (A2)</li>
+              <li><i class="icon">✉️</i> Preferencia de contacto: Correo electrónico</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Formulario de contacto -->
+        <div class="contact-form">
+          <h3>Envíame un mensaje</h3>
+          <form id="contactForm" action="#" method="POST">
+            <div class="form-group">
+              <label for="name">Nombre <span class="required">*</span></label>
+              <input type="text" id="name" name="name" required 
+                     aria-required="true" aria-label="Nombre">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Correo electrónico <span class="required">*</span></label>
+              <input type="email" id="email" name="email" required 
+                     aria-required="true" aria-label="Correo electrónico">
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Asunto <span class="required">*</span></label>
+              <input type="text" id="subject" name="subject" required 
+                     aria-required="true" aria-label="Asunto">
+            </div>
+
+            <div class="form-group">
+              <label for="message">Mensaje <span class="required">*</span></label>
+              <textarea id="message" name="message" rows="5" required 
+                        aria-required="true" aria-label="Mensaje"></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">
+              Enviar mensaje
+            </button>
+          </form>
+        </div>
+      </div>
     </section>
   </main>
 

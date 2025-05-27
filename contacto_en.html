@@ -33,10 +33,84 @@
   <main>
     <section id="contact">
       <h2>Contact</h2>
-      <p>Personal Email: <a href="mailto:danielcarrascogarcia18@gmail.com">danielcarrascogarcia18@gmail.com</a></p>
-      <p>University Email: <a href="mailto:carrascodani06@uma.es">carrascodani06@uma.es</a></p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/daniel-carrasco-garc%C3%ADa-568952286" target="_blank">Daniel Carrasco García</a></p>
-      <p>Instagram: <a href="https://www.instagram.com/_daniel.carrasco" target="_blank">@_daniel.carrasco</a></p>
+      
+      <div class="contact-container">
+        <!-- Contact Information -->
+        <div class="contact-info">
+          <div class="contact-card">
+            <h3>Personal Information</h3>
+            <ul class="contact-list">
+              <li><i class="icon">📍</i> Málaga/Algeciras-Cádiz, Spain</li>
+              <li><i class="icon">🕓</i> GMT+2 (Madrid)</li>
+              <li><i class="icon">📞</i> +34 633 120 603</li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Email</h3>
+            <ul class="contact-list">
+              <li><i class="icon">📧</i> <a href="mailto:danielcarrascogarcia18@gmail.com">danielcarrascogarcia18@gmail.com</a></li>
+              <li><i class="icon">🎓</i> <a href="mailto:carrascodani06@uma.es">carrascodani06@uma.es</a></li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Social Networks</h3>
+            <ul class="contact-list social-links">
+              <li><i class="icon">🔗</i> <a href="https://www.linkedin.com/in/daniel-carrasco-garc%C3%ADa-568952286" target="_blank">LinkedIn</a></li>
+              <li><i class="icon">🐙</i> <a href="https://github.com/xXErDaniXx06" target="_blank">GitHub</a></li>
+              <li><i class="icon">🐦</i> <a href="https://twitter.com/_carrascodaniel" target="_blank">Twitter</a></li>
+              <li><i class="icon">📸</i> <a href="https://instagram.com/_daniel.carrasco" target="_blank">Instagram</a></li>
+              <li><i class="icon">📝</i> <a href="https://danielcarrascogarcia.me" target="_blank">Blog</a></li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Availability</h3>
+            <ul class="contact-list">
+              <li><i class="icon">📅</i> Meetings: Monday to Friday, 17:00–20:00</li>
+              <li><i class="icon">💼</i> Open to freelance projects</li>
+              <li><i class="icon">🎯</i> Looking for job opportunities</li>
+              <li><i class="icon">🗣️</i> Languages: Spanish (native), English (C1), French (A2)</li>
+              <li><i class="icon">✉️</i> Preferred contact: Email</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+          <h3>Send me a message</h3>
+          <form id="contactForm" action="#" method="POST">
+            <div class="form-group">
+              <label for="name">Name <span class="required">*</span></label>
+              <input type="text" id="name" name="name" required 
+                     aria-required="true" aria-label="Name">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email <span class="required">*</span></label>
+              <input type="email" id="email" name="email" required 
+                     aria-required="true" aria-label="Email">
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject <span class="required">*</span></label>
+              <input type="text" id="subject" name="subject" required 
+                     aria-required="true" aria-label="Subject">
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message <span class="required">*</span></label>
+              <textarea id="message" name="message" rows="5" required 
+                        aria-required="true" aria-label="Message"></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">
+              Send message
+            </button>
+          </form>
+        </div>
+      </div>
     </section>
   </main>
 

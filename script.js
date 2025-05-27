@@ -19,17 +19,79 @@ function toggleDaltonicMode() {
 const translations = {
   es: {
     daltonicMode: 'Modo Daltónico',
-    normalMode: 'Modo no Daltónico',
+    normalMode: 'Modo Normal',
+    protanopia: 'Protanopia',
+    deuteranopia: 'Deuteranopia',
+    tritanopia: 'Tritanopia',
+    intensidad: 'Intensidad',
     showDescription: 'Ver descripción completa',
     hideDescription: 'Ocultar descripción'
   },
   en: {
     daltonicMode: 'Colorblind Mode',
-    normalMode: 'Non colorblind Mode',
+    normalMode: 'Normal Mode',
+    protanopia: 'Protanopia',
+    deuteranopia: 'Deuteranopia',
+    tritanopia: 'Tritanopia',
+    intensity: 'Intensity',
     showDescription: 'Show full description',
     hideDescription: 'Hide description'
   }
 };
+
+function createDaltonicControls() {
+  const controls = document.querySelector('.accessibility-controls');
+  const currentLang = document.documentElement.lang;
+  
+  const container = document.createElement('div');
+  container.className = 'daltonic-controls';
+  
+  // Tipo de daltonismo
+  const select = document.createElement('select');
+  select.id = 'daltonicType';
+  select.innerHTML = `
+    <option value="none">${translations[currentLang].normalMode}</option>
+    <option value="protanopia">${translations[currentLang].protanopia}</option>
+    <option value="deuteranopia">${translations[currentLang].deuteranopia}</option>
+    <option value="tritanopia">${translations[currentLang].tritanopia}</option>
+  `;
+
+  // Control de intensidad
+  const intensityContainer = document.createElement('div');
+  intensityContainer.className = 'intensity-control';
+  intensityContainer.innerHTML = `
+    <label for="daltonicIntensity">${translations[currentLang].intensity}: <span>50%</span></label>
+    <input type="range" id="daltonicIntensity" min="0" max="100" value="50">
+  `;
+
+  container.appendChild(select);
+  container.appendChild(intensityContainer);
+  controls.appendChild(container);
+
+  // Event listeners
+  select.addEventListener('change', updateDaltonicMode);
+  document.getElementById('daltonicIntensity').addEventListener('input', function(e) {
+    this.previousElementSibling.querySelector('span').textContent = `${e.target.value}%`;
+    updateDaltonicMode();
+  });
+}
+
+function updateDaltonicMode() {
+  const type = document.getElementById('daltonicType').value;
+  const intensity = document.getElementById('daltonicIntensity').value / 100;
+  
+  document.body.classList.remove('daltonic', 'protanopia', 'deuteranopia', 'tritanopia');
+  
+  if (type !== 'none') {
+    document.body.classList.add('daltonic', type);
+    document.documentElement.style.setProperty('--daltonic-intensity', intensity);
+  } else {
+    document.documentElement.style.removeProperty('--daltonic-intensity');
+  }
+  
+  localStorage.setItem('daltonicType', type);
+  localStorage.setItem('daltonicIntensity', intensity);
+}
 
 // Update initial button text based on language
 document.addEventListener('DOMContentLoaded', () => {
@@ -165,4 +227,16 @@ document.addEventListener('DOMContentLoaded', () => {
       ticking = true;
     }
   });
+});
+
+// Initialize daltonic settings on page load
+document.addEventListener('DOMContentLoaded', () => {
+  createDaltonicControls();
+  
+  const savedType = localStorage.getItem('daltonicType') || 'none';
+  const savedIntensity = localStorage.getItem('daltonicIntensity') || 0.5;
+  
+  document.getElementById('daltonicType').value = savedType;
+  document.getElementById('daltonicIntensity').value = savedIntensity * 100;
+  updateDaltonicMode();
 });

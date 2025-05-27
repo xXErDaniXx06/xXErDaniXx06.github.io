@@ -632,6 +632,69 @@ body.daltonic h2 {
   border-bottom-color: #000000;
 }
 
+/* Daltonic Controls Styling */
+.daltonic-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
+}
+
+#daltonicType {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+.intensity-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#daltonicIntensity {
+  width: 100%;
+}
+
+/* Daltonic Mode Color Adjustments */
+.protanopia {
+  --daltonic-intensity: 0.5;
+  filter: grayscale(var(--daltonic-intensity))
+          brightness(1.2)
+          contrast(0.9);
+}
+
+.deuteranopia {
+  --daltonic-intensity: 0.5;
+  filter: grayscale(var(--daltonic-intensity))
+          sepia(var(--daltonic-intensity))
+          brightness(1.1);
+}
+
+.tritanopia {
+  --daltonic-intensity: 0.5;
+  filter: grayscale(var(--daltonic-intensity))
+          hue-rotate(90deg)
+          brightness(1.1);
+}
+
+/* Mobile adjustments for daltonic controls */
+@media screen and (max-width: 768px) {
+  .daltonic-controls {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    width: calc(100% - 2rem);
+    max-width: 300px;
+  }
+}
+
 /* High contrast focus states for accessibility */
 a:focus,
 button:focus {
@@ -701,4 +764,180 @@ body.daltonic button:focus {
 
 .loading {
   opacity: 0.7;
+}
+
+/* Skills Grid Styles */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.skill-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-left: 4px solid #003366;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.skill-card h3 {
+  color: #003366;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.skill-card p {
+  margin: 0;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* Daltonic mode adjustments for skill cards */
+body.daltonic .skill-card {
+  border-left-color: #000000;
+}
+
+body.daltonic .skill-card h3 {
+  color: #000000;
+}
+
+/* Mobile adjustments for skills grid */
+@media screen and (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .skill-card {
+    padding: 1.25rem;
+  }
+}
+
+/* Contact Page Styles */
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-left: 4px solid #003366;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-list li {
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  font-style: normal;
+  min-width: 1.5rem;
+}
+
+.contact-form {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.required {
+  color: #dc3545;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: #003366;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+}
+
+.submit-button {
+  background-color: #003366;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #004d99;
+  transform: translateY(-2px);
+}
+
+/* Mobile adjustments for contact page */
+@media screen and (max-width: 768px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-form {
+    padding: 1.5rem;
+  }
+}
+
+/* Daltonic mode adjustments for contact page */
+body.daltonic .contact-card {
+  border-left-color: #000000;
+}
+
+body.daltonic .submit-button {
+  background-color: #000000;
+}
+
+body.daltonic .submit-button:hover {
+  background-color: #333333;
 }
