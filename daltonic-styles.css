@@ -93,47 +93,25 @@ input:focus, textarea:focus, select:focus {
   border-color: #007bff;
 }
 
-/* Media Queries */
-
-/* Mobile adjustments */
-@media screen and (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-
-  h2 {
-    font-size: 1.25rem;
-  }
-
-  button {
-    width: 100%;
-  }
+/* Variables globales */
+:root {
+  --daltonic-intensity: 0.5;
 }
-
-/* Small screen fixes */
-@media screen and (max-width: 480px) {
-  .accessibility-controls {
-    bottom: 1rem;
-  }
-
-  .daltonic-controls {
-    padding: 1rem;
-    bottom: 3.5rem;
-  }
-}
-
-/* Daltonic Mode Styles */
 
 /* Daltonic mode colors */
 body.daltonic {
   background-color: #ffffff;
 }
 
-body.daltonic header {
+body.daltonic header,
+body.daltonic footer {
   background-color: #000000;
 }
 
-body.daltonic h2 {
+body.daltonic h2,
+body.daltonic .project-title h3,
+body.daltonic .skill-card h3,
+body.daltonic .achievement-title {
   color: #000000;
   border-bottom-color: #666666;
 }
@@ -167,133 +145,81 @@ body.tritanopia {
           hue-rotate(180deg);
 }
 
-/* Accessibility Controls & Daltonic Mode Button */
+/* Accessibility Controls */
 .accessibility-controls {
   position: fixed;
   top: 5rem;
   right: 1rem;
   z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: flex-end;
 }
 
 #daltonicMode {
   padding: 0.8rem 1.2rem;
-  background: linear-gradient(145deg, #003366, #004d99);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  width: auto;
+  white-space: nowrap;
 }
 
 .daltonic-controls {
-  background: linear-gradient(145deg, #ffffff, #f8f9fa);
-  border-radius: 12px;
-  padding: 1.5rem;
-  min-width: 280px;
-  position: absolute;
-  right: 0;
-  top: 100%;
-  margin-top: 0.5rem;
-  box-shadow: 0 4px 20px rgba(0, 51, 102, 0.15);
-  border: 1px solid rgba(0, 51, 102, 0.1);
-}
-
-#daltonicMode:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* Daltonic Controls Enhancement */
-#daltonicType {
+  min-width: 250px;
   width: 100%;
-  padding: 0.8rem 1rem;
-  border: 2px solid #e9ecef;
-  border-radius: 8px;
-  font-size: 1rem;
-  color: #003366;
-  cursor: pointer;
-  background-color: white;
-  transition: all 0.3s ease;
-  margin-bottom: 1rem;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23003366' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: calc(100% - 1rem) center;
-  padding-right: 2.5rem;
-  font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0, 51, 102, 0.05);
+  max-width: 300px;
 }
 
-#daltonicType:hover {
-  border-color: #aad4ff;
-  box-shadow: 0 4px 8px rgba(0, 51, 102, 0.1);
-  transform: translateY(-1px);
-}
-
-#daltonicType:focus {
-  outline: none;
-  border-color: #003366;
-  box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
-}
-
-#daltonicType option {
-  padding: 0.8rem;
-  font-size: 1rem;
-  color: #003366;
-  background: white;
-}
-
-/* Modo daltónico */
-body.daltonic #daltonicType {
-  color: #000000;
-  border-color: #666666;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23000000' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-}
-
-body.daltonic #daltonicType option {
-  color: #000000;
-}
-
-/* Mobile adjustments */
+/* Responsive Adjustments */
 @media screen and (max-width: 768px) {
   .accessibility-controls {
-    position: fixed;
-    bottom: 1rem;
     top: auto;
+    bottom: 1rem;
     right: 1rem;
-    width: auto;
-    z-index: 1002;
+    left: 1rem;
+  }
+
+  #daltonicMode {
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.9rem;
   }
 
   .daltonic-controls {
     position: fixed;
     bottom: 4rem;
-    top: auto;
     right: 1rem;
     left: 1rem;
     width: auto;
-    min-width: 0;
-    padding: 1.5rem;
+    max-width: none;
     margin: 0;
-    max-height: min(400px, calc(100vh - 8rem));
-    overflow-y: auto;
+  }
+
+  .intensity-control {
+    margin-top: 1rem;
+  }
+
+  .intensity-control input[type="range"] {
+    width: 100%;
   }
 }
 
-/* Cambia el estilo cuando está en la zona de la cabecera */
-@media screen and (max-width: 7rem) {
-  #daltonicMode {
-    background: linear-gradient(145deg, #ffffff, #f8f9fa);
-    color: #003366;
-    border: 2px solid rgba(0, 51, 102, 0.2);
+@media screen and (max-width: 480px) {
+  .accessibility-controls {
+    padding: 0 1rem;
+  }
+
+  .daltonic-controls {
+    padding: 1rem;
+  }
+
+  #daltonicType {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mejoras de rendimiento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
