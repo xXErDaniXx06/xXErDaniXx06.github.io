@@ -267,6 +267,8 @@ footer {
   border: 1px solid rgba(0, 51, 102, 0.1);
   overflow: hidden;
   box-sizing: border-box;
+  max-width: calc(100% - 3rem);
+  margin: 0 auto;
 }
 
 .contact-form h3 {
@@ -276,6 +278,7 @@ footer {
   text-align: center;
   position: relative;
   padding-bottom: 1rem;
+  max-width: 100%;
 }
 
 .contact-form h3::after {
@@ -289,6 +292,7 @@ footer {
   margin-bottom: 2rem;
   position: relative;
   box-sizing: border-box;
+  max-width: 100%;
 }
 
 .form-group label {
@@ -308,8 +312,11 @@ footer {
 
 input[type="text"],
 input[type="email"],
-textarea {
+textarea,
+.submit-button {
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 1.2rem;
   border: 2px solid #e9ecef;
   border-radius: 12px;
@@ -437,8 +444,9 @@ textarea:focus {
   }
 
   .contact-form {
-    width: 100%;
+    width: calc(100% - 2rem);
     padding: 1rem;
+    margin: 0 auto;
     box-sizing: border-box;
   }
 
@@ -451,23 +459,28 @@ textarea:focus {
 
   input[type="text"],
   input[type="email"],
-  textarea {
-    width: calc(100% - 1.4rem);
+  textarea,
+  .submit-button {
+    width: 100%;
     padding: 0.7rem;
     font-size: 0.95rem;
     box-sizing: border-box;
+    margin: 0;
   }
 
   .submit-button {
-    width: calc(100% - 1.4rem);
-    padding: 0.7rem;
-    font-size: 1rem;
-    margin: 1rem auto;
+    margin-top: 1rem;
   }
 
   .contact-form h3 {
-    width: calc(100% - 1.4rem);
-    margin: 0 auto 1rem auto;
+    width: 100%;
+    margin: 0 0 1rem 0;
+  }
+
+  .contact-card {
+    padding: 1rem;
+    width: calc(100% - 2rem);
+    margin: 0 auto;
   }
 }
 
@@ -911,58 +924,43 @@ iframe.project-video {
   }
 
   .contact-form {
+    width: calc(100% - 2rem);
     padding: 1rem;
-    max-width: calc(100% - 2rem);
     margin: 0 auto;
+    box-sizing: border-box;
   }
 
   .form-group {
+    width: 100%;
     padding: 0;
     margin-bottom: 1rem;
-    width: 100%;
     box-sizing: border-box;
   }
 
   input[type="text"],
   input[type="email"],
-  textarea {
+  textarea,
+  .submit-button {
     width: 100%;
     padding: 0.7rem;
     font-size: 0.95rem;
     box-sizing: border-box;
+    margin: 0;
   }
 
   .submit-button {
-    width: 100%;
-    margin: 1rem auto;
-    box-sizing: border-box;
+    margin-top: 1rem;
   }
 
   .contact-form h3 {
-    width: calc(100% - 1.4rem);
-    margin: 0 auto 1rem auto;
+    width: 100%;
+    margin: 0 0 1rem 0;
   }
 
   .contact-card {
     padding: 1rem;
-  }
-
-  .form-group label {
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  textarea {
-    padding: 0.7rem;
-    font-size: 0.95rem;
-  }
-
-  .submit-button {
-    padding: 0.7rem;
-    font-size: 1rem;
-    margin-top: 1rem;
+    width: calc(100% - 2rem);
+    margin: 0 auto;
   }
 }
 
