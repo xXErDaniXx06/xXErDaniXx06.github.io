@@ -437,31 +437,37 @@ textarea:focus {
   }
 
   .contact-form {
+    width: 100%;
     padding: 1rem;
-    max-width: calc(100% - 2rem);
-    margin: 0 auto;
+    box-sizing: border-box;
   }
 
   .form-group {
+    width: 100%;
     padding: 0;
     margin-bottom: 1rem;
-    width: 100%;
     box-sizing: border-box;
   }
 
   input[type="text"],
   input[type="email"],
   textarea {
-    width: 100%;
+    width: calc(100% - 1.4rem);
     padding: 0.7rem;
     font-size: 0.95rem;
     box-sizing: border-box;
   }
 
   .submit-button {
-    width: 100%;
+    width: calc(100% - 1.4rem);
+    padding: 0.7rem;
+    font-size: 1rem;
     margin: 1rem auto;
-    box-sizing: border-box;
+  }
+
+  .contact-form h3 {
+    width: calc(100% - 1.4rem);
+    margin: 0 auto 1rem auto;
   }
 }
 
