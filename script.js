@@ -295,41 +295,34 @@ async function handleFormSubmit(e) {
     // Check rate limit first
     const limitData = checkRateLimit();
 
-    // Ejecutar reCAPTCHA y esperar el token
-    const recaptchaToken = await new Promise((resolve, reject) => {
-      grecaptcha.ready(() => {
-        grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', {action: 'submit'})
-          .then(resolve)
-          .catch(reject);
+    // Get reCAPTCHA token
+    let token;
+    try {
+      token = await new Promise((resolve, reject) => {
+        grecaptcha.ready(() => {
+          grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', {
+            action: 'contact'
+          }).then(resolve).catch(reject);
+        });
       });
-    });
-
-    if (!recaptchaToken) {
+    } catch (recaptchaError) {
+      console.error('reCAPTCHA Error:', recaptchaError);
       throw new Error(document.documentElement.lang === 'es' ? 
-        'Error en la verificación de seguridad' : 
-        'Security verification failed');
+        'Error de verificación de seguridad' : 
+        'Security verification error');
     }
 
-    // Prepare template parameters
+    // Prepare email data
     const templateParams = {
       to_name: "Daniel",
       from_name: e.target.name.value,
       from_email: e.target.email.value,
       subject: e.target.subject.value,
       message: e.target.message.value,
-      'g-recaptcha-response': recaptchaToken
+      'g-recaptcha-response': token
     };
 
-    // Verificar el token antes de enviar el email
-    const verificationResponse = await verifyRecaptcha(recaptchaToken);
-    
-    if (!verificationResponse.success || verificationResponse.score < 0.5) {
-      throw new Error(document.documentElement.lang === 'es' ? 
-        'Verificación de seguridad fallida' : 
-        'Security check failed');
-    }
-
-    // Send email using EmailJS
+    // Send email
     const response = await emailjs.send(
       "service_2hf264w",
       "template_mkc43b2",
@@ -343,69 +336,17 @@ async function handleFormSubmit(e) {
         'Message sent successfully!');
       e.target.reset();
     } else {
-      throw new Error('Error sending message');
+      throw new Error(document.documentElement.lang === 'es' ? 
+        'Error al enviar el mensaje' : 
+        'Error sending message');
     }
   } catch (error) {
-    console.error('Error:', error);
-    alert(error.message || (document.documentElement.lang === 'es' ? 
+    console.error('Form Error:', error);
+    alert(document.documentElement.lang === 'es' ? 
       'Error al enviar el mensaje. Por favor, inténtelo de nuevo.' : 
-      'Error sending message. Please try again.'));
+      'Error sending message. Please try again.');
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = originalText;
   }
-}
-
-// Función para verificar el token de reCAPTCHA
-async function verifyRecaptcha(token) {
-  try {
-    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        secret: '6LcFQUwrAAAAAG6X5mWlbfWL5ntbhWn_tMhOTQTe',
-        response: token
-      })
-    });
-
-    return await response.json();
-  } catch (error) {
-    console.error('reCAPTCHA verification error:', error);
-    return { success: false, score: 0 };
-  }
-}
-
-// Rate limiting and form protection
-const RATE_LIMIT = {
-  MAX_ATTEMPTS: 3,
-  COOLDOWN_MINUTES: 30,
-  KEY: 'contactFormLimit'
-};
-
-function checkRateLimit() {
-  const now = Date.now();
-  const limitData = JSON.parse(localStorage.getItem(RATE_LIMIT.KEY) || '{"attempts":0}');
-  
-  if (limitData.cooldownUntil && now < limitData.cooldownUntil) {
-    const minutesLeft = Math.ceil((limitData.cooldownUntil - now) / (1000 * 60));
-    throw new Error(`Por favor espere ${minutesLeft} minutos antes de enviar otro mensaje.`);
-  }
-  
-  if (limitData.attempts >= RATE_LIMIT.MAX_ATTEMPTS) {
-    const cooldownUntil = now + (RATE_LIMIT.COOLDOWN_MINUTES * 60 * 1000);
-    localStorage.setItem(RATE_LIMIT.KEY, JSON.stringify({
-      attempts: 0,
-      cooldownUntil
-    }));
-    throw new Error(`Demasiados intentos. Por favor espere ${RATE_LIMIT.COOLDOWN_MINUTES} minutos.`);
-  }
-  
-  return limitData;
-}
-
-function updateRateLimit(limitData) {
-  limitData.attempts = (limitData.attempts || 0) + 1;
-  localStorage.setItem(RATE_LIMIT.KEY, JSON.stringify(limitData));
 }

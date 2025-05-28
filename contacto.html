@@ -7,8 +7,14 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Asegurarse de que el script de reCAPTCHA se carga correctamente -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV"></script>
-    <!-- Añadir el div para el reCAPTCHA -->
-    <div class="g-recaptcha" data-sitekey="6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV" data-callback="onSubmit" data-size="invisible"></div>
+    <!-- Eliminar el div del reCAPTCHA invisible ya que usamos el render -->
+    <script type="text/javascript">
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', {action: 'homepage'}).then(function(token) {
+                console.log('reCAPTCHA ready');
+            });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
