@@ -102,17 +102,22 @@ function updateDaltonicMode() {
   const type = document.getElementById('daltonicType').value;
   const intensity = document.getElementById('daltonicIntensity').value / 100;
   
+  // Eliminar todas las clases de daltonismo
   document.body.classList.remove('daltonic', 'protanopia', 'deuteranopia', 'tritanopia');
   
   if (type !== 'none') {
-    document.body.classList.add('daltonic', type);
+    document.body.classList.add(type);
     document.documentElement.style.setProperty('--daltonic-intensity', intensity);
+    
+    // Guardar configuración
+    localStorage.setItem('daltonicType', type);
+    localStorage.setItem('daltonicIntensity', intensity);
   } else {
+    // Restaurar vista normal
     document.documentElement.style.removeProperty('--daltonic-intensity');
+    localStorage.removeItem('daltonicType');
+    localStorage.removeItem('daltonicIntensity');
   }
-  
-  localStorage.setItem('daltonicType', type);
-  localStorage.setItem('daltonicIntensity', intensity);
 }
 
 // Update initial button text based on language
@@ -255,12 +260,15 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   createDaltonicControls();
   
-  const savedType = localStorage.getItem('daltonicType') || 'none';
-  const savedIntensity = localStorage.getItem('daltonicIntensity') || 0.5;
+  // Restaurar configuración guardada
+  const savedType = localStorage.getItem('daltonicType');
+  const savedIntensity = localStorage.getItem('daltonicIntensity');
   
-  document.getElementById('daltonicType').value = savedType;
-  document.getElementById('daltonicIntensity').value = savedIntensity * 100;
-  updateDaltonicMode();
+  if (savedType && document.getElementById('daltonicType')) {
+    document.getElementById('daltonicType').value = savedType;
+    document.getElementById('daltonicIntensity').value = savedIntensity * 100;
+    updateDaltonicMode();
+  }
 });
 
 // Contact Form Functionality

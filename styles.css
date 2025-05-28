@@ -152,12 +152,123 @@ footer {
   margin-right: auto;
 }
 
+/* Contact Form Enhancement */
 .contact-form {
   background: linear-gradient(145deg, #ffffff, #f8f9fa);
   border-radius: 12px;
-  padding: 2.5rem;
-  box-shadow: 0 4px 15px rgba(0, 51, 102, 0.08);
+  padding: 3rem;
+  box-shadow: 0 8px 25px rgba(0, 51, 102, 0.12);
+  position: relative;
+  border: 1px solid rgba(0, 51, 102, 0.1);
+  overflow: hidden;
+}
+
+.contact-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #003366, #0066cc);
+}
+
+.contact-form h3 {
+  color: #003366;
+  font-size: 1.8rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.contact-form h3::after {
+  content: '✉️';
+  display: block;
+  font-size: 2rem;
+  margin-top: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  color: #003366;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.required {
+  color: #dc3545;
+  margin-left: 4px;
+  font-size: 1.2rem;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
   width: 100%;
+  padding: 1.2rem;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+input[type="text"]:hover,
+input[type="email"]:hover,
+textarea:hover {
+  border-color: #aad4ff;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: #003366;
+  box-shadow: 0 0 0 4px rgba(0, 51, 102, 0.1);
+  outline: none;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: linear-gradient(145deg, #003366, #004d99);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 51, 102, 0.2);
+}
+
+.submit-button::after {
+  content: '→';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  transition: right 0.3s ease;
+}
+
+.submit-button:hover::after {
+  right: 20px;
 }
 
 .form-group textarea {
@@ -181,6 +292,66 @@ body.daltonic h2 {
 
 body.daltonic a {
   color: #000000;
+}
+
+/* Daltonic Mode Filters */
+body.protanopia {
+  filter: grayscale(var(--daltonic-intensity))
+          brightness(1.2)
+          contrast(0.9)
+          sepia(0.3)
+          hue-rotate(-20deg);
+}
+
+body.deuteranopia {
+  filter: grayscale(var(--daltonic-intensity))
+          brightness(1.1)
+          contrast(1.1)
+          sepia(0.2)
+          hue-rotate(40deg);
+}
+
+body.tritanopia {
+  filter: grayscale(var(--daltonic-intensity))
+          brightness(1.1)
+          contrast(1.2)
+          sepia(0.3)
+          hue-rotate(180deg);
+}
+
+/* Daltonic Controls Enhancement */
+.daltonic-controls {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  min-width: 250px;
+}
+
+.intensity-control {
+  margin-top: 1.5rem;
+}
+
+.intensity-control label {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: #003366;
+  font-weight: 500;
+}
+
+.intensity-control input[type="range"] {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+#daltonicType {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #003366;
+  cursor: pointer;
 }
 
 /* Enhanced mobile styles */
