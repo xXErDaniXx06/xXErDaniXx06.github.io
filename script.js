@@ -103,6 +103,9 @@ function updateDaltonicMode() {
   const type = document.getElementById('daltonicType').value;
   const intensityInput = document.getElementById('daltonicIntensity');
   const intensityContainer = document.querySelector('.intensity-control');
+  const controls = document.querySelector('.daltonic-controls');
+  const currentLang = document.documentElement.lang;
+  const button = document.getElementById('daltonicMode');
   
   // Eliminar todas las clases de daltonismo
   document.body.classList.remove('daltonic', 'protanopia', 'deuteranopia', 'tritanopia');
@@ -125,6 +128,10 @@ function updateDaltonicMode() {
     localStorage.removeItem('daltonicType');
     localStorage.removeItem('daltonicIntensity');
   }
+
+  // Cerrar el panel después de seleccionar
+  controls.style.display = 'none';
+  button.textContent = translations[currentLang].daltonicMode;
 }
 
 // Update initial button text based on language
@@ -289,47 +296,72 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Añadir estas funciones de control de rate limit
+function checkRateLimit() {
+  const now = Date.now();
+  const lastSubmit = localStorage.getItem('lastSubmit');
+  const submitCount = parseInt(localStorage.getItem('submitCount') || '0');
+  
+  if (lastSubmit && (now - parseInt(lastSubmit)) < 60000) { // 1 minuto entre envíos
+    throw new Error(document.documentElement.lang === 'es' ? 
+      'Por favor, espere un minuto entre mensajes.' : 
+      'Please wait one minute between messages.');
+  }
+  
+  if (submitCount >= 5 && (now - parseInt(lastSubmit)) < 3600000) { // 5 mensajes por hora
+    throw new Error(document.documentElement.lang === 'es' ? 
+      'Ha excedido el límite de mensajes por hora.' : 
+      'You have exceeded the hourly message limit.');
+  }
+  
+  return { now, submitCount };
+}
+
+function updateRateLimit(limitData) {
+  localStorage.setItem('lastSubmit', limitData.now.toString());
+  localStorage.setItem('submitCount', (limitData.submitCount + 1).toString());
+}
+
+// Reemplazar la función handleFormSubmit existente
 async function handleFormSubmit(e) {
   e.preventDefault();
   
-  const submitButton = e.target.querySelector('.submit-button');
+  const form = e.target;
+  const submitButton = form.querySelector('.submit-button');
   const originalText = submitButton.textContent;
-  submitButton.disabled = true;
-  submitButton.textContent = document.documentElement.lang === 'es' ? 
-    'Enviando...' : 'Sending...';
-
+  
   try {
-    // Check rate limit first
+    submitButton.disabled = true;
+    submitButton.textContent = document.documentElement.lang === 'es' ? 
+      'Enviando...' : 'Sending...';
+
+    // Verificar rate limit
     const limitData = checkRateLimit();
 
-    // Get reCAPTCHA token
-    let token;
-    try {
-      token = await new Promise((resolve, reject) => {
-        grecaptcha.ready(() => {
-          grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', {
-            action: 'contact'
-          }).then(resolve).catch(reject);
-        });
-      });
-    } catch (recaptchaError) {
-      console.error('reCAPTCHA Error:', recaptchaError);
-      throw new Error(document.documentElement.lang === 'es' ? 
-        'Error de verificación de seguridad' : 
-        'Security verification error');
+    // Validar campos requeridos
+    const requiredFields = form.querySelectorAll('[required]');
+    for (const field of requiredFields) {
+      if (!field.value.trim()) {
+        throw new Error(document.documentElement.lang === 'es' ? 
+          'Por favor, complete todos los campos requeridos.' : 
+          'Please fill in all required fields.');
+      }
     }
 
-    // Prepare email data
+    // Obtener token reCAPTCHA
+    const token = await grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', {action: 'submit'});
+    
+    // Preparar datos del email
     const templateParams = {
       to_name: "Daniel",
-      from_name: e.target.name.value,
-      from_email: e.target.email.value,
-      subject: e.target.subject.value,
-      message: e.target.message.value,
+      from_name: form.name.value.trim(),
+      from_email: form.email.value.trim(),
+      subject: form.subject.value.trim(),
+      message: form.message.value.trim(),
       'g-recaptcha-response': token
     };
 
-    // Send email
+    // Enviar email
     const response = await emailjs.send(
       "service_2hf264w",
       "template_mkc43b2",
@@ -341,17 +373,16 @@ async function handleFormSubmit(e) {
       alert(document.documentElement.lang === 'es' ? 
         '¡Mensaje enviado correctamente!' : 
         'Message sent successfully!');
-      e.target.reset();
+      form.reset();
     } else {
-      throw new Error(document.documentElement.lang === 'es' ? 
-        'Error al enviar el mensaje' : 
-        'Error sending message');
+      throw new Error(response.text || 'Error en el envío');
     }
+
   } catch (error) {
     console.error('Form Error:', error);
-    alert(document.documentElement.lang === 'es' ? 
+    alert(error.message || (document.documentElement.lang === 'es' ? 
       'Error al enviar el mensaje. Por favor, inténtelo de nuevo.' : 
-      'Error sending message. Please try again.');
+      'Error sending message. Please try again.'));
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = originalText;
