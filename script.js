@@ -58,9 +58,10 @@ function createDaltonicControls() {
     <option value="tritanopia">${translations[currentLang].tritanopia}</option>
   `;
 
-  // Control de intensidad
+  // Control de intensidad (oculto por defecto)
   const intensityContainer = document.createElement('div');
   intensityContainer.className = 'intensity-control';
+  intensityContainer.style.display = 'none';
   intensityContainer.innerHTML = `
     <label for="daltonicIntensity">${currentLang === 'es' ? 'Intensidad' : 'Intensity'}: <span>50%</span></label>
     <input type="range" id="daltonicIntensity" min="0" max="100" value="50">
@@ -100,21 +101,27 @@ function createDaltonicControls() {
 
 function updateDaltonicMode() {
   const type = document.getElementById('daltonicType').value;
-  const intensity = document.getElementById('daltonicIntensity').value / 100;
+  const intensityInput = document.getElementById('daltonicIntensity');
+  const intensityContainer = document.querySelector('.intensity-control');
   
   // Eliminar todas las clases de daltonismo
   document.body.classList.remove('daltonic', 'protanopia', 'deuteranopia', 'tritanopia');
   
   if (type !== 'none') {
     document.body.classList.add(type);
+    const intensity = intensityInput.value / 100;
     document.documentElement.style.setProperty('--daltonic-intensity', intensity);
+    
+    // Mostrar el control de intensidad
+    intensityContainer.style.display = 'block';
     
     // Guardar configuración
     localStorage.setItem('daltonicType', type);
     localStorage.setItem('daltonicIntensity', intensity);
   } else {
-    // Restaurar vista normal
+    // Restaurar vista normal y ocultar control de intensidad
     document.documentElement.style.removeProperty('--daltonic-intensity');
+    intensityContainer.style.display = 'none';
     localStorage.removeItem('daltonicType');
     localStorage.removeItem('daltonicIntensity');
   }
