@@ -73,11 +73,11 @@ function createDaltonicControls() {
   controls.appendChild(container);
 
   // Event listeners
-  select.addEventListener('change', updateDaltonicMode);
+  select.addEventListener('change', () => updateDaltonicMode(true));
   const intensityInput = document.getElementById('daltonicIntensity');
   intensityInput.addEventListener('input', function(e) {
     this.previousElementSibling.querySelector('span').textContent = `${e.target.value}%`;
-    updateDaltonicMode();
+    updateDaltonicMode(false);
   });
 
   // Toggle del panel de control
@@ -99,7 +99,7 @@ function createDaltonicControls() {
   updateDaltonicMode();
 }
 
-function updateDaltonicMode() {
+function updateDaltonicMode(forceClose = false) {
   const type = document.getElementById('daltonicType').value;
   const intensityInput = document.getElementById('daltonicIntensity');
   const intensityContainer = document.querySelector('.intensity-control');
@@ -129,9 +129,11 @@ function updateDaltonicMode() {
     localStorage.removeItem('daltonicIntensity');
   }
 
-  // Cerrar el panel después de seleccionar
-  controls.style.display = 'none';
-  button.textContent = translations[currentLang].daltonicMode;
+  // Solo cerrar el panel cuando se cambia el tipo o se fuerza el cierre
+  if (forceClose) {
+    controls.style.display = 'none';
+    button.textContent = translations[currentLang].daltonicMode;
+  }
 }
 
 // Update initial button text based on language

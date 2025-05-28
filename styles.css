@@ -18,6 +18,11 @@ header {
 header h1 {
   margin: 0;
   font-size: 2rem;
+  color: white !important; /* Forzar color blanco siempre */
+}
+
+header p {
+  color: white !important; /* También forzar blanco para el subtítulo */
 }
 
 header nav {
@@ -364,16 +369,17 @@ textarea:focus {
 .profile-container {
   display: flex;
   gap: 2rem;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
   align-items: flex-start;
 }
 
 .profile-image {
-  width: 200px;
-  height: 200px;
+  width: 250px;  /* Aumentado de 200px */
+  height: 300px; /* Aumentado y ajustado ratio */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   object-fit: cover;
+  object-position: center; /* Asegura que la imagen esté centrada */
   transition: transform 0.3s ease;
 }
 
@@ -391,30 +397,43 @@ textarea:focus {
   margin-bottom: 2rem;
   box-shadow: 0 4px 15px rgba(0, 51, 102, 0.08);
   border: 1px solid rgba(0, 51, 102, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
 .project-header {
   margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .project-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.project-title h3 {
+  font-size: 1.8rem;
+  color: #003366;
+  margin-bottom: 1rem;
 }
 
 .project-image {
-  max-width: 300px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 51, 102, 0.15);
+  transition: transform 0.3s ease;
 }
 
 .project-video {
   width: 100%;
-  max-width: 560px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 51, 102, 0.15);
 }
 
 .project-details {
@@ -461,10 +480,13 @@ textarea:focus {
 
 /* Skills page styles */
 .skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   margin-top: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .skill-card {
@@ -473,6 +495,7 @@ textarea:focus {
   padding: 1.5rem;
   box-shadow: 0 4px 15px rgba(0, 51, 102, 0.08);
   border: 1px solid rgba(0, 51, 102, 0.1);
+  width: 100%;
 }
 
 .skill-card h3 {
@@ -484,11 +507,86 @@ textarea:focus {
   padding-bottom: 0.5rem;
 }
 
-/* Responsive adjustments */
+/* Achievements page styles */
+.achievements-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.achievement-item {
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 51, 102, 0.08);
+  border: 1px solid rgba(0, 51, 102, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.achievement-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #003366, #0066cc);
+}
+
+.achievement-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 51, 102, 0.15);
+}
+
+.achievement-title {
+  font-size: 1.2rem;
+  color: #003366;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.achievement-date {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.achievement-description {
+  color: #444;
+  line-height: 1.6;
+}
+
+.achievement-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #003366;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.achievement-link:hover {
+  color: #0066cc;
+}
+
 @media screen and (max-width: 768px) {
   .profile-container {
     flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
+  }
+
+  .profile-image {
+    width: 200px;
+    height: 240px; /* Mantiene el ratio en móvil */
   }
 
   .project-title {
@@ -500,36 +598,75 @@ textarea:focus {
   }
 
   .skills-grid {
+    max-width: 100%;
+  }
+  
+  .contact-container {
     grid-template-columns: 1fr;
   }
 
-  .contact-container {
-    grid-template-columns: 1fr;
+  .project-image,
+  .project-video {
+    max-width: 100%;
+  }
+
+  .collapsible {
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .achievements-list {
+    margin: 1rem 0;
+    max-width: 100%;
+  }
+
+  .achievement-item {
+    padding: 1.2rem;
   }
 }
 
 /* Collapsible content */
 .collapsible {
-  background: none;
-  border: none;
-  color: #003366;
+  background: linear-gradient(145deg, #003366, #004d99);
+  color: white;
   cursor: pointer;
-  padding: 1rem 0;
-  width: 100%;
-  text-align: left;
+  padding: 1rem 2rem;
+  width: auto;
+  margin: 1rem auto;
+  display: block;
+  text-align: center;
   font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 51, 102, 0.1);
 }
 
 .collapsible:hover {
-  color: #004d99;
+  color: white;
+  background: linear-gradient(145deg, #004d99, #006699);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 51, 102, 0.2);
 }
 
-.collapsible.active + .content {
-  padding-top: 1rem;
+.collapsible:active {
+  transform: translateY(0);
+}
+
+.collapsible.active {
+  margin-bottom: 0;
 }
 
 .content {
-  padding: 0 1rem;
-  background-color: white;
-  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  line-height: 1.6;
 }

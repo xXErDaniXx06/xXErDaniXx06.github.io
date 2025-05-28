@@ -296,3 +296,41 @@ body.daltonic #daltonicType option {
     border: 2px solid rgba(0, 51, 102, 0.2);
   }
 }
+
+.intensity-control {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #f0f4f8;
+  width: 100%;
+}
+
+.intensity-control label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #003366;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.intensity-control input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: #e9ecef;
+  border-radius: 10px;
+  outline: none;
+  -webkit-appearance: none;
+  margin: 1rem 0;
+}
+
+.intensity-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #003366;
+  border: 3px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 51, 102, 0.2);
+  transition: all 0.3s ease;
+}
