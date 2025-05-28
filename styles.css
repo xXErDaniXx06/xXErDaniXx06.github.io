@@ -454,659 +454,118 @@ body.tritanopia {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Mobile Styles */
-@media screen and (max-width: 768px) {
-  .accessibility-controls {
-    position: fixed;
-    bottom: 1rem;
-    top: auto;
-    right: 1rem;
-    width: auto;
-  }
-
-  #daltonicMode {
-    padding: 0.7rem 1rem;
-    font-size: 0.95rem;
-    white-space: nowrap;
-    background: #003366;
-  }
-
-  .daltonic-controls {
-    position: fixed;
-    bottom: calc(100% + 1rem);
-    top: auto;
-    right: 0;
-    left: 0;
-    width: auto;
-    margin: 1rem;
-    max-width: none;
-  }
-
-  /* Asegurar que el control queda por encima del contenido */
-  .daltonic-controls {
-    z-index: 1001;
-  }
-
-  /* Evitar que el contenido se desborde */
-  .daltonic-controls select,
-  .daltonic-controls input[type="range"] {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-}
-
-/* Small screen adjustments */
-@media screen and (max-width: 480px) {
-  .accessibility-controls {
-    bottom: 1rem;
-  }
-
-  #daltonicMode {
-    padding: 0.6rem 0.9rem;
-    font-size: 0.9rem;
-  }
-
-  .daltonic-controls {
-    padding: 1rem;
-  }
-}
-
-/* Mobile adjustments */
-@media screen and (max-width: 768px) {
-  header {
-    padding: 1rem;
-  }
-
-  header h1 {
-    font-size: 1.5rem;
-  }
-
-  .main-nav {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .main-nav a {
-    width: 100%;
-    text-align: center;
-    padding: 0.75rem;
-  }
-
-  .language-switcher {
-    position: static;
-    text-align: center;
-    margin: 1rem auto;
-    display: inline-block;
-  }
-
-  main {
-    padding: 1rem;
-    margin: 1rem;
-  }
-
-  .achievements-list li {
-    padding: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .about-content {
-    text-align: left;
-  }
-
-  .profile-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .profile-image {
-    width: 150px;
-  }
-
-  .project-card {
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .collapsible {
-    font-size: 14px;
-    padding: 12px;
-  }
-
-  .content p {
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .achievements-list li {
-    font-size: 14px;
-    padding: 12px;
-    margin-bottom: 10px;
-  }
-
-  .project-details ul {
-    margin-left: 0;
-  }
-
-  .project-link {
-    width: 100%;
-    text-align: center;
-    margin-top: 1rem;
-  }
-
-  .project-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .project-title {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .project-video {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16/9;
-  }
-
-  .project-image {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-  }
-
-  .contact-container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  body {
-    font-size: 16px;
-    line-height: 1.6;
-  }
-
-  header p {
-    font-size: 0.9rem;
-  }
-
-  .accessibility-controls {
-    top: auto;
-    bottom: 4.5rem;
-  }
-  
-  .daltonic-controls {
-    position: fixed;
-    bottom: calc(100% + 0.5rem);
-    top: auto;
-    right: 1rem;
-    width: calc(100% - 2rem);
-    max-width: 320px;
-  }
-
-  #daltonicMode {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
-  }
-
-  section {
-    margin-bottom: 1.5rem;
-  }
-
-  h1 { font-size: 1.8rem; }
-  h2 { font-size: 1.5rem; }
-  h3 { font-size: 1.3rem; }
-  h4 { font-size: 1.1rem; }
-
-  .project-details li {
-    margin-bottom: 8px;
-  }
-
-  main {
-    margin: 1rem;
-    padding: 1rem;
-  }
-
-  .profile-image {
-    width: 180px;
-    height: 180px;
-  }
-
-  .contact-form {
-    padding: 1.5rem;
-  }
-}
-
-/* Make images responsive */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Improve table responsiveness */
-table {
+/* Daltonic Controls Enhancement */
+#daltonicType {
   width: 100%;
-  overflow-x: auto;
-  display: block;
-}
-
-/* Improve form responsiveness */
-input, textarea, button {
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.achievements-list {
-  list-style: none;
-  padding: 0;
-}
-
-.achievements-list li {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  border-left: 4px solid #003366;
-  transition: transform 0.2s ease;
-}
-
-.achievements-list li:hover {
-  transform: translateX(10px);
-  background-color: #e9ecef;
-}
-
-.about-content {
-  line-height: 1.6;
-  text-align: justify;
-}
-
-.about-content p {
-  margin-bottom: 1.5rem;
-}
-
-.profile-container {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  align-items: flex-start;
-}
-
-.profile-image {
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.profile-image:hover {
-  transform: scale(1.05);
-}
-
-.profile-image.error {
-  background-color: #f8f9fa;
-  border: 2px dashed #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.project-card {
-  background-color: #f8f9fa;
+  padding: 0.8rem 1rem;
+  border: 2px solid #e9ecef;
   border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  border-left: 4px solid #003366;
-  transition: transform 0.2s ease;
-}
-
-.project-card:hover {
-  transform: translateX(10px);
-}
-
-.project-details {
-  margin: 1.5rem 0;
-}
-
-.project-details h4 {
+  font-size: 1rem;
   color: #003366;
-  margin: 1rem 0 0.5rem;
-}
-
-.project-details ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.project-details li {
-  margin-bottom: 0.5rem;
-  padding-left: 1.5rem;
-  position: relative;
-}
-
-.project-details li:before {
-  content: "•";
-  color: #003366;
-  position: absolute;
-  left: 0;
-}
-
-.project-links {
-  margin-top: 1.5rem;
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.project-link {
-  display: inline-block;
-  background-color: #003366;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.project-link:hover {
-  background-color: #004d99;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-decoration: none;
-}
-
-body.daltonic .project-link {
-  background-color: #000000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-body.daltonic .project-link:hover {
-  background-color: #333333;
-}
-
-.project-header {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.project-title {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
-}
-
-.project-title h3 {
-  font-size: 1.8rem;
-  margin: 0;
-  color: #003366;
-  border-bottom: 2px solid #aad4ff;
-  padding-bottom: 0.5rem;
-}
-
-.project-video,
-.project-image {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-  display: block;
-}
-
-.project-video {
-  aspect-ratio: 16/9;
-  background-color: #000;
-  object-fit: contain;
-}
-
-.project-image {
-  max-height: 400px;
-  object-fit: cover;
-}
-
-/* Update daltonic mode */
-body.daltonic .project-title h3 {
-  color: #000000;
-  border-bottom-color: #666666;
-}
-
-/* Mobile adjustments */
-@media screen and (max-width: 768px) {
-  .project-header {
-    padding: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .project-title {
-    gap: 1rem;
-  }
-
-  .project-title h3 {
-    font-size: 1.5rem;
-  }
-}
-
-/* Update daltonic mode for project cards */
-body.daltonic .project-card {
-  border-left-color: #000000;
-}
-
-body.daltonic .project-details h4,
-body.daltonic .project-details li:before {
-  color: #000000;
-}
-
-body.daltonic .project-link {
-  background-color: #000000;
-}
-
-body.daltonic .project-link:hover {
-  background-color: #333333;
-}
-
-.collapsible {
-  background-color: #003366;
-  color: white;
   cursor: pointer;
-  padding: 12px 20px;
-  width: auto;
-  border: none;
-  text-align: center;
-  outline: none;
-  font-size: 15px;
-  border-radius: 25px;
-  margin: 1rem 0;
+  background-color: white;
   transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23003366' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 1rem) center;
+  padding-right: 2.5rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 51, 102, 0.05);
 }
 
-.collapsible:hover {
-  background-color: #004d99;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+#daltonicType:hover {
+  border-color: #aad4ff;
+  box-shadow: 0 4px 8px rgba(0, 51, 102, 0.1);
+  transform: translateY(-1px);
 }
 
-.collapsible:after {
-  content: '\2193'; /* Down arrow */
-  font-size: 16px;
-  transition: transform 0.3s ease;
+#daltonicType:focus {
+  outline: none;
+  border-color: #003366;
+  box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
 }
 
-.active.collapsible:after {
-  transform: rotate(180deg);
-}
-
-.content {
-  max-height: none;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-top: 1rem;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-/* Update daltonic mode styles */
-body.daltonic .collapsible {
-  background-color: #000000;
-}
-
-body.daltonic .collapsible:hover {
-  background-color: #333333;
-}
-
-/* Enhanced daltonic mode */
-body.daltonic {
-  background-color: #ffffff;
-}
-
-body.daltonic header,
-body.daltonic .collapsible,
-body.daltonic .project-link,
-body.daltonic #daltonicMode,
-body.daltonic footer {
-  background-color: #000000;
-}
-
-body.daltonic .project-card,
-body.daltonic .achievements-list li {
-  border-left: 4px solid #000000;
-  background-color: #f5f5f5;
-}
-
-body.daltonic .content {
-  background-color: #f5f5f5;
-}
-
-body.daltonic .language-switcher {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-body.daltonic .main-nav a.active {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-body.daltonic h2 {
-  border-bottom-color: #000000;
-}
-
-/* Accessibility Controls Positioning */
-.accessibility-controls {
-  position: fixed;
-  top: 5rem;
-  right: 1rem;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: flex-end;
-}
-
-.daltonic-controls {
-  background: linear-gradient(145deg, #ffffff, #f8f9fa);
-  border-radius: 12px;
-  padding: 1.5rem;
-  min-width: 280px;
-  position: absolute;
-  right: 0;
-  top: 100%;
-  margin-top: 0.5rem;
-  box-shadow: 0 4px 20px rgba(0, 51, 102, 0.15);
-  border: 1px solid rgba(0, 51, 102, 0.1);
-}
-
-/* Adjust reCAPTCHA position */
-.grecaptcha-badge {
-  bottom: 5rem !important;
-  right: 1rem !important;
-  z-index: 90 !important;
-}
-
-/* Skills Grid Styles */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  padding: 1rem;
-}
-
-.skill-card {
-  background: linear-gradient(145deg, #ffffff, #f8f9fa);
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 15px rgba(0, 51, 102, 0.08);
-  border: 1px solid rgba(0, 51, 102, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.skill-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #003366, #0066cc);
-}
-
-.skill-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 51, 102, 0.15);
-}
-
-.skill-card h3 {
+#daltonicType option {
+  padding: 0.8rem;
+  font-size: 1rem;
   color: #003366;
-  margin: 0 0 1rem 0;
-  font-size: 1.4rem;
-  border-bottom: 2px solid #aad4ff;
-  padding-bottom: 0.5rem;
+  background: white;
 }
 
-.skill-card p {
-  color: #444;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* Daltonic mode adjustments for skills */
-body.daltonic .skill-card h3 {
+/* Modo daltónico */
+body.daltonic #daltonicType {
   color: #000000;
-  border-bottom-color: #666666;
+  border-color: #666666;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23000000' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
 }
 
-body.daltonic .skill-card::before {
-  background: #000000;
+body.daltonic #daltonicType option {
+  color: #000000;
 }
 
-/* Mobile adjustments for skills */
+/* Mobile adjustments */
 @media screen and (max-width: 768px) {
-  .skills-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 0.5rem;
+  .accessibility-controls {
+    position: fixed;
+    bottom: 1rem;
+    top: auto;
+    right: 1rem;
+    width: auto;
+    z-index: 1002;
   }
 
-  .skill-card {
+  .daltonic-controls {
+    position: fixed;
+    bottom: 4rem;
+    top: auto;
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+    min-width: 0;
     padding: 1.5rem;
+    margin: 0;
+    max-height: min(400px, calc(100vh - 8rem));
+    overflow-y: auto;
+  }
+
+  /* Intensity control mobile adjustments */
+  .intensity-control {
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+
+  .intensity-control label {
+    font-size: 0.9rem;
+  }
+
+  #daltonicType {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+}
+
+/* Small screen fixes */
+@media screen and (max-width: 480px) {
+  .accessibility-controls {
+    bottom: 1rem;
+  }
+
+  .daltonic-controls {
+    padding: 1rem;
+    bottom: 3.5rem;
+  }
+}
+
+/* Loading animation */
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
   }
 }
