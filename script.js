@@ -43,10 +43,12 @@ function createDaltonicControls() {
   const controls = document.querySelector('.accessibility-controls');
   const currentLang = document.documentElement.lang;
   
+  // Crear el contenedor principal
   const container = document.createElement('div');
   container.className = 'daltonic-controls';
+  container.style.display = 'none'; // Oculto por defecto
   
-  // Tipo de daltonismo
+  // Selector de tipo
   const select = document.createElement('select');
   select.id = 'daltonicType';
   select.innerHTML = `
@@ -60,20 +62,40 @@ function createDaltonicControls() {
   const intensityContainer = document.createElement('div');
   intensityContainer.className = 'intensity-control';
   intensityContainer.innerHTML = `
-    <label for="daltonicIntensity">${translations[currentLang].intensity}: <span>50%</span></label>
+    <label for="daltonicIntensity">${currentLang === 'es' ? 'Intensidad' : 'Intensity'}: <span>50%</span></label>
     <input type="range" id="daltonicIntensity" min="0" max="100" value="50">
   `;
 
+  // Añadir elementos al contenedor
   container.appendChild(select);
   container.appendChild(intensityContainer);
   controls.appendChild(container);
 
   // Event listeners
   select.addEventListener('change', updateDaltonicMode);
-  document.getElementById('daltonicIntensity').addEventListener('input', function(e) {
+  const intensityInput = document.getElementById('daltonicIntensity');
+  intensityInput.addEventListener('input', function(e) {
     this.previousElementSibling.querySelector('span').textContent = `${e.target.value}%`;
     updateDaltonicMode();
   });
+
+  // Toggle del panel de control
+  const button = document.getElementById('daltonicMode');
+  button.addEventListener('click', function() {
+    const isVisible = container.style.display !== 'none';
+    container.style.display = isVisible ? 'none' : 'block';
+    button.textContent = isVisible ? 
+      translations[currentLang].daltonicMode : 
+      translations[currentLang].normalMode;
+  });
+
+  // Restaurar configuración guardada
+  const savedType = localStorage.getItem('daltonicType') || 'none';
+  const savedIntensity = localStorage.getItem('daltonicIntensity') || 0.5;
+  
+  select.value = savedType;
+  intensityInput.value = savedIntensity * 100;
+  updateDaltonicMode();
 }
 
 function updateDaltonicMode() {
