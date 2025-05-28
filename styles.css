@@ -380,12 +380,12 @@ textarea:focus {
 }
 
 .profile-image {
-  width: 250px;  /* Aumentado de 200px */
-  height: 300px; /* Aumentado y ajustado ratio */
+  width: 250px;
+  height: 300px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   object-fit: cover;
-  object-position: center; /* Asegura que la imagen esté centrada */
+  object-position: center;
   transition: transform 0.3s ease;
 }
 
@@ -393,6 +393,46 @@ textarea:focus {
   flex: 1;
   line-height: 1.6;
   text-align: justify;
+}
+
+@media screen and (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .profile-image {
+    width: 200px;
+    height: 240px;
+  }
+
+  .about-content {
+    text-align: left;
+    font-size: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .about-content p {
+    margin-bottom: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .profile-container {
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .profile-image {
+    width: 160px;
+    height: 200px;
+  }
+
+  .about-content {
+    font-size: 0.95rem;
+    padding: 0;
+  }
 }
 
 /* Projects page styles */
@@ -783,6 +823,37 @@ iframe.project-video {
   .achievement-description {
     font-size: 1.1rem;  /* Ligeramente más pequeño en tablets */
   }
+
+  .contact-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .contact-form {
+    padding: 1.5rem;
+  }
+
+  .contact-form h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .submit-button {
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -801,6 +872,37 @@ iframe.project-video {
 
   .achievement-description {
     font-size: 1.05rem;  /* Adaptado para móviles */
+  }
+
+  .contact-form {
+    padding: 1rem;
+  }
+
+  .contact-form h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .contact-card {
+    padding: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    padding: 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .submit-button {
+    padding: 0.7rem;
+    font-size: 1rem;
+    margin-top: 1rem;
   }
 }
 
