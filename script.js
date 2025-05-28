@@ -220,15 +220,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const content = button.nextElementSibling;
     
     // Hide content by default
-    content.style.display = "none";
+    content.style.maxHeight = "0px";
     
     // Set initial text
     button.textContent = translations[document.documentElement.lang].showDescription;
     
     button.addEventListener("click", function() {
       this.classList.toggle("active");
-      content.style.display = content.style.display === "none" ? "block" : "none";
-      this.textContent = content.style.display === "none" ? 
+      const isExpanded = content.style.maxHeight !== "0px";
+      
+      content.classList.toggle('active');
+      content.style.maxHeight = isExpanded ? "0px" : "2000px";
+      
+      this.textContent = isExpanded ? 
         translations[document.documentElement.lang].showDescription : 
         translations[document.documentElement.lang].hideDescription;
     });

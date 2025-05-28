@@ -159,7 +159,7 @@ section {
 
 h2 {
   color: #003366;
-  border-bottom: 2px solid #aad4ff;
+  border-bottom: 1px solid #003366;
   padding-bottom: 0.3rem;
 }
 
@@ -219,7 +219,7 @@ footer {
   color: #003366;
   margin: 0 0 1rem 0;
   font-size: 1.2rem;
-  border-bottom: 1px solid #aad4ff;
+  border-bottom: 1px solid #003366;
   padding-bottom: 0.5rem;
 }
 
@@ -405,6 +405,7 @@ textarea:focus {
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  max-height: fit-content;
 }
 
 .project-card::before {
@@ -435,7 +436,7 @@ textarea:focus {
   color: #003366;
   margin: 0 0 1rem 0;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #aad4ff;
+  border-bottom: 1px solid #003366;
 }
 
 .project-image {
@@ -465,7 +466,7 @@ textarea:focus {
   color: #003366;
   margin: 1.5rem 0 1rem 0;
   font-size: 1.2rem;
-  border-bottom: 1px solid #aad4ff;
+  border-bottom: 1px solid #003366;
   padding-bottom: 0.5rem;
 }
 
@@ -508,6 +509,8 @@ textarea:focus {
   border-radius: 8px;
   transition: all 0.3s ease;
   font-weight: 600;
+  font-size: 1rem;
+  padding: 0.8rem 1.5rem;
 }
 
 .project-link:hover {
@@ -550,7 +553,7 @@ textarea:focus {
   color: #003366;
   margin: 0 0 1rem 0;
   font-size: 1.2rem;
-  border-bottom: 1px solid #aad4ff;
+  border-bottom: 1px solid #003366;
   padding-bottom: 0.5rem;
 }
 
@@ -562,22 +565,27 @@ textarea:focus {
 
 /* Achievements page styles */
 .achievements-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
   margin: 2rem auto;
-  max-width: 800px;
+  padding: 0;
+  list-style: none;
+  max-width: 1200px;
 }
 
 .achievement-item {
   background: linear-gradient(145deg, #ffffff, #f8f9fa);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 2rem;
   box-shadow: 0 4px 15px rgba(0, 51, 102, 0.08);
   border: 1px solid rgba(0, 51, 102, 0.1);
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .achievement-item::before {
@@ -588,53 +596,60 @@ textarea:focus {
   right: 0;
   height: 3px;
   background: linear-gradient(90deg, #003366, #0066cc);
+  transition: height 0.3s ease;
 }
 
 .achievement-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 51, 102, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 51, 102, 0.15);
+}
+
+.achievement-item:hover::before {
+  height: 6px;
 }
 
 .achievement-title {
   color: #003366;
-  margin: 0 0 0.5rem 0;
-  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  font-size: 1.4rem;
   font-weight: 600;
+  border-bottom: 1px solid #003366;
+  padding-bottom: 0.8rem;
 }
 
 .achievement-date {
   color: #666;
   font-size: 0.9rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #aad4ff;
+  margin-bottom: 1.5rem;
+  display: block;
 }
 
 .achievement-description {
   color: #444;
   line-height: 1.6;
   margin: 0;
+  flex-grow: 1;
 }
 
 .achievement-link {
   display: inline-block;
   margin-top: 1.5rem;
-  padding: 0.5rem 1rem;
-  color: #003366;
+  padding: 0.8rem 1.5rem;
+  color: white;
   text-decoration: none;
   font-weight: 500;
-  border-radius: 6px;
+  border-radius: 8px;
   transition: all 0.3s ease;
-  background: rgba(0, 51, 102, 0.1);
+  background: linear-gradient(145deg, #003366, #004d99);
+  align-self: flex-start;
 }
 
 .achievement-link:hover {
-  color: white;
-  background: #003366;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 51, 102, 0.2);
   text-decoration: none;
 }
 
-/* Media Queries */
 @media screen and (max-width: 1024px) {
   main {
     margin: 1rem;
@@ -675,6 +690,12 @@ textarea:focus {
   .contact-form {
     padding: 1.5rem;
   }
+
+  .achievements-list {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin: 1rem 0;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -707,38 +728,31 @@ textarea:focus {
   background: linear-gradient(145deg, #003366, #004d99);
   color: white;
   cursor: pointer;
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.5rem;
   width: auto;
   margin: 1rem auto;
   display: block;
   text-align: center;
   font-weight: 600;
+  font-size: 1rem;
   border: none;
   border-radius: 8px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 51, 102, 0.1);
 }
 
-.collapsible:hover {
-  color: white;
-  background: linear-gradient(145deg, #004d99, #006699);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 51, 102, 0.2);
-}
-
-.collapsible:active {
-  transform: translateY(0);
-}
-
-.collapsible.active {
-  margin-bottom: 0;
-}
-
 .content {
-  padding: 2rem;
+  padding: 1.5rem;
   margin-top: 1rem;
   background-color: #f8f9fa;
   border-radius: 12px;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
   line-height: 1.6;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.content.active {
+  max-height: 2000px;
 }
