@@ -103,48 +103,31 @@ body.daltonic {
   background-color: #ffffff;
 }
 
-/* Daltonic Filters */
+/* Daltonic Filters - Simplified */
 .protanopia {
-  filter: url('data:image/svg+xml,\
-    <svg xmlns="http://www.w3.org/2000/svg">\
-      <filter id="protanopia">\
-        <feColorMatrix values="0.567, 0.433, 0, 0, 0  0.558, 0.442, 0, 0, 0  0, 0.242, 0.758, 0, 0  0, 0, 0, 1, 0"/>\
-      </filter>\
-    </svg>#protanopia');
-  -webkit-filter: grayscale(0.5) brightness(1.1);
+  filter: grayscale(50%) sepia(20%) hue-rotate(-50deg) saturate(80%);
 }
 
 .deuteranopia {
-  filter: url('data:image/svg+xml,\
-    <svg xmlns="http://www.w3.org/2000/svg">\
-      <filter id="deuteranopia">\
-        <feColorMatrix values="0.625, 0.375, 0, 0, 0  0.7, 0.3, 0, 0, 0  0, 0.3, 0.7, 0, 0  0, 0, 0, 1, 0"/>\
-      </filter>\
-    </svg>#deuteranopia');
-  -webkit-filter: grayscale(0.6) brightness(1.05);
+  filter: grayscale(45%) sepia(30%) hue-rotate(180deg) saturate(85%);
 }
 
 .tritanopia {
-  filter: url('data:image/svg+xml,\
-    <svg xmlns="http://www.w3.org/2000/svg">\
-      <filter id="tritanopia">\
-        <feColorMatrix values="0.95, 0.05, 0, 0, 0  0, 0.433, 0.567, 0, 0  0, 0.475, 0.525, 0, 0  0, 0, 0, 1, 0"/>\
-      </filter>\
-    </svg>#tritanopia');
-  -webkit-filter: grayscale(0.4) brightness(1.1);
+  filter: grayscale(40%) sepia(40%) hue-rotate(220deg) saturate(90%);
 }
 
 /* Control Panel Styles */
 .daltonic-controls {
+  position: fixed;
+  top: 8rem;
+  right: 1rem;
   background: white;
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  position: fixed;
-  top: 8rem;
-  right: 1rem;
   width: 280px;
-  z-index: 1000;
+  z-index: 1001;
+  display: none;
 }
 
 #daltonicType {
@@ -154,6 +137,8 @@ body.daltonic {
   border: 2px solid #e9ecef;
   border-radius: 8px;
   font-size: 1rem;
+  cursor: pointer;
+  background: white;
 }
 
 .intensity-control {

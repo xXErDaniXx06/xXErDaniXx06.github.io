@@ -92,14 +92,20 @@ function createDaltonicControls() {
     backdrop.classList.remove('active');
   });
 
+  select.addEventListener('change', function() {
+    const type = this.value;
+    document.body.classList.remove('protanopia', 'deuteranopia', 'tritanopia');
+    if (type !== 'none') {
+      document.body.classList.add(type);
+    }
+    localStorage.setItem('daltonicType', type);
+  });
+
   const button = document.getElementById('daltonicMode');
   button.addEventListener('click', function() {
-    const isVisible = container.style.display !== 'none';
-    container.style.display = isVisible ? 'none' : 'block';
-    backdrop.classList.toggle('active', !isVisible);
-    button.textContent = isVisible ? 
-      translations[currentLang].daltonicMode : 
-      translations[currentLang].normalMode;
+    const controls = document.querySelector('.daltonic-controls');
+    const isVisible = controls.style.display === 'block';
+    controls.style.display = isVisible ? 'none' : 'block';
   });
 
   // Mejorar interacción táctil
