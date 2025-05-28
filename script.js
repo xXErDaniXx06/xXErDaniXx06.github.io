@@ -240,3 +240,100 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('daltonicIntensity').value = savedIntensity * 100;
   updateDaltonicMode();
 });
+
+// Contact Form Functionality
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize EmailJS with your public key
+  emailjs.init("bxER5s23w9AXoN6vK");
+  
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', handleFormSubmit);
+  }
+});
+
+async function handleFormSubmit(e) {
+  e.preventDefault();
+  
+  const submitButton = e.target.querySelector('.submit-button');
+  const originalText = submitButton.textContent;
+  submitButton.disabled = true;
+  submitButton.textContent = document.documentElement.lang === 'es' ? 
+    'Enviando...' : 'Sending...';
+
+  try {
+    // Check rate limit first
+    const limitData = checkRateLimit();
+
+    // Get reCAPTCHA token
+    const recaptchaToken = await grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', {action: 'submit'});
+
+    // Prepare template parameters
+    const templateParams = {
+      to_name: "Daniel",
+      from_name: e.target.name.value,
+      from_email: e.target.email.value,
+      subject: e.target.subject.value,
+      message: e.target.message.value,
+      'g-recaptcha-response': recaptchaToken
+    };
+
+    // Send email using EmailJS
+    const response = await emailjs.send(
+      "service_2hf264w",
+      "template_mkc43b2",
+      templateParams
+    );
+
+    if (response.status === 200) {
+      updateRateLimit(limitData);
+      alert(document.documentElement.lang === 'es' ? 
+        '¡Mensaje enviado correctamente!' : 
+        'Message sent successfully!');
+      e.target.reset();
+    } else {
+      throw new Error('Error sending message');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert(error.message || (document.documentElement.lang === 'es' ? 
+      'Error al enviar el mensaje. Por favor, inténtelo de nuevo.' : 
+      'Error sending message. Please try again.'));
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = originalText;
+  }
+}
+
+// Rate limiting and form protection
+const RATE_LIMIT = {
+  MAX_ATTEMPTS: 3,
+  COOLDOWN_MINUTES: 30,
+  KEY: 'contactFormLimit'
+};
+
+function checkRateLimit() {
+  const now = Date.now();
+  const limitData = JSON.parse(localStorage.getItem(RATE_LIMIT.KEY) || '{"attempts":0}');
+  
+  if (limitData.cooldownUntil && now < limitData.cooldownUntil) {
+    const minutesLeft = Math.ceil((limitData.cooldownUntil - now) / (1000 * 60));
+    throw new Error(`Por favor espere ${minutesLeft} minutos antes de enviar otro mensaje.`);
+  }
+  
+  if (limitData.attempts >= RATE_LIMIT.MAX_ATTEMPTS) {
+    const cooldownUntil = now + (RATE_LIMIT.COOLDOWN_MINUTES * 60 * 1000);
+    localStorage.setItem(RATE_LIMIT.KEY, JSON.stringify({
+      attempts: 0,
+      cooldownUntil
+    }));
+    throw new Error(`Demasiados intentos. Por favor espere ${RATE_LIMIT.COOLDOWN_MINUTES} minutos.`);
+  }
+  
+  return limitData;
+}
+
+function updateRateLimit(limitData) {
+  limitData.attempts = (limitData.attempts || 0) + 1;
+  localStorage.setItem(RATE_LIMIT.KEY, JSON.stringify(limitData));
+}
