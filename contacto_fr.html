@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact - Daniel Carrasco García</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="daltonic-styles.css">
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <h1>Daniel Carrasco García</h1>
+      <div class="language-switcher">
+        <a href="contacto.html">ES</a>
+        <span>|</span>
+        <a href="contacto_en.html">EN</a>
+        <span>|</span>
+        <a href="contacto_fr.html" class="active">FR</a>
+      </div>
+    </div>
+    <p>Étudiant en Génie Informatique · Université de Malaga</p>
+    <nav class="main-nav">
+      <a href="index_fr.html">À propos</a>
+      <a href="proyectos_fr.html">Projets</a>
+      <a href="habilidades_fr.html">Compétences</a>
+      <a href="logros_fr.html">Réalisations</a>
+      <a href="contacto_fr.html" class="active">Contact</a>
+    </nav>
+  </header>
+
+  <div class="accessibility-controls">
+    <button id="daltonicMode" onclick="toggleDaltonicMode()">Mode Daltonien</button>
+  </div>
+
+  <main>
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="contact-container">
+        <div class="contact-info">
+          <div class="contact-card">
+            <h3>Informations Personnelles</h3>
+            <ul class="contact-list">
+              <li><i class="icon">📍</i> Málaga/Algeciras-Cadix, Espagne</li>
+              <li><i class="icon">🕓</i> GMT+2 (Madrid)</li>
+              <li><i class="icon">📞</i> +34 633 120 603</li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Courriel</h3>
+            <ul class="contact-list">
+              <li><i class="icon">📧</i> <a href="mailto:danielcarrascogarcia18@gmail.com">danielcarrascogarcia18@gmail.com</a></li>
+              <li><i class="icon">🎓</i> <a href="mailto:carrascodani06@uma.es">carrascodani06@uma.es</a></li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Réseaux Sociaux</h3>
+            <ul class="contact-list social-links">
+              // ...existing social links...
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Disponibilité</h3>
+            <ul class="contact-list">
+              <li><i class="icon">📅</i> Réunions : Lundi à vendredi, 17h00-20h00</li>
+              <li><i class="icon">💼</i> Accepte les projets freelance</li>
+              <li><i class="icon">🎯</i> Ouvert aux opportunités professionnelles</li>
+              <li><i class="icon">🗣️</i> Langues : Espagnol (natif), Anglais (C1), Français (A2)</li>
+              <li><i class="icon">✉️</i> Préférence de contact : Courriel</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h3>Envoyez-moi un message</h3>
+          <form id="contactForm" action="#" method="POST">
+            <div class="form-group">
+              <label for="name">Nom <span class="required">*</span></label>
+              <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Courriel <span class="required">*</span></label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Sujet <span class="required">*</span></label>
+              <input type="text" id="subject" name="subject" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message <span class="required">*</span></label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">
+              Envoyer le message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Daniel Carrasco García. Tous droits réservés.</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

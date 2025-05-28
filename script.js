@@ -36,6 +36,16 @@ const translations = {
     intensity: 'Intensity',
     showDescription: 'Show full description',
     hideDescription: 'Hide description'
+  },
+  fr: {
+    daltonicMode: 'Mode Daltonien',
+    normalMode: 'Mode Normal',
+    protanopia: 'Protanopie',
+    deuteranopia: 'Deutéranopie',
+    tritanopia: 'Tritanopie',
+    intensity: 'Intensité',
+    showDescription: 'Voir la description complète',
+    hideDescription: 'Masquer la description'
   }
 };
 
@@ -185,19 +195,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Language switcher functionality
 function setActiveLanguage() {
-  const currentLang = document.documentElement.lang;
+  const currentPath = window.location.pathname;
+  const baseFileName = currentPath.split('/').pop().split('_')[0].split('.')[0];
   const langLinks = document.querySelectorAll('.language-switcher a');
   
+  // Eliminar clase active de todos los enlaces
   langLinks.forEach(link => {
     link.classList.remove('active');
-    if ((currentLang === 'es' && link.getAttribute('href').indexOf('_en') === -1) ||
-        (currentLang === 'en' && link.getAttribute('href').indexOf('_en') !== -1)) {
+    
+    // Actualizar los href de los enlaces para mantener la página actual
+    const linkPath = link.getAttribute('href');
+    const isEnglish = linkPath.includes('_en');
+    const isFrench = linkPath.includes('_fr');
+    
+    if (isEnglish) {
+      link.href = `${baseFileName}_en.html`;
+    } else if (isFrench) {
+      link.href = `${baseFileName}_fr.html`;
+    } else {
+      link.href = `${baseFileName}.html`;
+    }
+    
+    // Activar el enlace correspondiente al idioma actual
+    if (currentPath.includes('_en.html') && isEnglish) {
+      link.classList.add('active');
+    } else if (currentPath.includes('_fr.html') && isFrench) {
+      link.classList.add('active');
+    } else if (!currentPath.includes('_') && !isEnglish && !isFrench) {
       link.classList.add('active');
     }
   });
 }
 
-document.addEventListener('DOMContentLoaded', setActiveLanguage);
+// Asegurarse de que se ejecute cuando se carga la página
+document.addEventListener('DOMContentLoaded', () => {
+  setActiveLanguage();
+});
 
 // Handle profile image loading errors
 document.addEventListener('DOMContentLoaded', () => {
