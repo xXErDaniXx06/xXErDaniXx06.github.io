@@ -83,8 +83,9 @@ function createDaltonicControls() {
   // Toggle del panel de control
   const button = document.getElementById('daltonicMode');
   button.addEventListener('click', function() {
-    const isVisible = container.style.display !== 'none';
-    container.style.display = isVisible ? 'none' : 'block';
+    const container = document.querySelector('.daltonic-controls');
+    const isVisible = container.classList.contains('visible');
+    container.classList.toggle('visible');
     button.textContent = isVisible ? 
       translations[currentLang].daltonicMode : 
       translations[currentLang].normalMode;
