@@ -435,6 +435,34 @@ textarea:focus {
     font-size: 0.95rem;
     padding: 0;
   }
+
+  .contact-form {
+    padding: 1rem;
+    max-width: calc(100% - 2rem);
+    margin: 0 auto;
+  }
+
+  .form-group {
+    padding: 0;
+    margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+
+  .submit-button {
+    width: 100%;
+    margin: 1rem auto;
+    box-sizing: border-box;
+  }
 }
 
 /* Projects page styles */
@@ -885,18 +913,23 @@ iframe.project-video {
   .form-group {
     padding: 0;
     margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   input[type="text"],
   input[type="email"],
   textarea {
-    width: calc(100% - 1.4rem); /* Ajustado para compensar el padding */
+    width: 100%;
     padding: 0.7rem;
+    font-size: 0.95rem;
+    box-sizing: border-box;
   }
 
   .submit-button {
-    width: calc(100% - 1.4rem);
+    width: 100%;
     margin: 1rem auto;
+    box-sizing: border-box;
   }
 
   .contact-form h3 {
