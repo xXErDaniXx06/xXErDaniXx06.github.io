@@ -287,8 +287,20 @@ async function handleFormSubmit(e) {
     // Check rate limit first
     const limitData = checkRateLimit();
 
-    // Get reCAPTCHA token
-    const recaptchaToken = await grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', {action: 'submit'});
+    // Ejecutar reCAPTCHA y esperar el token
+    const recaptchaToken = await new Promise((resolve, reject) => {
+      grecaptcha.ready(() => {
+        grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', {action: 'submit'})
+          .then(resolve)
+          .catch(reject);
+      });
+    });
+
+    if (!recaptchaToken) {
+      throw new Error(document.documentElement.lang === 'es' ? 
+        'Error en la verificación de seguridad' : 
+        'Security verification failed');
+    }
 
     // Prepare template parameters
     const templateParams = {
@@ -299,6 +311,15 @@ async function handleFormSubmit(e) {
       message: e.target.message.value,
       'g-recaptcha-response': recaptchaToken
     };
+
+    // Verificar el token antes de enviar el email
+    const verificationResponse = await verifyRecaptcha(recaptchaToken);
+    
+    if (!verificationResponse.success || verificationResponse.score < 0.5) {
+      throw new Error(document.documentElement.lang === 'es' ? 
+        'Verificación de seguridad fallida' : 
+        'Security check failed');
+    }
 
     // Send email using EmailJS
     const response = await emailjs.send(
@@ -324,6 +345,27 @@ async function handleFormSubmit(e) {
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = originalText;
+  }
+}
+
+// Función para verificar el token de reCAPTCHA
+async function verifyRecaptcha(token) {
+  try {
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        secret: '6LcFQUwrAAAAAG6X5mWlbfWL5ntbhWn_tMhOTQTe',
+        response: token
+      })
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.error('reCAPTCHA verification error:', error);
+    return { success: false, score: 0 };
   }
 }
 

@@ -103,7 +103,7 @@ header nav a {
 }
 
 main {
-  max-width: 900px;
+  max-width: 1200px;
   margin: auto;
   padding: 2rem;
   background-color: white;
@@ -138,6 +138,31 @@ footer {
   margin-top: 2rem;
   background-color: #003366;
   color: white;
+}
+
+/* Contact Page Enhancement */
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-form {
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 15px rgba(0, 51, 102, 0.08);
+  width: 100%;
+}
+
+.form-group textarea {
+  min-height: 150px;
+  resize: vertical;
 }
 
 /* Daltonic mode colors */
@@ -262,6 +287,11 @@ body.daltonic a {
     max-height: 300px;
     object-fit: cover;
   }
+
+  .contact-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -305,6 +335,10 @@ body.daltonic a {
   .profile-image {
     width: 180px;
     height: 180px;
+  }
+
+  .contact-form {
+    padding: 1.5rem;
   }
 }
 
