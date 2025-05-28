@@ -53,7 +53,11 @@ function createDaltonicControls() {
   const controls = document.querySelector('.accessibility-controls');
   const currentLang = document.documentElement.lang;
   
-  // Crear el contenedor principal
+  // Crear backdrop para móviles
+  const backdrop = document.createElement('div');
+  backdrop.className = 'daltonic-backdrop';
+  document.body.appendChild(backdrop);
+  
   const container = document.createElement('div');
   container.className = 'daltonic-controls';
   container.style.display = 'none'; // Oculto por defecto
@@ -83,6 +87,37 @@ function createDaltonicControls() {
   controls.appendChild(container);
 
   // Event listeners
+  backdrop.addEventListener('click', () => {
+    container.style.display = 'none';
+    backdrop.classList.remove('active');
+  });
+
+  const button = document.getElementById('daltonicMode');
+  button.addEventListener('click', function() {
+    const isVisible = container.style.display !== 'none';
+    container.style.display = isVisible ? 'none' : 'block';
+    backdrop.classList.toggle('active', !isVisible);
+    button.textContent = isVisible ? 
+      translations[currentLang].daltonicMode : 
+      translations[currentLang].normalMode;
+  });
+
+  // Mejorar interacción táctil
+  select.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    select.focus();
+  });
+
+  intensityInput.addEventListener('touchmove', function(e) {
+    const touch = e.touches[0];
+    const bounds = this.getBoundingClientRect();
+    const value = ((touch.clientX - bounds.left) / bounds.width) * 100;
+    this.value = Math.max(0, Math.min(100, value));
+    this.previousElementSibling.querySelector('span').textContent = `${Math.round(value)}%`;
+    updateDaltonicMode(false);
+  });
+
+  // Event listeners
   select.addEventListener('change', () => updateDaltonicMode(true));
   const intensityInput = document.getElementById('daltonicIntensity');
   intensityInput.addEventListener('input', function(e) {
@@ -91,7 +126,6 @@ function createDaltonicControls() {
   });
 
   // Toggle del panel de control
-  const button = document.getElementById('daltonicMode');
   button.addEventListener('click', function() {
     const isVisible = container.style.display !== 'none';
     container.style.display = isVisible ? 'none' : 'block';
