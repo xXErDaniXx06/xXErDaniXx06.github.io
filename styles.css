@@ -266,6 +266,7 @@ footer {
   position: relative;
   border: 1px solid rgba(0, 51, 102, 0.1);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .contact-form h3 {
@@ -287,6 +288,7 @@ footer {
 .form-group {
   margin-bottom: 2rem;
   position: relative;
+  box-sizing: border-box;
 }
 
 .form-group label {
@@ -876,11 +878,30 @@ iframe.project-video {
 
   .contact-form {
     padding: 1rem;
+    max-width: calc(100% - 2rem);
+    margin: 0 auto;
+  }
+
+  .form-group {
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: calc(100% - 1.4rem); /* Ajustado para compensar el padding */
+    padding: 0.7rem;
+  }
+
+  .submit-button {
+    width: calc(100% - 1.4rem);
+    margin: 1rem auto;
   }
 
   .contact-form h3 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
+    width: calc(100% - 1.4rem);
+    margin: 0 auto 1rem auto;
   }
 
   .contact-card {
