@@ -103,46 +103,61 @@ body.daltonic {
   background-color: #ffffff;
 }
 
-body.daltonic header,
-body.daltonic footer {
-  background-color: #000000;
+/* Daltonic Filters */
+.protanopia {
+  filter: url('data:image/svg+xml,\
+    <svg xmlns="http://www.w3.org/2000/svg">\
+      <filter id="protanopia">\
+        <feColorMatrix values="0.567, 0.433, 0, 0, 0  0.558, 0.442, 0, 0, 0  0, 0.242, 0.758, 0, 0  0, 0, 0, 1, 0"/>\
+      </filter>\
+    </svg>#protanopia');
+  -webkit-filter: grayscale(0.5) brightness(1.1);
 }
 
-body.daltonic h2,
-body.daltonic .project-title h3,
-body.daltonic .skill-card h3,
-body.daltonic .achievement-title {
-  color: #000000;
-  border-bottom-color: #666666;
+.deuteranopia {
+  filter: url('data:image/svg+xml,\
+    <svg xmlns="http://www.w3.org/2000/svg">\
+      <filter id="deuteranopia">\
+        <feColorMatrix values="0.625, 0.375, 0, 0, 0  0.7, 0.3, 0, 0, 0  0, 0.3, 0.7, 0, 0  0, 0, 0, 1, 0"/>\
+      </filter>\
+    </svg>#deuteranopia');
+  -webkit-filter: grayscale(0.6) brightness(1.05);
 }
 
-body.daltonic a {
-  color: #000000;
+.tritanopia {
+  filter: url('data:image/svg+xml,\
+    <svg xmlns="http://www.w3.org/2000/svg">\
+      <filter id="tritanopia">\
+        <feColorMatrix values="0.95, 0.05, 0, 0, 0  0, 0.433, 0.567, 0, 0  0, 0.475, 0.525, 0, 0  0, 0, 0, 1, 0"/>\
+      </filter>\
+    </svg>#tritanopia');
+  -webkit-filter: grayscale(0.4) brightness(1.1);
 }
 
-/* Daltonic Mode Filters */
-body.protanopia {
-  filter: grayscale(var(--daltonic-intensity))
-          brightness(1.2)
-          contrast(0.9)
-          sepia(0.3)
-          hue-rotate(-20deg);
+/* Control Panel Styles */
+.daltonic-controls {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 8rem;
+  right: 1rem;
+  width: 280px;
+  z-index: 1000;
 }
 
-body.deuteranopia {
-  filter: grayscale(var(--daltonic-intensity))
-          brightness(1.1)
-          contrast(1.1)
-          sepia(0.2)
-          hue-rotate(40deg);
+#daltonicType {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
 }
 
-body.tritanopia {
-  filter: grayscale(var(--daltonic-intensity))
-          brightness(1.1)
-          contrast(1.2)
-          sepia(0.3)
-          hue-rotate(180deg);
+.intensity-control {
+  margin-top: 1rem;
 }
 
 /* Accessibility Controls */
@@ -175,21 +190,6 @@ body.tritanopia {
   white-space: nowrap;
   min-width: auto;
   backdrop-filter: blur(5px);
-}
-
-.daltonic-controls {
-  position: fixed;
-  top: auto;
-  bottom: 5rem;
-  right: 1rem;
-  width: calc(100% - 2rem);
-  max-width: 300px;
-  background: white;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 51, 102, 0.2);
-  z-index: 1001;
-  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 /* Estilos para los controles internos */
@@ -278,99 +278,24 @@ body.tritanopia {
   }
 
   .daltonic-controls {
-    position: fixed;
-    top: auto;
-    bottom: 5rem;
-    right: 1rem;
     width: calc(100% - 2rem);
     max-width: 300px;
-    background: white;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 51, 102, 0.2);
-    z-index: 1001;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    top: auto;
+    bottom: 5rem;
   }
 
-  #daltonicType {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: white;
-    border: 2px solid #e9ecef;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-  .intensity-control {
-    margin-top: 1rem;
-  }
-
-  .intensity-control label {
-    display: block;
-    margin-bottom: 0.8rem;
-    font-size: 1rem;
-  }
-
+  #daltonicType,
   #daltonicIntensity {
-    width: 100%;
-    height: 2rem;
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-  }
-
-  /* Estilos personalizados para el input range */
-  #daltonicIntensity::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 24px;
-    height: 24px;
-    background: #003366;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-    margin-top: -8px;
-  }
-
-  #daltonicIntensity::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 8px;
-    background: #e9ecef;
-    border-radius: 4px;
-    border: none;
-  }
-
-  /* Backdrop para cerrar el panel */
-  .daltonic-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    display: none;
-  }
-
-  .daltonic-backdrop.active {
-    display: block;
+    font-size: 16px; /* Prevenir zoom en iOS */
   }
 }
 
-@media screen and (max-width: 480px) {
-  .accessibility-controls {
-    padding: 0 1rem;
-  }
-
-  .daltonic-controls {
-    padding: 1rem;
-  }
-
-  #daltonicType {
-    font-size: 0.9rem;
+/* Fallback styles for browsers that don't support filters */
+@supports not (filter: url('#protanopia')) {
+  .protanopia,
+  .deuteranopia,
+  .tritanopia {
+    filter: grayscale(0.5);
   }
 }
 

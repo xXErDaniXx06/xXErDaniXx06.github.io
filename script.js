@@ -146,37 +146,20 @@ function createDaltonicControls() {
 function updateDaltonicMode(forceClose = false) {
   const type = document.getElementById('daltonicType').value;
   const intensityInput = document.getElementById('daltonicIntensity');
-  const intensityContainer = document.querySelector('.intensity-control');
   const controls = document.querySelector('.daltonic-controls');
-  const currentLang = document.documentElement.lang;
-  const button = document.getElementById('daltonicMode');
   
-  // Eliminar todas las clases de daltonismo
-  document.body.classList.remove('daltonic', 'protanopia', 'deuteranopia', 'tritanopia');
+  // Remover todas las clases de daltonismo
+  document.body.classList.remove('protanopia', 'deuteranopia', 'tritanopia');
   
   if (type !== 'none') {
     document.body.classList.add(type);
-    const intensity = intensityInput.value / 100;
-    document.documentElement.style.setProperty('--daltonic-intensity', intensity);
-    
-    // Mostrar el control de intensidad
-    intensityContainer.style.display = 'block';
-    
-    // Guardar configuración
     localStorage.setItem('daltonicType', type);
-    localStorage.setItem('daltonicIntensity', intensity);
   } else {
-    // Restaurar vista normal y ocultar control de intensidad
-    document.documentElement.style.removeProperty('--daltonic-intensity');
-    intensityContainer.style.display = 'none';
     localStorage.removeItem('daltonicType');
-    localStorage.removeItem('daltonicIntensity');
   }
 
-  // Solo cerrar el panel cuando se cambia el tipo o se fuerza el cierre
   if (forceClose) {
     controls.style.display = 'none';
-    button.textContent = translations[currentLang].daltonicMode;
   }
 }
 
