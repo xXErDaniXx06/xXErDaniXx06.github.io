@@ -57,7 +57,6 @@ function createDaltonicControls() {
   container.className = 'daltonic-controls';
   container.style.display = 'none';
   
-  // Selector de tipo simplificado
   container.innerHTML = `
     <select id="daltonicType">
       <option value="none">${translations[currentLang].normalMode}</option>
@@ -68,14 +67,21 @@ function createDaltonicControls() {
   `;
   
   controls.appendChild(container);
-
-  // Event listeners simplificados
+  
   const button = document.getElementById('daltonicMode');
   const select = document.getElementById('daltonicType');
 
-  button.addEventListener('click', function() {
+  button.addEventListener('click', function(e) {
+    e.stopPropagation();
     const isVisible = container.style.display === 'block';
     container.style.display = isVisible ? 'none' : 'block';
+  });
+
+  // Cerrar el panel al hacer clic fuera
+  document.addEventListener('click', function(e) {
+    if (!container.contains(e.target) && !button.contains(e.target)) {
+      container.style.display = 'none';
+    }
   });
 
   select.addEventListener('change', function() {
