@@ -66,24 +66,26 @@ function createDaltonicControls() {
     </select>
   `;
   
-  controls.appendChild(container);
-  
+  document.body.appendChild(container);
+
   const button = document.getElementById('daltonicMode');
   const select = document.getElementById('daltonicType');
 
+  // Toggle del panel de control
   button.addEventListener('click', function(e) {
     e.stopPropagation();
     const isVisible = container.style.display === 'block';
     container.style.display = isVisible ? 'none' : 'block';
   });
 
-  // Cerrar el panel al hacer clic fuera
+  // Cerrar al hacer clic fuera
   document.addEventListener('click', function(e) {
     if (!container.contains(e.target) && !button.contains(e.target)) {
       container.style.display = 'none';
     }
   });
 
+  // Cambio de modo
   select.addEventListener('change', function() {
     const type = this.value;
     document.body.classList.remove('protanopia', 'deuteranopia', 'tritanopia');
