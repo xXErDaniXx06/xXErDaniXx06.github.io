@@ -406,3 +406,72 @@ body::after {
 body {
   transition: filter 0.3s ease;
 }
+
+/* Base styles */
+.accessibility-controls {
+  position: fixed;
+  top: 5rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+#daltonicMode {
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(145deg, #003366, #004d99);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.daltonic-controls {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  min-width: 200px;
+}
+
+#daltonicType {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* Filtros de daltonismo */
+.protanopia {
+  filter: grayscale(0.5) sepia(0.3) hue-rotate(-30deg);
+}
+
+.deuteranopia {
+  filter: grayscale(0.6) sepia(0.2) hue-rotate(40deg);
+}
+
+.tritanopia {
+  filter: grayscale(0.4) sepia(0.4) hue-rotate(200deg);
+}
+
+/* Ajustes móviles */
+@media screen and (max-width: 768px) {
+  .daltonic-controls {
+    position: fixed;
+    bottom: 5rem;
+    top: auto;
+    right: 1rem;
+    width: calc(100% - 2rem);
+    max-width: 300px;
+  }
+
+  #daltonicType {
+    font-size: 16px;
+    height: 44px;
+  }
+}
