@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Daniel Carrasco García - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="daltonic-styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
+
 <body>
+  <a href="#about" class="skip-link">Saltar al contenido</a>
   <header>
     <div class="header-top">
       <h1>Daniel Carrasco García</h1>
-      <div class="language-switcher">
-        <a href="index.html" class="active">ES</a>
+      <nav class="language-switcher" aria-label="Selector de idioma">
+        <a href="index.html" class="active" aria-current="page">ES</a>
         <span>|</span>
         <a href="index_en.html">EN</a>
         <span>|</span>
         <a href="index_fr.html">FR</a>
-      </div>
+      </nav>
     </div>
     <p>Estudiante de Ingeniería Informática · Universidad de Málaga</p>
-    <nav class="main-nav">
-      <a href="index.html" class="active">Sobre mí</a>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a href="index.html" class="active" aria-current="page">Sobre mí</a>
       <a href="proyectos.html">Proyectos</a>
       <a href="habilidades.html">Habilidades</a>
       <a href="logros.html">Logros</a>
@@ -31,7 +39,7 @@
   </header>
 
   <div class="accessibility-controls">
-    <button id="daltonicMode" onclick="toggleDaltonicMode()">Modo Daltónico</button>
+    <button id="daltonicMode" aria-label="Opciones de accesibilidad">Accesibilidad</button>
   </div>
 
   <main>
@@ -40,13 +48,26 @@
       <div class="profile-container">
         <img src="images/profile.jpg" alt="Daniel Carrasco García" class="profile-image">
         <div class="about-content">
-          <p>Soy Daniel Carrasco García, estudiante de Ingeniería Informática en la Universidad de Málaga, con una profunda pasión por la tecnología, el desarrollo de software y la creación de soluciones prácticas que aborden problemas reales. Mi enfoque combina la rigurosidad académica con una actitud proactiva hacia los retos técnicos y los proyectos colaborativos.</p>
+          <p>Soy Daniel Carrasco García, estudiante de Ingeniería Informática en la Universidad de Málaga, con una
+            profunda pasión por la tecnología, el desarrollo de software y la creación de soluciones prácticas que
+            aborden problemas reales. Mi enfoque combina la rigurosidad académica con una actitud proactiva hacia los
+            retos técnicos y los proyectos colaborativos.</p>
 
-          <p>A lo largo de mi formación he adquirido experiencia en lenguajes como Java, C++, Python, HTML, CSS y Arduino, y he trabajado en ámbitos como el desarrollo web, testing con JUnit y Mockito, diseño de algoritmos, teoría de la codificación, programación de bajo nivel con RISC-V, y simulación de arquitecturas con Logisim. También he participado en proyectos orientados a la inteligencia artificial y al análisis financiero, como estrategias algorítmicas de trading en criptomonedas.</p>
+          <p>A lo largo de mi formación he adquirido experiencia en lenguajes como Java, C++, Python, HTML, CSS y
+            Arduino, y he trabajado en ámbitos como el desarrollo web, testing con JUnit y Mockito, diseño de
+            algoritmos, teoría de la codificación, programación de bajo nivel con RISC-V, y simulación de arquitecturas
+            con Logisim. También he participado en proyectos orientados a la inteligencia artificial y al análisis
+            financiero, como estrategias algorítmicas de trading en criptomonedas.</p>
 
-          <p>Destaco por mi capacidad de trabajo en equipo, mi curiosidad constante y mi compromiso con escribir un código limpio, mantenible y elegante. He desarrollado aplicaciones y prácticas académicas aplicando principios SOLID, patrones de diseño y buenas prácticas de testing. Además, cuento con experiencia en herramientas como Docker, Maven, IntelliJ IDEA y GitHub, y he realizado proyectos que integran frontend y backend, con especial interés en el uso de Flask y Angular.</p>
+          <p>Destaco por mi capacidad de trabajo en equipo, mi curiosidad constante y mi compromiso con escribir un
+            código limpio, mantenible y elegante. He desarrollado aplicaciones y prácticas académicas aplicando
+            principios SOLID, patrones de diseño y buenas prácticas de testing. Además, cuento con experiencia en
+            herramientas como Docker, Maven, IntelliJ IDEA y GitHub, y he realizado proyectos que integran frontend y
+            backend, con especial interés en el uso de Flask y Angular.</p>
 
-          <p>Hablo español como lengua materna, tengo nivel C1 de inglés y A2 de francés, lo que me permite colaborar en entornos internacionales. Obtuve Matrícula de Honor en Bachillerato y estoy constantemente en búsqueda de nuevas oportunidades que me permitan aprender, innovar y contribuir a proyectos con impacto real.</p>
+          <p>Hablo español como lengua materna, tengo nivel C1 de inglés y A2 de francés, lo que me permite colaborar en
+            entornos internacionales. Obtuve Matrícula de Honor en Bachillerato y estoy constantemente en búsqueda de
+            nuevas oportunidades que me permitan aprender, innovar y contribuir a proyectos con impacto real.</p>
         </div>
       </div>
     </section>
@@ -57,4 +78,5 @@
   </footer>
   <script src="script.js"></script>
 </body>
+
 </html>

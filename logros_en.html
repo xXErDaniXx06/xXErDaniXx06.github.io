@@ -1,192 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Achievements - Daniel Carrasco García</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="daltonic-styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Achievements - Daniel Carrasco García</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="daltonic-styles.css">
 </head>
+
 <body>
+  <a href="#achievements" class="skip-link">Skip to content</a>
   <header>
     <div class="header-top">
       <h1>Daniel Carrasco García</h1>
-      <div class="language-switcher">
+      <nav class="language-switcher" aria-label="Language switcher">
         <a href="logros.html">ES</a>
         <span>|</span>
-        <a href="logros_en.html" class="active">EN</a>
-      </div>
+        <a href="logros_en.html" class="active" aria-current="page">EN</a>
+        <span>|</span>
+        <a href="logros_fr.html">FR</a>
+      </nav>
     </div>
     <p>Computer Engineering Student · University of Málaga</p>
-    <nav class="main-nav">
+    <nav class="main-nav" aria-label="Main navigation">
       <a href="index_en.html">About</a>
       <a href="proyectos_en.html">Projects</a>
       <a href="habilidades_en.html">Skills</a>
-      <a href="logros_en.html" class="active">Achievements</a>
+      <a href="logros_en.html" class="active" aria-current="page">Achievements</a>
       <a href="contacto_en.html">Contact</a>
     </nav>
   </header>
 
   <div class="accessibility-controls">
-    <button id="daltonicMode" onclick="toggleDaltonicMode()">Colorblind Mode</button>
+    <button id="daltonicMode" aria-label="Accessibility options">Accessibility</button>
   </div>
 
   <main>
     <section id="achievements">
       <h2>Achievements and Awards</h2>
       <div class="achievements-list">
-        <!-- Future Projects -->
         <article class="achievement-item">
-          <h3 class="achievement-title">International Platinum at Infomatrix Iberoamérica Science Final</h3>
-          <span class="achievement-date">2022</span>
-          <p class="achievement-description">Highest recognition at the Ibero-American scientific research projects final.</p>
+          <h3 class="achievement-title">Finalist Talent 4 Cyber 2025</h3>
+          <span class="achievement-date">2025</span>
+          <p class="achievement-description">Finalist in the national cybersecurity championship organized by the
+            Ministry of Defense. Achieved 12th place in Spain with my team.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">Finalist Malackaton 2025</h3>
+          <span class="achievement-date">2025</span>
+          <p class="achievement-description">Finalist in the annual hackathon at the University of Málaga.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">Member of Málaga Space Team - Communications Division</h3>
+          <span class="achievement-date">2025</span>
+          <p class="achievement-description">Joined the Málaga Space Team, a University of Málaga team dedicated to
+            satellite design and construction, as a member of the communications and outreach team.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">Init.g Participation</h3>
+          <span class="achievement-date">2025</span>
+          <p class="achievement-description">Participation in the Init.g 2025 event.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">Third Prize Oracle Challenge - "Summer Hit Song 2025"</h3>
+          <span class="achievement-date">2025</span>
+          <p class="achievement-description">Third prize in Oracle's "Reto Enseña" with the project "Summer Hit Song
+            2025". We developed an AI capable of analyzing songs and predicting the next summer hit based on musical
+            patterns and trends.</p>
         </article>
 
         <article class="achievement-item">
           <h3 class="achievement-title">First Prize at Diverciencia</h3>
           <span class="achievement-date">2024</span>
-          <p class="achievement-description">Highest recognition at the science fair for innovative project development and social impact.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Two Second Prizes at Diverciencia</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Recognition for outstanding projects in the Diverciencia science fair.</p>
+          <p class="achievement-description">Highest recognition at the science fair for innovative project development
+            and social impact.</p>
         </article>
 
         <article class="achievement-item">
           <h3 class="achievement-title">High School Honors Degree</h3>
-          <span class="achievement-date">2022</span>
-          <p class="achievement-description">Awarded for academic excellence throughout high school.</p>
-        </article>
-
-<article class="achievement-item">
-  <h3 class="achievement-title">Third Prize - Enseña Challenge (Oracle)</h3>
-  <span class="achievement-date">2025</span>
-  <p class="achievement-description">
-    Third prize awarded after completing several challenges, including the development of an AI to analyze and complete songs to turn them into summer hits.
-  </p>
-</article>
-
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Cádiz Under-18 Programming Champion</h3>
-          <span class="achievement-date">2021</span>
-          <p class="achievement-description">Champion of the Cádiz programming competition for under-18s.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">3rd Place at AdaByron Málaga</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Third place in the AdaByron competition, promoting women in technology.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">First Prize in Astronomy at Science in Action</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Awarded for the best project in Astronomy at the Science in Action competition.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Second Prize in STEAM at Science in Action</h3>
-          <span class="achievement-date">2022</span>
-          <p class="achievement-description">Recognition for the second-best STEAM project at Science in Action.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">First Prize in Scientific Research Projects of Cádiz</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Top prize for the best scientific research project in Cádiz.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Second Prize in Scientific Research Projects of Cádiz</h3>
-          <span class="achievement-date">2022</span>
-          <p class="achievement-description">Second place in the Scientific Research Projects competition of Cádiz.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Attendance at Google's init.g</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Participated in Google's init.g, a program for innovative project development.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Participation in Oracle Spain's "Reto Enseña"</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Involved in Oracle's challenge to promote technology education.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Winner of three First Prizes at Open Science Cambre</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Achieved three first prizes for outstanding scientific projects.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Winner of the II Science Fair at the University of Extremadura</h3>
-          <span class="achievement-date">2020</span>
-          <p class="achievement-description">First prize at the II Science Fair of the University of Extremadura.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Winner of six First Prizes at Young Researchers Algeciras</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Secured six first prizes at the Young Researchers competition in Algeciras.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Double participation in Cansat Esero</h3>
-          <span class="achievement-date">2022, 2023</span>
-          <p class="achievement-description">Participated twice in the Cansat Esero program, launching satellites with high-altitude balloons.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Double participation in probe balloon launches at 35km altitude</h3>
-          <span class="achievement-date">2022, 2023</span>
-          <p class="achievement-description">Involved in two high-altitude balloon launches, reaching 35km.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Participation in UCA's summer scholarship for outstanding students</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Attended a summer scholarship program at the University of Cádiz for top students.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">First Prize at Cepsa Foundation Awards Campo de Gibraltar</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Won the first prize at the Cepsa Foundation Awards for the Campo de Gibraltar region.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">Spanish Representative at the European Scientific Research Projects Finals</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Represented Spain at the European finals for scientific research projects.</p>
-        </article>
-
-        <article class="achievement-item">
-          <h3 class="achievement-title">4th Prize representing Spain at the European Scientific Research Projects Finals</h3>
-          <span class="achievement-date">2023</span>
-          <p class="achievement-description">Achieved fourth place representing Spain in the European finals.</p>
+          <span class="achievement-date">2024</span>
+          <p class="achievement-description">Awarded for academic excellence throughout high school, achieving the
+            highest grades.</p>
         </article>
 
         <article class="achievement-item">
           <h3 class="achievement-title">Second Prize at Catch a Star - EAAE</h3>
+          <span class="achievement-date">2024</span>
+          <p class="achievement-description">International recognition in astronomy from the European Association for
+            Astronomy Education.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">Best First-Year Team Award Malackaton 2024</h3>
+          <span class="achievement-date">2024</span>
+          <p class="achievement-description">Recognition as the best first-year team at the University of Málaga
+            hackathon.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">International Platinum at Infomatrix Iberoamérica</h3>
           <span class="achievement-date">2023</span>
-          <p class="achievement-description">Received the second prize at the Catch a Star competition by EAAE.</p>
+          <p class="achievement-description">Highest award in the Ibero-American science final for innovation and
+            technical excellence.</p>
         </article>
 
         <article class="achievement-item">
-          <h3 class="achievement-title">Best First-Year Team Award at Malackaton 2025 (UMA)</h3>
-          <span class="achievement-date">2025</span>
-          <p class="achievement-description">Awarded for the best first-year team at the Malackaton 2025.</p>
+          <h3 class="achievement-title">Cádiz Under-18 Programming Champion</h3>
+          <span class="achievement-date">2023</span>
+          <p class="achievement-description">First place in the provincial programming competition.</p>
         </article>
 
         <article class="achievement-item">
-          <h3 class="achievement-title">Participation in Malackaton 2025 (UMA)</h3>
-          <span class="achievement-date">2025</span>
-          <p class="achievement-description">Participated in the Malackaton 2025, a hackathon organized by the University of Málaga.</p>
+          <h3 class="achievement-title">First Prize in Astronomy - Science in Action</h3>
+          <span class="achievement-date">2023</span>
+          <p class="achievement-description">National recognition for innovative astronomy research.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">Triple Crown at Open Science Cambre</h3>
+          <span class="achievement-date">2023</span>
+          <p class="achievement-description">Winner of three first prizes at the science fair.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">First Prize in Scientific Research of Cádiz</h3>
+          <span class="achievement-date">2023</span>
+          <p class="achievement-description">Provincial recognition for research excellence.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">International Platinum at Infomatrix Iberoamérica Science Final</h3>
+          <span class="achievement-date">2022</span>
+          <p class="achievement-description">Highest recognition at the Ibero-American scientific research projects
+            final.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">Participation in CanSat Esero</h3>
+          <span class="achievement-date">2022-2023</span>
+          <p class="achievement-description">Double participation in the European experimental satellite project.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">Servet Project - Probe Balloon Launches</h3>
+          <span class="achievement-date">2022-2023</span>
+          <p class="achievement-description">Participation in two probe balloon launches reaching 35km altitude.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">STEAM Award in Science in Action</h3>
+          <span class="achievement-date">2022</span>
+          <p class="achievement-description">Second prize for interdisciplinary STEAM project.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">Young Researchers Awards Algeciras</h3>
+          <span class="achievement-date">2019-2024</span>
+          <p class="achievement-description">Winner of six first prizes across different editions.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">First Prize Cepsa Foundation</h3>
+          <span class="achievement-date">2021</span>
+          <p class="achievement-description">Recognition for the best project in the Campo de Gibraltar region.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">UCA Excellence Scholarship</h3>
+          <span class="achievement-date">2021</span>
+          <p class="achievement-description">Participation in the summer program for outstanding students.</p>
+        </article>
+
+        <article class="achievement-item">
+          <h3 class="achievement-title">Winner UEX Science Fair</h3>
+          <span class="achievement-date">2020</span>
+          <p class="achievement-description">First prize at the II Science Fair of the University of Extremadura.</p>
         </article>
       </div>
     </section>
@@ -197,4 +195,5 @@
   </footer>
   <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,170 +1,232 @@
-function toggleDaltonicMode() {
-  const isDaltonic = localStorage.getItem('daltonic') === 'true';
-  const currentLang = document.documentElement.lang;
-  document.body.classList.toggle('daltonic', !isDaltonic);
-  localStorage.setItem('daltonic', !isDaltonic);
-  const button = document.getElementById('daltonicMode');
-  button.textContent = !isDaltonic ? 
-    translations[currentLang].normalMode : 
-    translations[currentLang].daltonicMode;
-
-  // Update meta theme color for mobile
-  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-  if (metaThemeColor) {
-    metaThemeColor.content = !isDaltonic ? '#000000' : '#003366';
-  }
-}
-
 // Language-specific text
 const translations = {
   es: {
-    daltonicMode: 'Modo Daltónico',
+    accessibility: 'Accesibilidad',
     normalMode: 'Modo Normal',
     protanopia: 'Protanopia',
     deuteranopia: 'Deuteranopia',
     tritanopia: 'Tritanopia',
-    intensidad: 'Intensidad',
-    showDescription: 'Ver descripción completa',
-    hideDescription: 'Ocultar descripción'
+    intensity: 'Intensidad',
+    fontSize: 'Tamaño de letra',
+    contrast: 'Contraste',
+    showDescription: 'Ver detalles',
+    hideDescription: 'Ocultar detalles',
+    colorBlindness: 'Daltonismo'
   },
   en: {
-    daltonicMode: 'Colorblind Mode',
+    accessibility: 'Accessibility',
     normalMode: 'Normal Mode',
     protanopia: 'Protanopia',
     deuteranopia: 'Deuteranopia',
     tritanopia: 'Tritanopia',
     intensity: 'Intensity',
-    showDescription: 'Show full description',
-    hideDescription: 'Hide description'
+    fontSize: 'Font Size',
+    contrast: 'Contrast',
+    showDescription: 'Show details',
+    hideDescription: 'Hide details',
+    colorBlindness: 'Color Blindness'
   },
   fr: {
-    daltonicMode: 'Mode Daltonien',
+    accessibility: 'Accessibilité',
     normalMode: 'Mode Normal',
     protanopia: 'Protanopie',
     deuteranopia: 'Deutéranopie',
     tritanopia: 'Tritanopie',
     intensity: 'Intensité',
-    showDescription: 'Voir la description complète',
-    hideDescription: 'Masquer la description'
+    fontSize: 'Taille de la police',
+    contrast: 'Contraste',
+    showDescription: 'Voir les détails',
+    hideDescription: 'Masquer les détails',
+    colorBlindness: 'Daltonisme'
   }
 };
 
-function createDaltonicControls() {
-  const controls = document.querySelector('.accessibility-controls');
-  const currentLang = document.documentElement.lang;
-  
-  const container = document.createElement('div');
-  container.className = 'daltonic-controls';
-  container.style.display = 'none';
-  
-  container.innerHTML = `
-    <select id="daltonicType">
-      <option value="none">${translations[currentLang].normalMode}</option>
-      <option value="protanopia">${translations[currentLang].protanopia}</option>
-      <option value="deuteranopia">${translations[currentLang].deuteranopia}</option>
-      <option value="tritanopia">${translations[currentLang].tritanopia}</option>
-    </select>
-  `;
-  
-  document.body.appendChild(container);
+// Accessibility State
+const a11yState = {
+  mode: localStorage.getItem('a11y_mode') || 'none',
+  intensity: localStorage.getItem('a11y_intensity') || '100',
+  fontSize: localStorage.getItem('a11y_fontSize') || '16',
+  contrast: localStorage.getItem('a11y_contrast') || '100',
+  panelOpen: false
+};
 
-  const button = document.getElementById('daltonicMode');
-  const select = document.getElementById('daltonicType');
+// Initialize Accessibility Features
+function initAccessibility() {
+  createAccessibilityOverlay();
+  createAccessibilityPanel();
+  updateAccessibilityState();
 
-  // Toggle del panel de control
-  button.addEventListener('click', function(e) {
-    e.stopPropagation();
-    const isVisible = container.style.display === 'block';
-    container.style.display = isVisible ? 'none' : 'block';
-  });
-
-  // Cerrar al hacer clic fuera
-  document.addEventListener('click', function(e) {
-    if (!container.contains(e.target) && !button.contains(e.target)) {
-      container.style.display = 'none';
-    }
-  });
-
-  // Cambio de modo
-  select.addEventListener('change', function() {
-    const type = this.value;
-    document.body.classList.remove('protanopia', 'deuteranopia', 'tritanopia');
-    if (type !== 'none') {
-      document.body.classList.add(type);
-    }
-    localStorage.setItem('daltonicType', type);
-  });
-
-  // Restaurar configuración guardada
-  const savedType = localStorage.getItem('daltonicType');
-  if (savedType) {
-    select.value = savedType;
-    document.body.classList.add(savedType);
+  // Set initial button text
+  const btn = document.getElementById('daltonicMode');
+  if (btn) {
+    const lang = document.documentElement.lang;
+    btn.textContent = translations[lang].accessibility;
+    btn.onclick = toggleAccessibilityPanel; // Override inline onclick
   }
 }
 
-// Update initial button text based on language
-document.addEventListener('DOMContentLoaded', () => {
-  const currentLang = document.documentElement.lang;
-  const isDaltonic = localStorage.getItem('daltonic') === 'true';
-  const button = document.getElementById('daltonicMode');
-  
-  if (isDaltonic) {
-    document.body.classList.add('daltonic');
-    button.textContent = translations[currentLang].normalMode;
-  } else {
-    button.textContent = translations[currentLang].daltonicMode;
+function createAccessibilityOverlay() {
+  if (!document.getElementById('accessibility-overlay')) {
+    const overlay = document.createElement('div');
+    overlay.id = 'accessibility-overlay';
+    document.body.appendChild(overlay);
   }
-  
-  setActiveLanguage();
-});
+}
 
-// Apply daltonic mode on page load if it was enabled
-document.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('daltonic') === 'true') {
-    document.body.classList.add('daltonic');
-    document.getElementById('daltonicMode').textContent = 'Modo Normal';
-  }
-});
+function createAccessibilityPanel() {
+  if (document.querySelector('.accessibility-panel')) return;
 
-// Initialize section highlighting
-document.addEventListener('DOMContentLoaded', () => {
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('.main-nav a');
+  const lang = document.documentElement.lang;
+  const t = translations[lang];
 
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      if (window.pageYOffset >= sectionTop - 60) {
-        current = section.getAttribute('id');
-      }
-    });
+  const panel = document.createElement('div');
+  panel.className = 'accessibility-panel';
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-modal', 'true');
+  panel.setAttribute('aria-label', t.accessibility);
 
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href').slice(1) === current) {
-        link.classList.add('active');
-      }
-    });
+  panel.innerHTML = `
+    <div class="panel-header">
+      <h3>${t.accessibility}</h3>
+      <button class="close-panel" onclick="toggleAccessibilityPanel()" aria-label="Close accessibility panel">✕</button>
+    </div>
+    
+    <div class="control-group">
+      <label>${t.colorBlindness}</label>
+      <div class="mode-grid">
+        <button class="mode-btn ${a11yState.mode === 'none' ? 'active' : ''}" onclick="updateA11yMode('none')">${t.normalMode}</button>
+        <button class="mode-btn ${a11yState.mode === 'protanopia' ? 'active' : ''}" onclick="updateA11yMode('protanopia')">${t.protanopia}</button>
+        <button class="mode-btn ${a11yState.mode === 'deuteranopia' ? 'active' : ''}" onclick="updateA11yMode('deuteranopia')">${t.deuteranopia}</button>
+        <button class="mode-btn ${a11yState.mode === 'tritanopia' ? 'active' : ''}" onclick="updateA11yMode('tritanopia')">${t.tritanopia}</button>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label for="a11y-intensity">${t.intensity} <span id="intensity-val" class="value-display">${a11yState.intensity}%</span></label>
+      <input type="range" id="a11y-intensity" min="0" max="100" value="${a11yState.intensity}" 
+             oninput="updateA11yIntensity(this.value)">
+    </div>
+
+    <div class="control-group">
+      <label for="a11y-contrast">${t.contrast} <span id="contrast-val" class="value-display">${a11yState.contrast}%</span></label>
+      <input type="range" id="a11y-contrast" min="80" max="150" value="${a11yState.contrast}" 
+             oninput="updateA11yContrast(this.value)">
+    </div>
+
+    <div class="control-group">
+      <label for="a11y-fontsize">${t.fontSize} <span id="fontsize-val" class="value-display">${a11yState.fontSize}px</span></label>
+      <input type="range" id="a11y-fontsize" min="12" max="24" value="${a11yState.fontSize}" 
+             oninput="updateA11yFontSize(this.value)">
+    </div>
+  `;
+
+  document.body.appendChild(panel);
+
+  // Set initial values in UI
+  // document.getElementById('a11y-mode').value = a11yState.mode; // No longer needed
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && a11yState.panelOpen) {
+      toggleAccessibilityPanel();
+    }
   });
-});
+}
 
-// Language switcher functionality
+function toggleAccessibilityPanel() {
+  const panel = document.querySelector('.accessibility-panel');
+  const btn = document.getElementById('daltonicMode');
+
+  if (panel) {
+    a11yState.panelOpen = !a11yState.panelOpen;
+    panel.classList.toggle('visible', a11yState.panelOpen);
+
+    if (a11yState.panelOpen) {
+      // Trap focus or move focus to close button
+      const closeBtn = panel.querySelector('.close-panel');
+      if (closeBtn) closeBtn.focus();
+    } else {
+      // Return focus to toggle button
+      if (btn) btn.focus();
+    }
+  }
+}
+
+function updateA11yMode(mode) {
+  a11yState.mode = mode;
+  localStorage.setItem('a11y_mode', mode);
+
+  // Update active button state
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.classList.remove('active');
+    // Check if the button's onclick attribute contains the mode string
+    if (btn.getAttribute('onclick').includes(`'${mode}'`)) {
+      btn.classList.add('active');
+    }
+  });
+
+  updateAccessibilityState();
+}
+
+function updateA11yIntensity(value) {
+  a11yState.intensity = value;
+  localStorage.setItem('a11y_intensity', value);
+  document.getElementById('intensity-val').textContent = value + '%';
+  updateAccessibilityState();
+}
+
+function updateA11yContrast(value) {
+  a11yState.contrast = value;
+  localStorage.setItem('a11y_contrast', value);
+  document.getElementById('contrast-val').textContent = value + '%';
+  updateAccessibilityState();
+}
+
+function updateA11yFontSize(value) {
+  a11yState.fontSize = value;
+  localStorage.setItem('a11y_fontSize', value);
+  document.getElementById('fontsize-val').textContent = value + 'px';
+  updateAccessibilityState();
+}
+
+function updateAccessibilityState() {
+  // Update Overlay
+  const overlay = document.getElementById('accessibility-overlay');
+  if (overlay) {
+    overlay.className = ''; // Clear classes
+    if (a11yState.mode !== 'none') {
+      overlay.classList.add(a11yState.mode);
+      overlay.style.opacity = a11yState.intensity / 100;
+    } else {
+      overlay.style.opacity = 0;
+    }
+  }
+
+  // Update Font Size
+  document.documentElement.style.fontSize = a11yState.fontSize + 'px';
+
+  // Update Contrast
+  // Apply to specific content elements to avoid breaking position:fixed on accessibility controls
+  const contentElements = document.querySelectorAll('header, main, footer');
+  contentElements.forEach(el => {
+    el.style.filter = `contrast(${a11yState.contrast}%)`;
+  });
+}
+
+// Language Switcher
 function setActiveLanguage() {
   const currentPath = window.location.pathname;
-  const baseFileName = currentPath.split('/').pop().split('_')[0].split('.')[0];
+  const baseFileName = currentPath.split('/').pop().split('_')[0].split('.')[0] || 'index';
   const langLinks = document.querySelectorAll('.language-switcher a');
-  
-  // Eliminar clase active de todos los enlaces
+
   langLinks.forEach(link => {
     link.classList.remove('active');
-    
-    // Actualizar los href de los enlaces para mantener la página actual
+
     const linkPath = link.getAttribute('href');
     const isEnglish = linkPath.includes('_en');
     const isFrench = linkPath.includes('_fr');
-    
+
+    // Update href to match current page
     if (isEnglish) {
       link.href = `${baseFileName}_en.html`;
     } else if (isFrench) {
@@ -172,8 +234,8 @@ function setActiveLanguage() {
     } else {
       link.href = `${baseFileName}.html`;
     }
-    
-    // Activar el enlace correspondiente al idioma actual
+
+    // Set active class
     if (currentPath.includes('_en.html') && isEnglish) {
       link.classList.add('active');
     } else if (currentPath.includes('_fr.html') && isFrench) {
@@ -184,132 +246,97 @@ function setActiveLanguage() {
   });
 }
 
-// Asegurarse de que se ejecute cuando se carga la página
-document.addEventListener('DOMContentLoaded', () => {
-  setActiveLanguage();
-});
+// Scroll Animations
+function initScrollAnimations() {
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
 
-// Handle profile image loading errors
-document.addEventListener('DOMContentLoaded', () => {
-  const profileImage = document.querySelector('.profile-image');
-  if (profileImage) {
-    profileImage.onerror = function() {
-      this.classList.add('error');
-      this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"%3E%3Cpath fill="%23ccc" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/%3E%3C/svg%3E';
-      this.alt = 'Profile image placeholder';
-    };
-  }
-});
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
 
-// Collapsible functionality
-document.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('section');
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+}
+
+// Collapsible Sections
+function initCollapsibles() {
   const coll = document.getElementsByClassName("collapsible");
-  
+
   for (let i = 0; i < coll.length; i++) {
     const button = coll[i];
-    const content = button.nextElementSibling;
-    
-    // Hide content by default
-    content.style.maxHeight = "0px";
-    
-    // Set initial text
-    button.textContent = translations[document.documentElement.lang].showDescription;
-    
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
       this.classList.toggle("active");
-      const isExpanded = content.style.maxHeight !== "0px";
-      
-      content.classList.toggle('active');
-      content.style.maxHeight = isExpanded ? "0px" : "2000px";
-      
-      this.textContent = isExpanded ? 
-        translations[document.documentElement.lang].showDescription : 
-        translations[document.documentElement.lang].hideDescription;
+      var content = this.nextElementSibling;
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
     });
   }
-});
+}
 
-// Improve mobile touch feedback
-document.addEventListener('DOMContentLoaded', () => {
-  const interactiveElements = document.querySelectorAll('a, button, .collapsible');
-  
-  interactiveElements.forEach(element => {
-    element.addEventListener('touchstart', function() {
-      this.style.opacity = '0.7';
-    });
-    
-    element.addEventListener('touchend', function() {
-      this.style.opacity = '1';
-    });
-  });
+// Active Section Highlighting
+function updateActiveSection() {
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.main-nav a');
 
-  // Add loading states
-  const loadingElements = document.querySelectorAll('.profile-image, .project-card, .achievements-list li');
-  loadingElements.forEach(element => {
-    element.classList.add('loading');
-    element.addEventListener('load', function() {
-      this.classList.remove('loading');
-    });
-  });
-
-  // Improve scroll performance
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        // Update active sections
-        updateActiveSection();
-        ticking = false;
-      });
-      ticking = true;
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    if (window.pageYOffset >= sectionTop - 100) {
+      current = section.getAttribute('id');
     }
   });
-});
 
-// Initialize daltonic settings on page load
-document.addEventListener('DOMContentLoaded', () => {
-  createDaltonicControls();
-  
-  // Restaurar configuración guardada
-  const savedType = localStorage.getItem('daltonicType');
-  const savedIntensity = localStorage.getItem('daltonicIntensity');
-  
-  if (savedType && document.getElementById('daltonicType')) {
-    document.getElementById('daltonicType').value = savedType;
-    document.getElementById('daltonicIntensity').value = savedIntensity * 100;
-    updateDaltonicMode();
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href').includes(current) && current !== '') {
+      link.classList.add('active');
+    }
+  });
+}
+
+// Contact Form Handling
+function initContactForm() {
+  if (typeof emailjs !== 'undefined') {
+    emailjs.init("bxER5s23w9AXoN6vK");
   }
-});
 
-// Contact Form Functionality
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize EmailJS with your public key
-  emailjs.init("bxER5s23w9AXoN6vK");
-  
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
     contactForm.addEventListener('submit', handleFormSubmit);
   }
-});
+}
 
-// Añadir estas funciones de control de rate limit
 function checkRateLimit() {
   const now = Date.now();
   const lastSubmit = localStorage.getItem('lastSubmit');
   const submitCount = parseInt(localStorage.getItem('submitCount') || '0');
-  
-  if (lastSubmit && (now - parseInt(lastSubmit)) < 60000) { // 1 minuto entre envíos
-    throw new Error(document.documentElement.lang === 'es' ? 
-      'Por favor, espere un minuto entre mensajes.' : 
+
+  if (lastSubmit && (now - parseInt(lastSubmit)) < 60000) {
+    throw new Error(document.documentElement.lang === 'es' ?
+      'Por favor, espere un minuto entre mensajes.' :
       'Please wait one minute between messages.');
   }
-  
-  if (submitCount >= 5 && (now - parseInt(lastSubmit)) < 3600000) { // 5 mensajes por hora
-    throw new Error(document.documentElement.lang === 'es' ? 
-      'Ha excedido el límite de mensajes por hora.' : 
+
+  if (submitCount >= 5 && (now - parseInt(lastSubmit)) < 3600000) {
+    throw new Error(document.documentElement.lang === 'es' ?
+      'Ha excedido el límite de mensajes por hora.' :
       'You have exceeded the hourly message limit.');
   }
-  
+
   return { now, submitCount };
 }
 
@@ -318,36 +345,34 @@ function updateRateLimit(limitData) {
   localStorage.setItem('submitCount', (limitData.submitCount + 1).toString());
 }
 
-// Reemplazar la función handleFormSubmit existente
 async function handleFormSubmit(e) {
   e.preventDefault();
-  
+
   const form = e.target;
   const submitButton = form.querySelector('.submit-button');
   const originalText = submitButton.textContent;
-  
+
   try {
     submitButton.disabled = true;
-    submitButton.textContent = document.documentElement.lang === 'es' ? 
+    submitButton.textContent = document.documentElement.lang === 'es' ?
       'Enviando...' : 'Sending...';
 
-    // Verificar rate limit
     const limitData = checkRateLimit();
 
-    // Validar campos requeridos
     const requiredFields = form.querySelectorAll('[required]');
     for (const field of requiredFields) {
       if (!field.value.trim()) {
-        throw new Error(document.documentElement.lang === 'es' ? 
-          'Por favor, complete todos los campos requeridos.' : 
+        throw new Error(document.documentElement.lang === 'es' ?
+          'Por favor, complete todos los campos requeridos.' :
           'Please fill in all required fields.');
       }
     }
 
-    // Obtener token reCAPTCHA
-    const token = await grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', {action: 'submit'});
-    
-    // Preparar datos del email
+    if (typeof grecaptcha === 'undefined') {
+      throw new Error('reCAPTCHA not loaded');
+    }
+    const token = await grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', { action: 'submit' });
+
     const templateParams = {
       to_name: "Daniel",
       from_name: form.name.value.trim(),
@@ -357,7 +382,6 @@ async function handleFormSubmit(e) {
       'g-recaptcha-response': token
     };
 
-    // Enviar email
     const response = await emailjs.send(
       "service_2hf264w",
       "template_mkc43b2",
@@ -366,8 +390,8 @@ async function handleFormSubmit(e) {
 
     if (response.status === 200) {
       updateRateLimit(limitData);
-      alert(document.documentElement.lang === 'es' ? 
-        '¡Mensaje enviado correctamente!' : 
+      alert(document.documentElement.lang === 'es' ?
+        '¡Mensaje enviado correctamente!' :
         'Message sent successfully!');
       form.reset();
     } else {
@@ -376,11 +400,31 @@ async function handleFormSubmit(e) {
 
   } catch (error) {
     console.error('Form Error:', error);
-    alert(error.message || (document.documentElement.lang === 'es' ? 
-      'Error al enviar el mensaje. Por favor, inténtelo de nuevo.' : 
+    alert(error.message || (document.documentElement.lang === 'es' ?
+      'Error al enviar el mensaje. Por favor, inténtelo de nuevo.' :
       'Error sending message. Please try again.'));
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = originalText;
   }
 }
+
+// Initialization
+document.addEventListener('DOMContentLoaded', () => {
+  initAccessibility();
+  setActiveLanguage();
+  initScrollAnimations();
+  initCollapsibles();
+  initContactForm();
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateActiveSection();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+});

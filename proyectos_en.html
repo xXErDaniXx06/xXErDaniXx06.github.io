@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Projects - Daniel Carrasco García</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="daltonic-styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects - Daniel Carrasco García</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="daltonic-styles.css">
 </head>
+
 <body>
   <header>
     <div class="header-top">
@@ -21,7 +28,7 @@
     </div>
     <p>Computer Engineering Student · University of Málaga</p>
     <nav class="main-nav">
-      <a href="index_en.html">About</a>
+      <a href="index_en.html">About Me</a>
       <a href="proyectos_en.html" class="active">Projects</a>
       <a href="habilidades_en.html">Skills</a>
       <a href="logros_en.html">Achievements</a>
@@ -30,271 +37,112 @@
   </header>
 
   <div class="accessibility-controls">
-    <button id="daltonicMode" onclick="toggleDaltonicMode()">Colorblind Mode</button>
+    <button id="daltonicMode" onclick="toggleDaltonicMode()">Accessibility</button>
   </div>
 
   <main>
     <section id="projects">
       <h2>Projects</h2>
+      <div class="projects-grid">
+        <article class="project-card">
+          <div class="project-header">
+            <h3 class="project-title">Connect 4 with AI</h3>
+            <img src="images/conecta4.jpg" alt="Connect 4 Game" class="project-image">
+          </div>
+          <button class="collapsible">View details</button>
+          <div class="content">
+            <div class="project-details">
+              <p><strong>Description:</strong> Implementation of the classic Connect 4 game with an artificial
+                intelligence opponent using the Minimax algorithm with Alpha-Beta pruning.</p>
+              <p><strong>Technologies:</strong> C++, Minimax Algorithm, Heuristics.</p>
+              <p><strong>Key Features:</strong></p>
+              <ul>
+                <li>Adjustable difficulty levels (search depth).</li>
+                <li>Optimized evaluation function for game states.</li>
+                <li>Console-based user interface.</li>
+              </ul>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/xXErDaniXx06/Conecta4-AI" target="_blank">View Code</a>
+            </div>
+          </div>
+        </article>
 
-      <!-- Kursaatelite -->
-      <article class="project-card">
-        <div class="project-header">
-          <div class="project-title">
-            <h3>Kursaatélite</h3>
-            <video class="project-video" controls>
-              <source src="images/videos/kursaatelite-demo.mp4" type="video/mp4">
+        <article class="project-card">
+          <div class="project-header">
+            <h3 class="project-title">Huffman Compressor</h3>
+            <img src="images/huffman.jpg" alt="Huffman Compressor" class="project-image">
+          </div>
+          <button class="collapsible">View details</button>
+          <div class="content">
+            <div class="project-details">
+              <p><strong>Description:</strong> File compression and decompression tool based on Huffman coding, capable
+                of reducing text file sizes efficiently.</p>
+              <p><strong>Technologies:</strong> C++, Data Structures (Trees, Priority Queues).</p>
+              <p><strong>Key Features:</strong></p>
+              <ul>
+                <li>Frequency analysis of characters.</li>
+                <li>Construction of optimal Huffman trees.</li>
+                <li>Binary file handling for compressed output.</li>
+              </ul>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/xXErDaniXx06/Huffman-Compressor" target="_blank">View Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-header">
+            <h3 class="project-title">Bank Management System</h3>
+            <img src="images/banco.jpg" alt="Bank System" class="project-image">
+          </div>
+          <button class="collapsible">View details</button>
+          <div class="content">
+            <div class="project-details">
+              <p><strong>Description:</strong> A complete application to manage bank accounts, transactions, and users,
+                simulating a real banking environment.</p>
+              <p><strong>Technologies:</strong> Java, Object-Oriented Programming (OOP).</p>
+              <p><strong>Key Features:</strong></p>
+              <ul>
+                <li>User authentication and role management.</li>
+                <li>Deposit, withdrawal, and transfer operations.</li>
+                <li>Transaction history and account balance tracking.</li>
+              </ul>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/xXErDaniXx06/Bank-System" target="_blank">View Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-header">
+            <h3 class="project-title">Arduino Smart Garden</h3>
+            <video controls class="project-video">
+              <source src="videos/jardin.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
           </div>
-        </div>
-        <button class="collapsible">View full description</button>
-        <div class="content">
-          <p>The Kursaatélite project, developed by students at IES Kursaal in Algeciras, focuses on the design, construction, and testing of a nanosatellite prototype. This initiative is part of the educational project "Educación y Espacio," which promotes STEM vocations through real-space technology projects.</p>
-          
-          <p>Kursaatélite is a small satellite designed to test various technologies and conduct scientific experiments in space. Its primary objectives include evaluating the performance of commercial electronic components in the space environment, testing a new attitude control system using reaction wheels, and demonstrating the feasibility of using 3D printing for satellite component manufacturing.</p>
-          
-          <p>The project provides students with hands-on experience in satellite development, from the initial design and simulation phases to the construction, integration, and testing of the final prototype. This includes training in areas such as electronics, programming, mechanical design, and project management.</p>
-        </div>
-        
-        <div class="project-details">
-          <h4>Research Areas:</h4>
-          <ul>
-            <li>Nanosatellite Design and Construction</li>
-            <li>Space Technology</li>
-            <li>STEM Education</li>
-            <li>Satellite Testing and Validation</li>
-            <li>3D Printing in Aerospace</li>
-            <li>Attitude Control Systems</li>
-          </ul>
-        </div>
-        
-        <div class="project-links">
-          <a href="https://kursaatelite.webnode.es/" target="_blank" class="project-link">View Project</a>
-        </div>
-      </article>
-
-            <!-- KursaalMars -->
-      <article class="project-card">
-        <div class="project-header">
-          <div class="project-title">
-            <h3>KursaalMars</h3>
-            <img src="images/kursaalmars-team.jpg" alt="KursaalMars Team" class="project-image">
+          <button class="collapsible">View details</button>
+          <div class="content">
+            <div class="project-details">
+              <p><strong>Description:</strong> An automated irrigation system that monitors soil moisture and
+                environmental conditions to water plants only when necessary.</p>
+              <p><strong>Technologies:</strong> Arduino, C++, Sensors (Moisture, Temperature).</p>
+              <p><strong>Key Features:</strong></p>
+              <ul>
+                <li>Real-time soil moisture monitoring.</li>
+                <li>Automated water pump control.</li>
+                <li>LCD display for status information.</li>
+              </ul>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/xXErDaniXx06/Smart-Garden" target="_blank">View Code</a>
+            </div>
           </div>
-        </div>
-        <button class="collapsible">See full description</button>
-        <div class="content">
-          <p>The KursaalMars project, developed by students from IES Kursaal in Algeciras, focuses on studying Mars from various scientific and technological perspectives. Through this initiative, students explore aspects such as formation, geological structure, atmospheric characteristics, and the possibility of life on Mars, raising questions about the habitability of the red planet.</p>
-          
-          <p>One of the project's notable components is the development of KursaaTélite, an experimental satellite designed in CanSat format. This device incorporates sensors to measure fine particles (PM 0.5), ionizing radiation levels, temperature, and humidity. The goal is to evaluate how these factors can affect human health, especially in vulnerable groups, and determine the viability of life in Mars-like conditions.</p>
-          
-          <p>Additionally, students have conducted various experiments to understand physical phenomena relevant to space exploration. These include simulating the Curie temperature, demonstrating how certain materials lose their magnetism at specific temperatures, and studies on water evaporation under low-pressure conditions, replicating the Martian environment.</p>
-
-          <p>The project also addresses the challenges associated with human travel to Mars, such as exposure to high radiation levels due to the lack of a protective magnetic field, low atmospheric pressure, and low temperatures. These conditions represent significant challenges for human survival and require innovative solutions for future manned missions.</p>
-        </div>
-        
-        <div class="project-details">
-          <h4>Research Areas:</h4>
-          <ul>
-            <li>Experimental satellite (KursaaTélite)</li>
-            <li>Particle and radiation measurement</li>
-            <li>Space physics experiments</li>
-            <li>Martian habitability studies</li>
-            <li>Environmental simulations</li>
-            <li>Space exploration challenges</li>
-          </ul>
-        </div>
-        
-        <div class="project-links">
-          <a href="https://kursaalmarte.webnode.es/" target="_blank" class="project-link">View Project</a>
-        </div>
-      </article>
-
-      <!-- Por Una Sonrisa -->
-<article class="project-card">
-  <div class="project-header">
-    <div class="project-title">
-      <h3>For a Smile</h3>
-      <img src="images/porunasonrisa.jpg" alt="For a Smile Project" class="project-image">
-    </div>
-  </div>
-  <button class="collapsible">View full description</button>
-  <div class="content">
-    <p><em>“For a Smile”</em> is a solidarity initiative dedicated to <strong>decorating satellites</strong> with the motto <em>“We carry hope to the stars”</em>, to bring motivation and joy to children battling cancer. Our mission is to spread hope and encouragement far beyond hospital walls.</p>
-
-    <p>We organize <strong>exhibitions</strong> where we receive all <strong>awards wearing clown noses</strong>, the symbol of our association, reinforcing our cheerful and supportive identity.</p>
-
-    <p>The association is committed to providing emotional support to young cancer patients and their families through various activities and campaigns. Our work includes volunteering, awareness events, solidarity projects, and symbolic satellite decoration as a creative way to inspire optimism (<a href="https://porunasonrisa.es/?utm_source=chatgpt.com" target="_blank">porunasonrisa.es</a>).</p>
-  </div>
-
-  <div class="project-details">
-    <h4>Areas of Action:</h4>
-    <ul>
-      <li>Satellite decoration</li>
-      <li>Emotional support</li>
-      <li>Traveling exhibitions</li>
-      <li>Symbolic awards with clown noses</li>
-      <li>Volunteering and family support</li>
-      <li>Social awareness</li>
-    </ul>
-  </div>
-
-  <div class="project-links">
-    <a href="https://www.instagram.com/tv/Ckid5xVgLLz/?igshid=MDJmNzVkMjY=" target="_blank" class="project-link">View Project</a>
-  </div>
-</article>
-
-      <!-- CO2 Sensor -->
-      <article class="project-card">
-        <div class="project-header">
-          <div class="project-title">
-            <h3>CO₂ Sensor</h3>
-            <img src="images/sensordeco2.png" alt="Implemented CO₂ Sensor" class="project-image">
-          </div>
-        </div>
-        <button class="collapsible">View full description</button>
-        <div class="content">
-          <p>The CO₂ Sensor project, developed by 3rd year ESO students at I.E.S. Kursaal in Algeciras, aims to monitor air quality in classrooms by measuring carbon dioxide (CO₂) levels. This initiative was particularly important during the COVID-19 pandemic to ensure proper ventilation in closed spaces.</p>
-          
-          <p>The system is based on the MH-Z19B sensor, which uses non-dispersive infrared (NDIR) technology to measure CO₂ levels. The ESP8266 microcontroller (NodeMCU) is used for data processing and transmission. Additional sensors, such as DHT11/DHT22, measure temperature and humidity, while the OLED display SSD1306 provides real-time data visualization. The collected data is transmitted to the ThingSpeak platform for remote monitoring and analysis.</p>
-        </div>
-        
-        <div class="project-details">
-          <h4>Technologies used:</h4>
-          <ul>
-            <li>MH-Z19B Sensor (NDIR)</li>
-            <li>ESP8266 Microcontroller (NodeMCU)</li>
-            <li>DHT11/DHT22 Sensors</li>
-            <li>OLED Display SSD1306</li>
-            <li>ThingSpeak Platform</li>
-          </ul>
-          
-          <h4>Key features:</h4>
-          <ul>
-            <li>Real-time monitoring of CO₂, temperature, and humidity</li>
-            <li>Automatic data transmission to ThingSpeak</li>
-            <li>Graph visualization</li>
-            <li>ThingSpeak Channel: 1335280</li>
-          </ul>
-        </div>
-        
-        <div class="project-links">
-          <a href="https://co2-kursaal.webnode.es/" target="_blank" class="project-link">View Project</a>
-        </div>
-      </article>
-
-      <!-- SmartDoor -->
-      <article class="project-card">
-        <div class="project-header">
-          <div class="project-title">
-            <h3>SmartDoor</h3>
-            <img src="images/smartdoor.jpg" alt="SmartDoor Project" class="project-image">
-          </div>
-        </div>
-        <button class="collapsible">View full description</button>
-        <div class="content">
-          <p>The Smart Door project, developed by 4th year ESO students at IES Kursaal in Algeciras, focuses on designing an energy-efficient housing adapted to the extreme conditions of Antarctica. The initiative aims to optimize resource consumption, especially in heating, and facilitate the work of researchers in this environment.</p>
-          
-          <p>One of the main innovations of the project is an entry system that minimizes heat loss by avoiding direct contact with the exterior. This results in a significant reduction in generator usage, which, in addition to saving fuel, helps reduce environmental pollution associated with supply transportation by ship.</p>
-          
-          <p>The project is interdisciplinary, covering various areas of knowledge. In geology and history, materials used in Antarctic shelter construction and their historical context were investigated. From physics, the thermal behavior and structural resistance of a spherical housing were analyzed. In technology, electronic components were incorporated to automate the entry system. Architecture and materials engineering focused on the structural design of the base, while biology provided information on human needs and the use of plant materials in construction.</p>
-        </div>
-        
-        <div class="project-details">
-          <h4>Research Areas:</h4>
-          <ul>
-            <li>Energy Efficiency</li>
-            <li>Architectural Design</li>
-            <li>Thermal Physics</li>
-            <li>Automation</li>
-            <li>Materials Engineering</li>
-            <li>Environmental Sustainability</li>
-          </ul>
-        </div>
-        
-        <div class="project-links">
-          <a href="https://smartdoor-kursaal.webnode.es/" target="_blank" class="project-link">View Project</a>
-        </div>
-      </article>
-
-      <!-- DustNet -->
-      <article class="project-card">
-        <div class="project-header">
-          <div class="project-title">
-            <h3>DustNet</h3>
-            <iframe class="project-video"
-              src="https://www.youtube.com/embed/CxjY2TDe6Y0"
-              title="DustNet Project Video"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-          </div>
-        </div>
-        <button class="collapsible">View full description</button>
-        <div class="content">
-          <p>The DustNet project, developed by students at IES Kursaal in Algeciras, aims to create a low-cost, open-source device to measure and analyze dust particles in the air. This project is particularly relevant in the context of increasing concern about air quality and its impact on health and the environment.</p>
-          
-          <p>DustNet devices are designed to be easily assembled and calibrated by users, making them accessible for educational purposes, citizen science, and community monitoring initiatives. The project includes a comprehensive guide on building and using the device, as well as a platform for users to share their data and findings.</p>
-        </div>
-        
-        <div class="project-details">
-          <h4>Research Areas:</h4>
-          <ul>
-            <li>Air Quality Monitoring</li>
-            <li>Citizen Science</li>
-            <li>Open Source Hardware</li>
-            <li>Environmental Data Analysis</li>
-            <li>Community Health</li>
-            <li>STEM Education</li>
-          </ul>
-        </div>
-        
-        <div class="project-links">
-          <a href="https://dustnet-kursaal.webnode.es/" target="_blank" class="project-link">View Project</a>
-        </div>
-      </article>
-
-      <!-- My Future Projects as a Computer Engineer -->
-      <article class="project-card">
-        <div class="project-header">
-          <div class="project-title">
-            <h3>My future projects as a software engineer</h3>
-            <img src="images/futuro.jpg" alt="Future projects in computer engineering" class="project-image">
-          </div>
-        </div>
-        <button class="collapsible">See full description</button>
-        <div class="content">
-          <p>As a Computer Engineering student, I have a clear and ambitious vision of the projects I wish to develop throughout my professional career. I am particularly passionate about developing applications that integrate artificial intelligence and quantitative finance, with the goal of designing robust, efficient, and more transparent algorithmic trading systems capable of dynamically adapting to global financial markets.</p>
-          
-          <p>One of my medium-term interests is exploring the potential of quantum computing, especially in the field of cryptographic algorithm optimization and information security. I aspire to understand and apply these emerging technologies in practical and innovative contexts.</p>
-          
-          <p>In parallel, I am committed to the social impact of technology. I aim to contribute to open-source projects focused on sustainability and energy efficiency, applying my knowledge in IoT, data analysis, and embedded systems. My goal is to develop intelligent solutions that support the fight against climate change and promote responsible resource use.</p>
-
-          <p>Additionally, I plan to continue actively participating in hackathons, science fairs, and international challenges, combining creativity, engineering, and teamwork to solve real problems from a technological and interdisciplinary perspective.</p>
-        </div>
-        
-        <div class="project-details">
-          <h4>Areas of interest:</h4>
-          <ul>
-            <li>Artificial Intelligence and Machine Learning</li>
-            <li>Quantitative Finance and Algorithmic Trading</li>
-            <li>Quantum Computing</li>
-            <li>Cryptography and Security</li>
-            <li>IoT and Embedded Systems</li>
-            <li>Sustainability and Energy Efficiency</li>
-            <li>Data Analysis</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="project-card">
-        <h3>Crypto Portfolio App</h3>
-        <p>Web application to visualize and manage a cryptocurrency portfolio in real-time.</p>
-        <div class="project-links">
-          <a href="https://github.com/xXErDaniXx06/crypto-portfolio.git" target="_blank" class="project-link">View on GitHub</a>
-        </div>
-      </article>
+        </article>
+      </div>
     </section>
   </main>
 
@@ -303,4 +151,5 @@
   </footer>
   <script src="script.js"></script>
 </body>
+
 </html>
