@@ -101,7 +101,7 @@ function createAccessibilityPanel() {
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="control-group" id="intensity-control-group">
       <label for="a11y-intensity">${t.intensity} <span id="intensity-val" class="value-display">${a11yState.intensity}%</span></label>
       <input type="range" id="a11y-intensity" min="0" max="100" value="${a11yState.intensity}" 
              oninput="updateA11yIntensity(this.value)">
@@ -121,9 +121,6 @@ function createAccessibilityPanel() {
   `;
 
   document.body.appendChild(panel);
-
-  // Set initial values in UI
-  // document.getElementById('a11y-mode').value = a11yState.mode; // No longer needed
 
   // Close on Escape
   document.addEventListener('keydown', (e) => {
@@ -190,6 +187,12 @@ function updateA11yFontSize(value) {
 }
 
 function updateAccessibilityState() {
+  // Update Intensity Slider Visibility
+  const intensityGroup = document.getElementById('intensity-control-group');
+  if (intensityGroup) {
+    intensityGroup.style.display = a11yState.mode === 'none' ? 'none' : 'block';
+  }
+
   // Update Overlay
   const overlay = document.getElementById('accessibility-overlay');
   if (overlay) {
