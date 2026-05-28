@@ -19,6 +19,10 @@ const currentPath = Astro.url.pathname;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Cabeceras de Seguridad (Security Headers en Frontend para GitHub Pages) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; media-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.emailjs.com https://www.google.com/recaptcha/;" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
     <!-- SEO -->
     <title>{title}</title>
     <meta name="description" content="Porfolio de Daniel Carrasco García – Desarrollador Frontend y especialista en tecnología aeroespacial." />

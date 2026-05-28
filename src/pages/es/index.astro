@@ -89,11 +89,18 @@ const t = getTranslations(lang).index;
             <div class="absolute inset-0 rounded-[60%_40%_30%_70%_/_60%_30%_70%_40%] bg-gradient-to-tr from-sky-500 to-indigo-500 opacity-25 blur-2xl group-hover:opacity-40 transition-all duration-700 ease-in-out group-hover:rounded-[40%_60%_70%_30%_/_40%_50%_50%_60%]"></div>
             
             <!-- Foto con enmascaramiento blob orgánico y morphing en hover -->
-            <div class="w-full h-full rounded-[60%_40%_30%_70%_/_60%_30%_70%_40%] overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 ease-in-out group-hover:scale-[1.02] group-hover:border-sky-400/40 group-hover:rounded-[40%_60%_70%_30%_/_40%_50%_50%_60%] bg-slate-950">
+            <div class="w-full h-full rounded-[60%_40%_30%_70%_/_60%_30%_70%_40%] overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 ease-in-out group-hover:scale-[1.02] group-hover:border-sky-400/40 group-hover:rounded-[40%_60%_70%_30%_/_40%_50%_50%_60%] bg-slate-950 relative">
+              <!-- Foto base (normal): profile2.jpeg -->
+              <img
+                src="/images/profile2.jpeg"
+                alt="Daniel Carrasco García"
+                class="absolute inset-0 w-full h-full object-cover object-top filter brightness-95 contrast-105 transition-all duration-700 group-hover:opacity-0 group-hover:scale-105"
+              />
+              <!-- Foto en hover: profile.jpg -->
               <img
                 src="/images/profile.jpg"
                 alt="Daniel Carrasco García"
-                class="w-full h-full object-cover object-top filter brightness-95 contrast-105 transition-all duration-700 group-hover:brightness-100"
+                class="absolute inset-0 w-full h-full object-cover object-top filter brightness-95 contrast-105 transition-all duration-700 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100"
               />
             </div>
             
