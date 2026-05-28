@@ -1,0 +1,289 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations } from '../../utils/i18n.js';
+
+const lang = 'en';
+const t = getTranslations(lang).projects;
+
+const idMap: Record<string, any> = {
+  ksat: {
+    borderHover: 'hover:border-sky-500/40',
+    accentText: 'text-sky-400',
+    accentBg: 'bg-sky-500/10 border-sky-500/20',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+            </svg>`,
+    tagClasses: {
+      LoRa: 'bg-sky-500/10 text-sky-300 border-sky-500/25',
+      RF: 'bg-blue-500/10 text-blue-300 border-blue-500/25',
+      CubeSat: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25',
+      LaTeX: 'bg-violet-500/10 text-violet-300 border-violet-500/25'
+    },
+    media: { type: 'image', src: '/images/MST_Imagen.jpg' }
+  },
+  emprendimiento: {
+    borderHover: 'hover:border-emerald-500/40',
+    accentText: 'text-emerald-400',
+    accentBg: 'bg-emerald-500/10 border-emerald-500/20',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"/>
+            </svg>`,
+    tagClasses: {
+      Entrepreneurship: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/25',
+      Business: 'bg-teal-500/10 text-teal-300 border-teal-500/25',
+      Innovation: 'bg-sky-500/10 text-sky-300 border-sky-500/25'
+    },
+    media: { type: 'image', src: '/images/CursoEmprendimiento_Imagen.jpg' }
+  },
+  kursaatelite: {
+    borderHover: 'hover:border-indigo-500/40',
+    accentText: 'text-indigo-400',
+    accentBg: 'bg-indigo-500/10 border-indigo-500/20',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5M2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>`,
+    tagClasses: {
+      Hardware: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25',
+      Telemetría: 'bg-blue-500/10 text-blue-300 border-blue-500/25',
+      Telemetry: 'bg-blue-500/10 text-blue-300 border-blue-500/25',
+      Télémétrie: 'bg-blue-500/10 text-blue-300 border-blue-500/25',
+      CanSat: 'bg-violet-500/10 text-violet-300 border-violet-500/25',
+      'Data Analysis': 'bg-purple-500/10 text-purple-300 border-purple-500/25'
+    },
+    media: { type: 'video', src: '/images/videos/kursaatelite-demo.mp4' }
+  },
+  kursaalmars: {
+    borderHover: 'hover:border-rose-500/40',
+    accentText: 'text-rose-400',
+    accentBg: 'bg-rose-500/10 border-rose-500/20',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="12" r="10"/>
+            </svg>`,
+    tagClasses: {
+      Automation: 'bg-rose-500/10 text-rose-300 border-rose-500/25',
+      'Space Research': 'bg-orange-500/10 text-orange-300 border-orange-500/25',
+      Biology: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/25'
+    },
+    media: { type: 'image', src: '/images/kursaalmars-team.jpg' }
+  },
+  porunasonrisa: {
+    borderHover: 'hover:border-rose-400/40',
+    accentText: 'text-rose-400',
+    accentBg: 'bg-rose-500/10 border-rose-500/20',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.593c-.525-.438-3.7-3.127-5.944-5.797-1.016-1.192-1.766-2.438-2.19-3.594C3.303 11.01 3.5 9.797 4 9c.6-.9 1.504-1.5 2.5-1.5 1.35 0 2.5.95 3 2.5.5-1.55 1.65-2.5 3-2.5.996 0 1.9.6 2.5 1.5.5.797.697 2.01.134 3.202-.424 1.156-1.174 2.402-2.19 3.594C15.7 18.466 12.525 21.155 12 21.593z"/></svg>`,
+    tagClasses: {
+      'Decoración': 'bg-rose-500/10 text-rose-300 border-rose-500/25',
+      'Voluntariado': 'bg-rose-500/10 text-rose-300 border-rose-500/25',
+      'Volunteering': 'bg-rose-500/10 text-rose-300 border-rose-500/25',
+      'Bénévolat': 'bg-rose-500/10 text-rose-300 border-rose-500/25'
+    },
+    media: { type: 'image', src: '/images/porunasonrisa.jpg' }
+  },
+  sensordeco2: {
+    borderHover: 'hover:border-emerald-500/40',
+    accentText: 'text-emerald-400',
+    accentBg: 'bg-emerald-500/10 border-emerald-500/20',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-1 5h2v6h-2V7zm0 8h2v2h-2v-2z"/></svg>`,
+    tagClasses: {
+      'ESP8266': 'bg-emerald-500/10 text-emerald-300 border-emerald-500/25',
+      'ThingSpeak': 'bg-teal-500/10 text-teal-300 border-teal-500/25',
+      'OLED': 'bg-sky-500/10 text-sky-300 border-sky-500/25'
+    },
+    media: { type: 'image', src: '/images/sensordeco2.png' }
+  },
+  smartdoor: {
+    borderHover: 'hover:border-blue-500/40',
+    accentText: 'text-blue-400',
+    accentBg: 'bg-blue-500/10 border-blue-500/20',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>`,
+    tagClasses: {
+      'Antártida': 'bg-blue-500/10 text-blue-300 border-blue-500/25',
+      'Antarctica': 'bg-blue-500/10 text-blue-300 border-blue-500/25',
+      'Antarctique': 'bg-blue-500/10 text-blue-300 border-blue-500/25',
+      'Eficiencia': 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25',
+      'Efficiency': 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25',
+      'Efficacité': 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25'
+    },
+    media: { type: 'image', src: '/images/smartdoor.jpg' }
+  },
+  dustnet: {
+    borderHover: 'hover:border-violet-500/40',
+    accentText: 'text-violet-400',
+    accentBg: 'bg-violet-500/10 border-violet-500/20',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>`,
+    tagClasses: {
+      'LoRaWAN': 'bg-violet-500/10 text-violet-300 border-violet-500/25',
+      'PM2.5': 'bg-purple-500/10 text-purple-300 border-purple-500/25'
+    },
+    media: { type: 'image', src: '/images/Dustnet_Image.png' }
+  },
+  oracle: {
+    borderHover: 'hover:border-amber-500/40',
+    accentText: 'text-amber-400',
+    accentBg: 'bg-amber-500/10 border-amber-500/20',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V15h-2v1.93A8 8 0 0 1 4.07 11H6V9H4.07A8 8 0 0 1 11 4.07V6h2V4.07A8 8 0 0 1 19.93 11H18v2h1.93A8 8 0 0 1 13 16.93z"/>
+            </svg>`,
+    tagClasses: {
+      Python: 'bg-amber-500/10 text-amber-300 border-amber-500/25',
+      'AI / ML': 'bg-yellow-500/10 text-yellow-300 border-yellow-500/25',
+      Firebase: 'bg-orange-500/10 text-orange-300 border-orange-500/25',
+      'Full-Stack': 'bg-sky-500/10 text-sky-300 border-sky-500/25'
+    },
+    media: { type: 'image', src: '/images/Oracle_Image.jpg' }
+  },
+  futuro: {
+    borderHover: 'hover:border-sky-500/40',
+    accentText: 'text-sky-400',
+    accentBg: 'bg-sky-500/10 border-sky-500/20',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V15h-2v1.93A8 8 0 0 1 4.07 11H6V9H4.07A8 8 0 0 1 11 4.07V6h2V4.07A8 8 0 0 1 19.93 11H18v2h1.93A8 8 0 0 1 13 16.93z"/></svg>`,
+    tagClasses: {
+      'IA / ML': 'bg-sky-500/10 text-sky-300 border-sky-500/25',
+      'Trading': 'bg-blue-500/10 text-blue-300 border-blue-500/25',
+      'Quantum': 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25'
+    },
+    media: { type: 'image', src: '/images/FuturosProyectos_Image.jpg' }
+  }
+};
+
+const getProjectConfig = (id: string) => {
+  return idMap[id] || idMap.ksat;
+};
+---
+
+<Layout title={t.meta_title} lang={lang}>
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-24">
+
+    <!-- Header -->
+    <header class="mb-16 text-center md:text-left">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full
+                   border border-sky-400/30 bg-sky-400/10 text-sky-400
+                   text-xs font-semibold tracking-widest uppercase">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        {t.tag}
+      </span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-3">
+        {t.title}
+        <span class="bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">{t.title_highlight}</span>
+      </h1>
+      <p class="text-slate-400 max-w-2xl text-lg leading-relaxed">
+        {t.subtitle}
+      </p>
+    </header>
+
+    <!-- Linear project list -->
+    <div class="max-w-6xl mx-auto p-4 flex flex-col gap-20">
+      {t.list.map((project: any, index: number) => {
+        const config = getProjectConfig(project.id);
+        const isOdd = index % 2 === 1;
+
+        return (
+          <article
+            id={`project-${project.id}`}
+            class={`flex flex-col md:flex-row gap-8 items-center bg-transparent border-none ${isOdd ? 'md:flex-row-reverse' : ''}`}
+            aria-label={`Project ${project.title}`}
+          >
+            <!-- Text Block (50%) -->
+            <div class="w-full md:w-1/2 flex flex-col gap-4">
+              
+              <!-- Header -->
+              <div class="flex flex-col gap-2">
+                <div class="flex items-center gap-3">
+                  <div class={`w-12 h-12 rounded-xl border flex items-center justify-center shrink-0 ${config.accentBg} ${config.accentText} shadow-md`}>
+                    <Fragment set:html={config.iconSvg} />
+                  </div>
+                  <div>
+                    <h2 class="text-2xl font-bold text-white tracking-tight">{project.title}</h2>
+                    <p class="text-sm text-slate-500">{project.org}</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center gap-3 mt-1">
+                  {project.active ? (
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold
+                                 bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
+                      {t.status_active}
+                    </span>
+                  ) : (
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold
+                                 bg-slate-500/10 text-slate-400 border border-slate-500/20">
+                      {t.status_completed}
+                    </span>
+                  )}
+                  <time class="text-xs text-slate-400 font-medium">{project.time}</time>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <p class="text-slate-300 text-base leading-relaxed">
+                <Fragment set:html={project.description} />
+              </p>
+
+              <!-- Milestones -->
+              <ul class="space-y-2.5 my-2" aria-label={`Milestones of project ${project.title}`}>
+                {project.milestones.map((m: any) => (
+                  <li class="flex items-start gap-2.5 text-sm text-slate-400">
+                    <svg class={`w-4 h-4 shrink-0 mt-0.5 ${config.accentText}`} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                    <span>{m}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <!-- Tags / Badges -->
+              <div class="flex flex-wrap gap-2 mt-2">
+                {project.tags.map((tag: any) => {
+                  const tagClass = config.tagClasses[tag] || 'bg-slate-500/10 text-slate-300 border-slate-500/25';
+                  return (
+                    <span class={`px-3 py-1 rounded-lg text-xs font-semibold border ${tagClass}`}>
+                      {tag}
+                    </span>
+                  );
+                })}
+              </div>
+
+            </div>
+
+            <!-- Multimedia Block (50%) -->
+            <div class="w-full md:w-1/2">
+              {config.media ? (
+                <div class="rounded-2xl overflow-hidden shadow-2xl border border-slate-700 bg-black/20 relative group/media">
+                  {config.media.type === 'video' ? (
+                    <video
+                      src={config.media.src}
+                      autoplay
+                      loop
+                      muted
+                      playsinline
+                      controls
+                      class="w-full aspect-video object-cover"
+                    />
+                  ) : (
+                    <img
+                      src={config.media.src}
+                      alt={project.title}
+                      class="w-full aspect-video object-cover group-hover/media:scale-[1.02] transition-transform duration-500"
+                    />
+                  )}
+                </div>
+              ) : (
+                /* Fallback visual premium */
+                <div class="rounded-2xl w-full aspect-video flex items-center justify-center bg-gradient-to-br from-[#0d1527] via-[#111c36] to-[#0a0f1e] shadow-2xl border border-slate-700 relative overflow-hidden group/fallback">
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(56,189,248,0.06),transparent_60%)]" aria-hidden="true"></div>
+                  <div class="w-16 h-16 rounded-2xl flex items-center justify-center bg-slate-900/50 border border-slate-800 text-sky-400 group-hover/fallback:scale-110 transition-transform duration-300">
+                    <Fragment set:html={config.iconSvg} />
+                  </div>
+                </div>
+              )}
+            </div>
+
+          </article>
+        );
+      })}
+    </div>
+  </section>
+</Layout>

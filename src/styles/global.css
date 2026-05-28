@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   VARIABLES CSS – PALETA TECNOLÓGICA OSCURA
+   ============================================= */
+:root {
+  /* Fondos */
+  --color-bg-primary:    #0a0f1e;
+  --color-bg-secondary:  #111827;
+  --color-bg-card:       #1a2235;
+  --color-bg-muted:      #1e293b;
+
+  /* Texto */
+  --color-text-primary:  #e2e8f0;
+  --color-text-secondary:#94a3b8;
+  --color-text-muted:    #64748b;
+
+  /* Acentos técnicos */
+  --color-accent-primary:   #38bdf8;   /* sky-400  */
+  --color-accent-secondary: #818cf8;   /* indigo-400 */
+  --color-accent-hover:     #7dd3fc;   /* sky-300  */
+
+  /* Bordes */
+  --color-border:        #1e293b;
+  --color-border-accent: #38bdf8;
+
+  /* Sombras */
+  --shadow-glow:         0 0 20px rgba(56, 189, 248, 0.15);
+
+  /* Tipografía */
+  --font-sans: 'Inter', 'Outfit', system-ui, sans-serif;
+
+  /* Transiciones */
+  --transition-base: 0.2s ease;
+}
+
+/* =============================================
+   ALTO CONTRASTE – ACCESIBILIDAD
+   ============================================= */
+[data-theme="high-contrast"] {
+  --color-bg-primary:    #000000;
+  --color-bg-secondary:  #0a0a0a;
+  --color-bg-card:       #111111;
+  --color-bg-muted:      #1a1a1a;
+
+  --color-text-primary:  #ffffff;
+  --color-text-secondary:#ffffff;
+  --color-text-muted:    #eeeeee;
+
+  --color-accent-primary:   #ffff00;  /* amarillo – alta visibilidad */
+  --color-accent-secondary: #00ffff;  /* cian  – daltonismo */
+  --color-accent-hover:     #ffff66;
+
+  --color-border:        #ffffff;
+  --color-border-accent: #ffff00;
+
+  --shadow-glow:         0 0 0 2px #ffff00;
+}
+
+/* =============================================
+   FILTROS DALTONISMO (preparados para SVG)
+   ============================================= */
+
+/*
+  Para activar el filtro, aplica la clase al <html> o al <body>.
+  Los filtros SVG reales se inyectarán vía un elemento <svg>
+  invisible en el Layout. Las clases aquí enlazan al filtro por ID.
+*/
+
+.deuteranopia-filter {
+  filter: url(#deuteranopia);
+}
+
+.protanopia-filter {
+  filter: url(#protanopia);
+}
+
+.tritanopia-filter {
+  filter: url(#tritanopia);
+}
+
+/* =============================================
+   ESTILOS BASE GLOBALES
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Foco visible para teclado – WCAG 2.1 */
+:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Utilidades de acento */
+.text-accent {
+  color: var(--color-accent-primary);
+}
+
+.bg-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+}

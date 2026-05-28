@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations } from '../../utils/i18n.js';
+
+const lang = 'en';
+const t = getTranslations(lang).achievements;
+---
+
+<Layout title={t.meta_title} lang={lang}>
+  <section class="max-w-4xl mx-auto px-4 sm:px-8 md:px-12 py-12 pb-28">
+
+    <!-- Header -->
+    <header class="mb-16">
+      <p class="text-xs font-semibold tracking-[0.25em] uppercase text-sky-400 mb-5">
+        {t.tag}
+      </p>
+      <h1 class="text-5xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight mb-4">
+        {t.title}
+      </h1>
+      <p class="text-slate-500 text-base max-w-lg leading-relaxed">
+        {t.list.length} {t.subtitle}
+      </p>
+    </header>
+
+    <!-- Timeline -->
+    <div class="relative border-l-2 border-slate-700 ml-3 md:ml-6 space-y-10">
+
+      {t.list.map((item: any) => (
+        <div class="relative pl-8 md:pl-10">
+
+          <!-- Punto en la línea -->
+          <span class="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full bg-blue-500 ring-4 ring-[#0a0f1e]"></span>
+
+          <!-- Fecha + ámbito -->
+          <div class="flex flex-wrap items-center gap-2 mb-1.5">
+            <time datetime={item.datetime} class="text-slate-400 text-xs font-mono tracking-wide">
+              {item.date}
+            </time>
+            <span class:list={[
+              'text-xs font-semibold px-2 py-0.5 rounded-full border',
+              t.scopes[item.scope] ?? 'bg-slate-500/10 text-slate-400 border-slate-500/20',
+            ]}>
+              {item.scope}
+            </span>
+          </div>
+
+          <!-- Organismo -->
+          <p class="text-xs text-slate-600 uppercase tracking-widest font-medium mb-1.5">
+            {item.org}
+          </p>
+
+          <!-- Premio + título -->
+          <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-2">
+            <span class="text-blue-400 font-bold text-sm shrink-0">{item.prize}</span>
+            <h2 class="text-white font-semibold text-base leading-snug">{item.title}</h2>
+          </div>
+
+          <!-- Descripción -->
+          <p class="text-slate-500 text-sm leading-relaxed">
+            {item.description}
+          </p>
+        </div>
+      ))}
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-16 pt-8 border-t border-slate-800">
+      <p class="text-slate-700 text-xs text-center tracking-wide">
+        {t.list.length} {t.footer_text}
+      </p>
+    </footer>
+
+  </section>
+</Layout>

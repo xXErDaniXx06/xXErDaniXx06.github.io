@@ -1,0 +1,92 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations } from '../../utils/i18n.js';
+
+const lang = 'en';
+const t = getTranslations(lang).skills;
+
+const visualConfig: Record<string, any> = {
+  programming: {
+    accentText: 'text-sky-400',
+  },
+  'rf-embedded': {
+    accentText: 'text-indigo-400',
+  },
+  tools: {
+    accentText: 'text-violet-400',
+  },
+  languages: {
+    accentText: 'text-emerald-400',
+  }
+};
+
+const getConfig = (id: string) => {
+  return visualConfig[id] || visualConfig.programming;
+};
+---
+
+<Layout title={t.meta_title} lang={lang}>
+  <section class="max-w-5xl mx-auto px-6 sm:px-8 py-12 pb-28">
+
+    <!-- Minimalist & elegant page header -->
+    <header class="mb-16">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full
+                   border border-indigo-400/20 bg-indigo-400/5 text-indigo-400
+                   text-xs font-semibold tracking-widest uppercase backdrop-blur-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+        </svg>
+        {t.tag}
+      </span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-3">
+        {t.title}
+        <span class="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">{t.title_highlight}</span>
+      </h1>
+      <p class="text-slate-400 max-w-2xl text-lg leading-relaxed">
+        {t.subtitle}
+      </p>
+    </header>
+
+    <!-- Open vertical flow container -->
+    <div class="space-y-20">
+      {t.categories.map((cat: any) => {
+        const visual = getConfig(cat.id);
+        return (
+          <section id={`skills-block-${cat.id}`} class="flex flex-col gap-6" aria-label={cat.title}>
+            
+            <!-- Block Header without cards -->
+            <div class="flex flex-col gap-1">
+              <h2 class={`text-xl font-bold tracking-tight ${visual.accentText}`}>
+                {cat.title}
+              </h2>
+              <p class="text-sm text-slate-500 max-w-2xl leading-relaxed">
+                {cat.description}
+              </p>
+            </div>
+
+            <!-- Minimal Badges/Pills -->
+            <div class="flex flex-wrap gap-2" role="list" aria-label={`Pills for ${cat.title}`}>
+              {cat.skills.map((skill: any) => (
+                <span role="listitem" class={`px-3.5 py-1.5 rounded-xl text-xs font-semibold border ${skill.tagClass || 'bg-slate-800/10 text-slate-300 border-slate-700/50'}`}>
+                  {skill.name}
+                </span>
+              ))}
+            </div>
+
+            <!-- Detailed info in a clean 2-column open grid -->
+            <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 pt-6 border-t border-white/5">
+              {cat.skills.map((skill: any) => (
+                <div class="flex items-baseline gap-3">
+                  <dt class="text-sm font-semibold text-slate-200 shrink-0 min-w-[110px] sm:min-w-[130px]">{skill.name}</dt>
+                  <dd class="text-sm text-slate-400">{skill.note}</dd>
+                </div>
+              ))}
+            </dl>
+
+          </section>
+        );
+      })}
+    </div>
+
+  </section>
+</Layout>

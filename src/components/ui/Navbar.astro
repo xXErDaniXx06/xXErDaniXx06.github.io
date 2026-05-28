@@ -1,0 +1,208 @@
+---
+// Navbar.astro – Barra de navegación con glassmorphism
+
+interface Props {
+  lang?: string;
+  currentPath?: string;
+}
+
+const { lang = 'es', currentPath = '' } = Astro.props;
+
+import { getTranslations } from '../../utils/i18n.js';
+
+const t = getTranslations(lang).nav;
+
+const navLinks = [
+  { href: `/${lang}/`,          label: t.inicio },
+  { href: `/${lang}/proyectos`, label: t.proyectos },
+  { href: `/${lang}/habilidades`, label: t.habilidades },
+  { href: `/${lang}/logros`,    label: t.logros },
+  { href: `/${lang}/contacto`,  label: t.contacto },
+];
+
+// Determine the current subpage to keep the user on the same page when switching language
+const pathname = Astro.url.pathname || '';
+const pathSegments = pathname.split('/').filter(Boolean);
+const pageName = pathSegments[1] || ''; // e.g. "proyectos", "habilidades", "logros", "contacto" or empty for home
+
+const getLangLink = (targetLang: string) => {
+  return pageName ? `/${targetLang}/${pageName}` : `/${targetLang}/`;
+};
+
+const langSwitcher = [
+  { code: 'ES', href: getLangLink('es'), active: lang === 'es' },
+  { code: 'EN', href: getLangLink('en'), active: lang === 'en' },
+  { code: 'FR', href: getLangLink('fr'), active: lang === 'fr' },
+];
+---
+
+<header
+  id="main-navbar"
+  class="fixed top-0 inset-x-0 z-40 border-b border-white/5
+         bg-[#0a0f1e]/70 backdrop-blur-xl"
+>
+  <nav
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4"
+    aria-label="Navegación principal"
+  >
+
+    <!-- Logo / Marca -->
+    <a
+      href={`/${lang}/`}
+      class="shrink-0 group"
+      aria-label={`${t.inicio} – Daniel Carrasco García`}
+    >
+      <span class="font-semibold text-white tracking-wide text-base sm:text-lg group-hover:text-sky-400 transition-colors duration-200">
+        Daniel Carrasco García
+      </span>
+    </a>
+
+    <!-- Menú principal (desktop) -->
+    <ul class="hidden md:flex items-center gap-1" role="list">
+      {navLinks.map(link => {
+        // Match active paths properly (e.g., handles trailing slashes and direct comparison)
+        const normalize = (path: string) => path.replace(/\/$/, '');
+        const isActive = normalize(currentPath) === normalize(link.href);
+        return (
+          <li>
+            <a
+              href={link.href}
+              aria-current={isActive ? 'page' : undefined}
+              class:list={[
+                'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
+                isActive
+                  ? 'text-sky-400 bg-sky-400/10'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-white/5',
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+
+    <!-- Acciones derecha -->
+    <div class="flex items-center gap-2 shrink-0">
+
+      <!-- Selector de idioma -->
+      <div class="hidden sm:flex items-center gap-0.5 px-1 py-1 rounded-lg bg-white/5 border border-white/10">
+        {langSwitcher.map(({ code, href, active }) => (
+          <a
+            href={href}
+            aria-label={`Cambiar a ${code}`}
+            class:list={[
+              'px-2.5 py-1 rounded-md text-xs font-semibold transition-colors',
+              active
+                ? 'bg-sky-500 text-white shadow-sm'
+                : 'text-slate-400 hover:text-slate-200',
+            ]}
+            aria-current={active ? 'true' : undefined}
+          >
+            {code}
+          </a>
+        ))}
+      </div>
+
+      <!-- Botón CV -->
+      <a
+        href="/docs/CV_Daniel.pdf"
+        download
+        class="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold
+               bg-sky-500 hover:bg-sky-400 text-white shadow-lg shadow-sky-500/20
+               transition-all hover:shadow-sky-400/30 hover:-translate-y-px active:translate-y-0"
+        aria-label={t.descargar_cv}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 16l-5-5 1.41-1.41L11 13.17V4h2v9.17l2.59-2.58L17 11l-5 5zm-7 3h14v-2H5v2z"/>
+        </svg>
+        {t.cv}
+      </a>
+
+      <!-- Hamburguesa (móvil) -->
+      <button
+        id="mobile-menu-btn"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label={t.abrir_menu}
+        class="md:hidden flex items-center justify-center w-9 h-9 rounded-lg
+               border border-white/10 bg-white/5 text-slate-300
+               hover:bg-white/10 transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="4" y1="7" x2="20" y2="7"/>
+          <line x1="4" y1="12" x2="20" y2="12"/>
+          <line x1="4" y1="17" x2="20" y2="17"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div
+    id="mobile-menu"
+    hidden
+    class="md:hidden border-t border-white/5 bg-[#0a0f1e]/95 backdrop-blur-xl px-4 py-4 space-y-1"
+    role="navigation"
+    aria-label="Menú móvil"
+  >
+    {navLinks.map(link => (
+      <a
+        href={link.href}
+        class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300
+               hover:text-white hover:bg-white/5 transition-colors"
+      >
+        {link.label}
+      </a>
+    ))}
+    <div class="pt-3 flex items-center justify-between gap-3">
+      <!-- Idioma móvil -->
+      <div class="flex items-center gap-1">
+        {langSwitcher.map(({ code, href, active }) => (
+          <a
+            href={href}
+            class:list={[
+              'px-2.5 py-1 rounded-md text-xs font-semibold transition-colors',
+              active ? 'bg-sky-500 text-white' : 'text-slate-400 hover:text-slate-200',
+            ]}
+          >
+            {code}
+          </a>
+        ))}
+      </div>
+      <!-- CV móvil -->
+      <a
+        href="/docs/CV_Daniel.pdf"
+        download
+        class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold
+               bg-sky-500 hover:bg-sky-400 text-white transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 16l-5-5 1.41-1.41L11 13.17V4h2v9.17l2.59-2.58L17 11l-5 5zm-7 3h14v-2H5v2z"/>
+        </svg>
+        {t.cv}
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Espaciador para contenido bajo la navbar fija -->
+<div class="h-16" aria-hidden="true"></div>
+
+<script is:inline>
+  const btn  = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      const open = !menu.hasAttribute('hidden');
+      if (open) {
+        menu.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        menu.removeAttribute('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  }
+</script>

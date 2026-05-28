@@ -1,0 +1,244 @@
+---
+// AccessibilityMenu.astro – Panel flotante de accesibilidad (FIXED - no rompe el DOM)
+---
+
+<!-- Wrapper fijo en esquina inferior derecha -->
+<div id="a11y-wrapper" class="fixed bottom-6 right-6 z-50">
+
+  <!-- Panel: absolute respecto al wrapper, flota SIN empujar contenido -->
+  <div
+    id="a11y-panel"
+    role="dialog"
+    aria-label="Opciones de accesibilidad"
+    aria-modal="false"
+    hidden
+    class="absolute bottom-16 right-0 w-64 bg-slate-900 rounded-xl shadow-2xl
+           border border-slate-700 p-5 space-y-5 text-sm text-slate-200"
+  >
+    <h2 class="text-sm font-semibold text-sky-400 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm8 7h-5v13h-2v-6h-2v6H9V9H4V7h16v2Z"/>
+      </svg>
+      Accesibilidad
+    </h2>
+
+    <!-- Tamaño de texto -->
+    <section aria-labelledby="font-size-label">
+      <p id="font-size-label" class="text-xs font-medium text-slate-500 uppercase tracking-widest mb-2">
+        Tamaño de texto
+      </p>
+      <div class="flex gap-2" role="group" aria-labelledby="font-size-label">
+        <button id="a11y-font-small"
+          class="a11y-font-btn flex-1 py-1.5 rounded-lg border border-slate-700 bg-slate-800
+                 hover:border-sky-500 hover:text-sky-400 transition-colors font-bold text-sm"
+          aria-label="Reducir tamaño de texto">A−</button>
+        <button id="a11y-font-normal"
+          class="a11y-font-btn flex-1 py-1.5 rounded-lg border border-slate-700 bg-slate-800
+                 hover:border-sky-500 hover:text-sky-400 transition-colors font-bold text-sm"
+          aria-label="Tamaño de texto normal">A</button>
+        <button id="a11y-font-large"
+          class="a11y-font-btn flex-1 py-1.5 rounded-lg border border-slate-700 bg-slate-800
+                 hover:border-sky-500 hover:text-sky-400 transition-colors font-bold text-base"
+          aria-label="Aumentar tamaño de texto">A+</button>
+      </div>
+    </section>
+
+    <!-- Alto contraste -->
+    <section aria-labelledby="contrast-label">
+      <p id="contrast-label" class="text-xs font-medium text-slate-500 uppercase tracking-widest mb-2">
+        Alto contraste
+      </p>
+      <button
+        id="a11y-contrast"
+        role="switch"
+        aria-checked="false"
+        class="w-full flex items-center justify-between px-3 py-2 rounded-lg border
+               border-slate-700 bg-slate-800 hover:border-sky-500 transition-colors"
+      >
+        <span class="font-medium text-slate-300">Activar modo</span>
+        <span id="contrast-status"
+              class="text-xs px-2 py-0.5 rounded-full bg-slate-700 text-slate-400 font-semibold">
+          OFF
+        </span>
+      </button>
+    </section>
+
+    <!-- Filtros daltonismo -->
+    <section aria-labelledby="colorblind-label">
+      <p id="colorblind-label" class="text-xs font-medium text-slate-500 uppercase tracking-widest mb-2">
+        Modo daltonismo
+      </p>
+      <div class="grid grid-cols-2 gap-2" role="group" aria-labelledby="colorblind-label">
+        <button data-filter="none"
+          class="colorblind-btn py-2 px-2 rounded-lg border border-slate-700 bg-slate-800
+                 hover:border-sky-500 transition-colors text-xs font-medium text-slate-300 text-left">
+          Ninguno
+        </button>
+        <button data-filter="protanopia"
+          class="colorblind-btn py-2 px-2 rounded-lg border border-slate-700 bg-slate-800
+                 hover:border-sky-500 transition-colors text-xs font-medium text-slate-300 text-left">
+          Protanopia
+        </button>
+        <button data-filter="deuteranopia"
+          class="colorblind-btn py-2 px-2 rounded-lg border border-slate-700 bg-slate-800
+                 hover:border-sky-500 transition-colors text-xs font-medium text-slate-300 text-left">
+          Deuteranopia
+        </button>
+        <button data-filter="tritanopia"
+          class="colorblind-btn py-2 px-2 rounded-lg border border-slate-700 bg-slate-800
+                 hover:border-sky-500 transition-colors text-xs font-medium text-slate-300 text-left">
+          Tritanopia
+        </button>
+      </div>
+    </section>
+
+    <!-- Reset -->
+    <button id="a11y-reset"
+      class="w-full py-2 rounded-lg border border-slate-700 text-slate-500 text-xs
+             hover:border-rose-500 hover:text-rose-400 transition-colors font-medium">
+      Restablecer todo
+    </button>
+  </div>
+
+  <!-- Botón flotante principal -->
+  <button
+    id="a11y-toggle"
+    aria-expanded="false"
+    aria-controls="a11y-panel"
+    aria-label="Abrir menú de accesibilidad"
+    class="w-14 h-14 rounded-full bg-sky-500 hover:bg-sky-400 shadow-lg shadow-sky-500/30
+           flex items-center justify-center text-white transition-all duration-200
+           hover:scale-110 focus-visible:outline focus-visible:outline-2
+           focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm8 7h-5v13h-2v-6h-2v6H9V9H4V7h16v2Z"/>
+    </svg>
+  </button>
+</div>
+
+<script is:inline>
+(function () {
+  const $ = id => document.getElementById(id);
+  const FONT_SIZES = { small: '14px', normal: '16px', large: '19px' };
+  const FILTER_CLASSES = ['deuteranopia-filter', 'protanopia-filter', 'tritanopia-filter'];
+
+  function applyPrefs() {
+    const fontSize    = localStorage.getItem('a11y-font')     || 'normal';
+    const contrast    = localStorage.getItem('a11y-contrast') === 'true';
+    const colorFilter = localStorage.getItem('a11y-filter')   || 'none';
+
+    document.documentElement.style.fontSize = FONT_SIZES[fontSize] || '16px';
+    if (contrast) {
+      document.documentElement.setAttribute('data-theme', 'high-contrast');
+      const btn = $('a11y-contrast');
+      if (btn) {
+        btn.setAttribute('aria-checked', 'true');
+        const st = $('contrast-status');
+        if (st) { st.textContent = 'ON'; st.className = 'text-xs px-2 py-0.5 rounded-full bg-yellow-400 text-black font-semibold'; }
+      }
+    }
+    applyColorFilter(colorFilter, false);
+
+    const activeFont = $('a11y-font-' + fontSize);
+    if (activeFont) activeFont.classList.add('border-sky-500', 'text-sky-400');
+  }
+
+  function applyColorFilter(filterId, save) {
+    if (save === undefined) save = true;
+    FILTER_CLASSES.forEach(c => document.body.classList.remove(c));
+    if (filterId !== 'none') document.body.classList.add(filterId + '-filter');
+    if (save) localStorage.setItem('a11y-filter', filterId);
+    document.querySelectorAll('.colorblind-btn').forEach(btn => {
+      const active = btn.dataset.filter === filterId;
+      btn.classList.toggle('border-sky-500', active);
+      btn.classList.toggle('text-sky-400', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+  }
+
+  function setFontSize(key) {
+    document.documentElement.style.fontSize = FONT_SIZES[key];
+    localStorage.setItem('a11y-font', key);
+    document.querySelectorAll('.a11y-font-btn').forEach(b => {
+      b.classList.remove('border-sky-500', 'text-sky-400');
+    });
+    const active = $('a11y-font-' + key);
+    if (active) active.classList.add('border-sky-500', 'text-sky-400');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    applyPrefs();
+
+    const toggle = $('a11y-toggle');
+    const panel  = $('a11y-panel');
+
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const open = !panel.hasAttribute('hidden');
+      if (open) {
+        panel.setAttribute('hidden', '');
+        toggle.setAttribute('aria-expanded', 'false');
+      } else {
+        panel.removeAttribute('hidden');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!$('a11y-wrapper').contains(e.target)) {
+        panel.setAttribute('hidden', '');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !panel.hasAttribute('hidden')) {
+        panel.setAttribute('hidden', '');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.focus();
+      }
+    });
+
+    $('a11y-font-small') .addEventListener('click', () => setFontSize('small'));
+    $('a11y-font-normal').addEventListener('click', () => setFontSize('normal'));
+    $('a11y-font-large') .addEventListener('click', () => setFontSize('large'));
+
+    $('a11y-contrast').addEventListener('click', function () {
+      const on = this.getAttribute('aria-checked') === 'true';
+      const st = $('contrast-status');
+      if (on) {
+        document.documentElement.removeAttribute('data-theme');
+        this.setAttribute('aria-checked', 'false');
+        st.textContent = 'OFF';
+        st.className = 'text-xs px-2 py-0.5 rounded-full bg-slate-700 text-slate-400 font-semibold';
+        localStorage.setItem('a11y-contrast', 'false');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'high-contrast');
+        this.setAttribute('aria-checked', 'true');
+        st.textContent = 'ON';
+        st.className = 'text-xs px-2 py-0.5 rounded-full bg-yellow-400 text-black font-semibold';
+        localStorage.setItem('a11y-contrast', 'true');
+      }
+    });
+
+    document.querySelectorAll('.colorblind-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyColorFilter(btn.dataset.filter));
+    });
+
+    $('a11y-reset').addEventListener('click', function () {
+      localStorage.removeItem('a11y-font');
+      localStorage.removeItem('a11y-contrast');
+      localStorage.removeItem('a11y-filter');
+      document.documentElement.style.fontSize = '16px';
+      document.documentElement.removeAttribute('data-theme');
+      applyColorFilter('none');
+      $('a11y-contrast').setAttribute('aria-checked', 'false');
+      const st = $('contrast-status');
+      st.textContent = 'OFF';
+      st.className = 'text-xs px-2 py-0.5 rounded-full bg-slate-700 text-slate-400 font-semibold';
+      document.querySelectorAll('.a11y-font-btn').forEach(b => b.classList.remove('border-sky-500', 'text-sky-400'));
+    });
+  });
+})();
+</script>

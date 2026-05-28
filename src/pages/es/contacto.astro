@@ -1,0 +1,360 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations } from '../../utils/i18n.js';
+
+const lang = 'es';
+const t = getTranslations(lang).contact;
+---
+
+<Layout title={t.meta_title} lang={lang}>
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-28">
+
+    <!-- Header -->
+    <header class="mb-10">
+      <div class="inline-flex items-center gap-2 mb-5">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
+        <span class="text-xs font-semibold tracking-[0.2em] uppercase text-slate-500">
+          {t.tag}
+        </span>
+      </div>
+      <h1 class="text-5xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+        {t.title}
+      </h1>
+    </header>
+
+    <!-- BENTO GRID: 2 columnas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- ══ TARJETA 1 · INFORMACIÓN DE CONTACTO ══ -->
+      <div class="bg-slate-800/40 border border-slate-700 rounded-3xl p-8 flex flex-col justify-between gap-8">
+
+        <div>
+          <h2 class="text-2xl font-bold text-white mb-3">{t.info.title}</h2>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            {t.info.description}
+          </p>
+        </div>
+
+        <!-- Links de contacto -->
+        <nav aria-label="Medios de contacto" class="flex flex-col gap-2">
+
+          <a href="mailto:danielcarrascogarcia18@gmail.com"
+             class="flex items-center gap-4 px-4 py-3 rounded-xl
+                    hover:bg-slate-700/50 transition-colors duration-200 group"
+             aria-label={t.info.personal_email}>
+            <div class="w-9 h-9 rounded-lg bg-slate-700 flex items-center justify-center shrink-0
+                        group-hover:bg-sky-500/20 transition-colors">
+              <svg class="w-4 h-4 text-slate-400 group-hover:text-sky-400 transition-colors" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">{t.info.personal_email}</p>
+              <p class="text-slate-200 text-sm font-medium truncate group-hover:text-sky-400 transition-colors">
+                danielcarrascogarcia18@gmail.com
+              </p>
+            </div>
+          </a>
+
+          <a href="mailto:carrascodani06@uma.es"
+             class="flex items-center gap-4 px-4 py-3 rounded-xl
+                    hover:bg-slate-700/50 transition-colors duration-200 group"
+             aria-label={t.info.uma_email}>
+            <div class="w-9 h-9 rounded-lg bg-slate-700 flex items-center justify-center shrink-0
+                        group-hover:bg-sky-500/20 transition-colors">
+              <svg class="w-4 h-4 text-slate-400 group-hover:text-sky-400 transition-colors" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">{t.info.uma_email}</p>
+              <p class="text-slate-200 text-sm font-medium truncate group-hover:text-sky-400 transition-colors">
+                carrascodani06@uma.es
+              </p>
+            </div>
+          </a>
+
+          <a href="tel:+34633120603"
+             class="flex items-center gap-4 px-4 py-3 rounded-xl
+                    hover:bg-slate-700/50 transition-colors duration-200 group"
+             aria-label={t.info.phone}>
+            <div class="w-9 h-9 rounded-lg bg-slate-700 flex items-center justify-center shrink-0
+                        group-hover:bg-sky-500/20 transition-colors">
+              <svg class="w-4 h-4 text-slate-400 group-hover:text-sky-400 transition-colors" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">{t.info.phone}</p>
+              <p class="text-slate-200 text-sm font-medium group-hover:text-sky-400 transition-colors">
+                (+34) 633 120 603
+              </p>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/daniel-carrasco-garc%C3%ADa-568952286"
+             target="_blank" rel="noopener noreferrer"
+             class="flex items-center gap-4 px-4 py-3 rounded-xl
+                    hover:bg-slate-700/50 transition-colors duration-200 group"
+             aria-label="LinkedIn">
+            <div class="w-9 h-9 rounded-lg bg-slate-700 flex items-center justify-center shrink-0
+                        group-hover:bg-blue-500/20 transition-colors">
+              <svg class="w-4 h-4 text-slate-400 group-hover:text-blue-400 transition-colors" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">LinkedIn</p>
+              <p class="text-slate-200 text-sm font-medium group-hover:text-blue-400 transition-colors">
+                Daniel Carrasco García
+              </p>
+            </div>
+          </a>
+
+          <a href="https://github.com/xXErDaniXx06"
+             target="_blank" rel="noopener noreferrer"
+             class="flex items-center gap-4 px-4 py-3 rounded-xl
+                    hover:bg-slate-700/50 transition-colors duration-200 group"
+             aria-label="GitHub">
+            <div class="w-9 h-9 rounded-lg bg-slate-700 flex items-center justify-center shrink-0
+                        group-hover:bg-slate-600 transition-colors">
+              <svg class="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">GitHub</p>
+              <p class="text-slate-200 text-sm font-medium group-hover:text-white transition-colors">
+                github.com/xXErDaniXx06
+              </p>
+            </div>
+          </a>
+        </nav>
+
+        <!-- CV + disponibilidad -->
+        <div class="border-t border-slate-700 pt-6 space-y-3">
+          <a href="/docs/CV_Daniel.pdf" download
+             class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl
+                    bg-slate-700 hover:bg-slate-600 text-slate-200 text-sm font-medium
+                    transition-colors duration-200 w-full justify-center"
+             aria-label={t.info.download_cv}>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 16l-5-5 1.41-1.41L11 13.17V4h2v9.17l2.59-2.58L17 11l-5 5zm-7 3h14v-2H5v2z"/>
+            </svg>
+            {t.info.download_cv}
+          </a>
+          <div class="text-xs text-slate-600 space-y-1 px-1">
+            <p>{t.info.meetings}</p>
+            <p>{t.info.languages}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TARJETA 2 · FORMULARIO ══ -->
+      <div class="bg-slate-800/40 border border-slate-700 rounded-3xl p-8">
+
+        <h2 class="text-xl font-bold text-white mb-6">{t.form.title}</h2>
+
+        <!-- Estado del formulario -->
+        <div id="form-status" aria-live="polite" class="hidden mb-5 px-4 py-3 rounded-xl text-sm font-medium"></div>
+
+        <form id="contactForm" novalidate class="space-y-5" aria-label={t.form.title}>
+
+          <!-- Nombre -->
+          <div>
+            <label for="contact-name"
+                   class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              {t.form.name} <span class="text-blue-400" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text" id="contact-name" name="name"
+              required aria-required="true" autocomplete="name"
+              placeholder={t.form.placeholder_name}
+              class="w-full bg-slate-900 border border-slate-600 rounded-xl px-4 py-3
+                     text-white placeholder-slate-400 text-sm
+                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     transition-all duration-200"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="contact-email"
+                   class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              {t.form.email} <span class="text-blue-400" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="email" id="contact-email" name="email"
+              required aria-required="true" autocomplete="email"
+              placeholder={t.form.placeholder_email}
+              class="w-full bg-slate-900 border border-slate-600 rounded-xl px-4 py-3
+                     text-white placeholder-slate-400 text-sm
+                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     transition-all duration-200"
+            />
+          </div>
+
+          <!-- Asunto -->
+          <div>
+            <label for="contact-subject"
+                   class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              {t.form.subject} <span class="text-blue-400" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text" id="contact-subject" name="subject"
+              required aria-required="true"
+              placeholder={t.form.placeholder_subject}
+              class="w-full bg-slate-900 border border-slate-600 rounded-xl px-4 py-3
+                     text-white placeholder-slate-400 text-sm
+                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     transition-all duration-200"
+            />
+          </div>
+
+          <!-- Mensaje -->
+          <div>
+            <label for="contact-message"
+                   class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              {t.form.message} <span class="text-blue-400" aria-hidden="true">*</span>
+            </label>
+            <textarea
+              id="contact-message" name="message"
+              required aria-required="true" rows="5"
+              placeholder={t.form.placeholder_message}
+              class="w-full bg-slate-900 border border-slate-600 rounded-xl px-4 py-3
+                     text-white placeholder-slate-400 text-sm resize-none
+                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     transition-all duration-200"
+            ></textarea>
+          </div>
+
+          <!-- Botón enviar -->
+          <button
+            type="submit" id="submit-btn"
+            class="w-full flex items-center justify-center gap-2
+                   bg-blue-600 hover:bg-blue-500 active:bg-blue-700
+                   text-white font-bold py-3 px-6 rounded-xl
+                   transition-all duration-200 shadow-lg shadow-blue-600/20
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900
+                   disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span id="btn-text">{t.form.submit}</span>
+            <svg id="btn-arrow" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+            <svg id="btn-spinner" class="hidden w-4 h-4 animate-spin" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            </svg>
+          </button>
+
+          <p class="text-xs text-slate-600">
+            <Fragment set:html={t.form.recaptcha_notice} />
+          </p>
+        </form>
+      </div>
+
+    </div><!-- /bento grid -->
+  </section>
+</Layout>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" is:inline></script>
+<!-- reCAPTCHA v3 -->
+<script src="https://www.google.com/recaptcha/api.js?render=6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV" is:inline></script>
+
+<script is:inline define:vars={{ t: t.form }}>
+(function () {
+  if (typeof emailjs !== 'undefined') {
+    emailjs.init('bxER5s23w9AXoN6vK');
+  }
+
+  function checkRateLimit() {
+    var now = Date.now();
+    var lastSubmit  = localStorage.getItem('lastSubmit');
+    var submitCount = parseInt(localStorage.getItem('submitCount') || '0');
+    if (lastSubmit && (now - parseInt(lastSubmit)) < 60000) {
+      throw new Error(t.error_rate_limit);
+    }
+    if (submitCount >= 5 && lastSubmit && (now - parseInt(lastSubmit)) < 3600000) {
+      throw new Error(t.error_hourly_limit);
+    }
+    return { now: now, submitCount: submitCount };
+  }
+
+  function updateRateLimit(data) {
+    localStorage.setItem('lastSubmit', data.now.toString());
+    localStorage.setItem('submitCount', (data.submitCount + 1).toString());
+  }
+
+  function showStatus(msg, isError) {
+    var el = document.getElementById('form-status');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'mb-5 px-4 py-3 rounded-xl text-sm font-medium ' +
+      (isError
+        ? 'bg-red-900/50 text-red-300 border border-red-700'
+        : 'bg-emerald-900/50 text-emerald-300 border border-emerald-700');
+    setTimeout(function () { el.className = 'hidden'; }, 7000);
+  }
+
+  function setLoading(on) {
+    var btn     = document.getElementById('submit-btn');
+    var text    = document.getElementById('btn-text');
+    var arrow   = document.getElementById('btn-arrow');
+    var spinner = document.getElementById('btn-spinner');
+    if (!btn) return;
+    btn.disabled = on;
+    text.textContent = on ? t.sending : t.submit;
+    arrow.classList.toggle('hidden', on);
+    spinner.classList.toggle('hidden', !on);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('contactForm');
+    if (!form) return;
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      setLoading(true);
+      try {
+        var limitData = checkRateLimit();
+
+        var fields = form.querySelectorAll('[required]');
+        for (var i = 0; i < fields.length; i++) {
+          if (!fields[i].value.trim()) {
+            throw new Error(t.error_required);
+          }
+        }
+
+        var token = '';
+        if (typeof grecaptcha !== 'undefined') {
+          token = await grecaptcha.execute('6LcFQUwrAAAAANLsFY1iLotmBpIHaUr42LUKdoUV', { action: 'contact' });
+        }
+
+        var response = await emailjs.send('service_2hf264w', 'template_mkc43b2', {
+          to_name:              'Daniel',
+          from_name:            form.name.value.trim(),
+          from_email:           form.email.value.trim(),
+          subject:              form.subject.value.trim(),
+          message:              form.message.value.trim(),
+          'g-recaptcha-response': token,
+        });
+
+        if (response.status === 200) {
+          updateRateLimit(limitData);
+          showStatus(t.success_sent, false);
+          form.reset();
+        } else {
+          throw new Error(response.text || t.error_sending);
+        }
+      } catch (err) {
+        showStatus(err.message || t.error_sending, true);
+      } finally {
+        setLoading(false);
+      }
+    });
+  });
+})();
+</script>
