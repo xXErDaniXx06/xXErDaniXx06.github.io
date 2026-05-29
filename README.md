@@ -1,4 +1,4 @@
-# 🚀 Portfolio Profesional Premium — Daniel Carrasco García
+# 🚀 Portfolio Profesional — Daniel Carrasco García
 
 <p align="center">
   <img src="https://img.shields.io/badge/Astro-v6.4.2-%23FF5D01?style=for-the-badge&logo=astro&logoColor=white" alt="Astro" />
@@ -52,7 +52,7 @@ Siguiendo los principios de inclusión tecnológica, se ha implementado un menú
 - **Tamaño de Texto Ajustable**: Aumento dinámico de fuentes para lectura simplificada.
 - **Fuente de Dislexia**: Opción para cambiar la tipografía global por la fuente especializada *OpenDyslexic*, facilitando la comprensión lectora.
 
-### 4. 🔒 Configuración de Seguridad Militar (CSP)
+### 4. 🔒 Configuración de Seguridad (CSP)
 El portfolio cuenta con configuraciones estrictas de cabeceras de respuesta HTTP aplicadas para despliegues tanto en **Netlify** (`netlify.toml`) como en **Vercel** (`vercel.json`):
 - **Content-Security-Policy (CSP)** restrictivo que mitiga ataques de Cross-Site Scripting (XSS) y Clickjacking.
 - Cabeceras `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff` y `Referrer-Policy: strict-origin-when-cross-origin`.
