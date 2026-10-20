@@ -1,0 +1,42 @@
+// Worker que sirve danielcarrascogarcia.me (web estática + Markdown para agentes,
+// servidor MCP y servidor de autorización OAuth). Guía de despliegue: DEPLOY-CLOUDFLARE.md
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "danielcarrascogarcia",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  // global_fetch_strictly_public: protege las descargas de Client ID Metadata Documents (OAuth)
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // El Worker atiende todas las peticiones para negociar Markdown y añadir cabeceras.
+    "run_worker_first": true,
+    "html_handling": "auto-trailing-slash"
+  },
+  "ratelimits": [
+    // Escrituras OAuth (registro de clientes, autorización y tokens): 10 por minuto y por IP
+    { "name": "OAUTH_RATE_LIMITER", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } }
+  ],
+  "kv_namespaces": [
+    // Clientes, autorizaciones y tokens OAuth (solo hashes) y límites de mensajes.
+    { "binding": "OAUTH_KV" }
+  ],
+  "vars": {
+    "SITE_ORIGIN": "https://danielcarrascogarcia.me",
+    // Claves públicas: el sitekey de Turnstile y los identificadores de EmailJS (los mismos del formulario)
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAFdnyOR1yvU76cfj",
+    "EMAILJS_PUBLIC_KEY": "bxER5s23w9AXoN6vK",
+    "EMAILJS_SERVICE_ID": "service_2hf264w",
+    "EMAILJS_TEMPLATE_ID": "template_mkc43b2"
+    // Secretos (no van aquí): TURNSTILE_SECRET_KEY, EMAILJS_PRIVATE_KEY y WEB_BOT_AUTH_PRIVATE_KEY → `wrangler secret put` o panel de Cloudflare
+  },
+  // Solo el dominio propio: sin URL *.workers.dev ni de vista previa (el emisor OAuth es el dominio).
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "danielcarrascogarcia.me", "custom_domain": true },
+    { "pattern": "www.danielcarrascogarcia.me", "custom_domain": true }
+  ],
+  "observability": { "enabled": true }
+}

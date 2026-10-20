@@ -1,0 +1,40 @@
+name: CI
+
+# Comprueba que la web compila y que el Worker de Cloudflare empaqueta.
+# No despliega: el despliegue se hace con `npm run deploy` (ver DEPLOY-CLOUDFLARE.md).
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  ASTRO_TELEMETRY_DISABLED: 1
+  WRANGLER_SEND_METRICS: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository
+        uses: actions/checkout@v4
+
+      - name: Install, cache, and configure Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Type-check and build Astro
+        run: npm run build
+
+      - name: Bundle the Cloudflare Worker (dry run)
+        run: npx wrangler deploy --dry-run --outdir worker-bundle

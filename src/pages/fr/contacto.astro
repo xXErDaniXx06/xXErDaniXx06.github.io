@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getTranslations } from '../../utils/i18n.js';
+import { CONTACT } from '../../data/profile.js';
 
 const lang = 'fr';
 const t = getTranslations(lang).contact;
@@ -44,7 +45,7 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
         <!-- Links de contacto -->
         <nav aria-label="Medios de contacto" class="flex flex-col gap-2">
 
-          <a href="mailto:danielcarrascogarcia18@gmail.com"
+          <a href={`mailto:${CONTACT.personalEmail}`}
              class="flex items-center gap-4 px-4 py-3 rounded-xl
                     hover:bg-slate-700/50 transition-colors duration-200 group"
              aria-label={t.info.personal_email}>
@@ -57,12 +58,12 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
             <div class="min-w-0">
               <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">{t.info.personal_email}</p>
               <p class="text-slate-200 text-sm font-medium truncate group-hover:text-sky-400 transition-colors">
-                danielcarrascogarcia18@gmail.com
+                {CONTACT.personalEmail}
               </p>
             </div>
           </a>
 
-          <a href="mailto:carrascodani06@uma.es"
+          <a href={`mailto:${CONTACT.umaEmail}`}
              class="flex items-center gap-4 px-4 py-3 rounded-xl
                     hover:bg-slate-700/50 transition-colors duration-200 group"
              aria-label={t.info.uma_email}>
@@ -75,12 +76,12 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
             <div class="min-w-0">
               <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">{t.info.uma_email}</p>
               <p class="text-slate-200 text-sm font-medium truncate group-hover:text-sky-400 transition-colors">
-                carrascodani06@uma.es
+                {CONTACT.umaEmail}
               </p>
             </div>
           </a>
 
-          <a href="tel:+34633120603"
+          <a href={CONTACT.phone.href}
              class="flex items-center gap-4 px-4 py-3 rounded-xl
                     hover:bg-slate-700/50 transition-colors duration-200 group"
              aria-label={t.info.phone}>
@@ -93,12 +94,12 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
             <div>
               <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">{t.info.phone}</p>
               <p class="text-slate-200 text-sm font-medium group-hover:text-sky-400 transition-colors">
-                (+34) 633 120 603
+                {CONTACT.phone.display}
               </p>
             </div>
           </a>
 
-          <a href="https://www.linkedin.com/in/daniel-carrasco-garc%C3%ADa-568952286"
+          <a href={CONTACT.linkedin.url}
              target="_blank" rel="noopener noreferrer"
              class="flex items-center gap-4 px-4 py-3 rounded-xl
                     hover:bg-slate-700/50 transition-colors duration-200 group"
@@ -112,12 +113,12 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
             <div>
               <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">LinkedIn</p>
               <p class="text-slate-200 text-sm font-medium group-hover:text-blue-400 transition-colors">
-                Daniel Carrasco García
+                {CONTACT.linkedin.label}
               </p>
             </div>
           </a>
 
-          <a href="https://github.com/xXErDaniXx06"
+          <a href={CONTACT.github.url}
              target="_blank" rel="noopener noreferrer"
              class="flex items-center gap-4 px-4 py-3 rounded-xl
                     hover:bg-slate-700/50 transition-colors duration-200 group"
@@ -131,7 +132,7 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
             <div>
               <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">GitHub</p>
               <p class="text-slate-200 text-sm font-medium group-hover:text-white transition-colors">
-                github.com/xXErDaniXx06
+                {CONTACT.github.label}
               </p>
             </div>
           </a>
@@ -139,7 +140,7 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
 
         <!-- CV + disponibilidad -->
         <div class="border-t border-slate-700 pt-6 space-y-3">
-          <a href="/docs/CV_Daniel.pdf" download
+          <a href={CONTACT.cvPath} download
              class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl
                     bg-slate-700 hover:bg-slate-600 text-slate-200 text-sm font-medium
                     transition-colors duration-200 w-full justify-center"
@@ -164,7 +165,9 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
         <!-- Estado del formulario -->
         <div id="form-status" aria-live="polite" class="hidden mb-5 px-4 py-3 rounded-xl text-sm font-medium"></div>
 
-        <form id="contactForm" novalidate class="space-y-5" aria-label={t.form.title}>
+        <form id="contactForm" novalidate class="space-y-5" aria-label={t.form.title}
+              toolname="send_contact_message"
+              tooldescription="Send an email message to Daniel Carrasco García through his portfolio contact form. All fields are required. The person browsing confirms the message by pressing the send button.">
 
           <!-- Nombre -->
           <div>
@@ -174,6 +177,7 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
             </label>
             <input
               type="text" id="contact-name" name="name"
+              toolparamdescription="Full name of the person sending the message (max. 100 characters)."
               required aria-required="true" autocomplete="name"
               maxlength="100"
               placeholder={t.form.placeholder_name}
@@ -192,6 +196,7 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
             </label>
             <input
               type="email" id="contact-email" name="email"
+              toolparamdescription="Email address where Daniel can reply (max. 100 characters)."
               required aria-required="true" autocomplete="email"
               maxlength="100"
               placeholder={t.form.placeholder_email}
@@ -210,6 +215,7 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
             </label>
             <input
               type="text" id="contact-subject" name="subject"
+              toolparamdescription="Subject of the message (max. 100 characters)."
               required aria-required="true"
               maxlength="100"
               placeholder={t.form.placeholder_subject}
@@ -228,6 +234,7 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
             </label>
             <textarea
               id="contact-message" name="message"
+              toolparamdescription="Body of the message (max. 3000 characters)."
               required aria-required="true" rows="5"
               maxlength="3000"
               placeholder={t.form.placeholder_message}
@@ -325,8 +332,7 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
     var form = document.getElementById('contactForm');
     if (!form) return;
 
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
+    async function submitForm() {
       setLoading(true);
       try {
         var limitData = checkRateLimit();
@@ -356,13 +362,26 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
           updateRateLimit(limitData);
           showStatus(t.success_sent, false);
           form.reset();
+          return t.success_sent;
         } else {
           throw new Error(response.text || t.error_sending);
         }
       } catch (err) {
         showStatus(err.message || t.error_sending, true);
+        throw new Error(err.message || t.error_sending);
       } finally {
         setLoading(false);
+      }
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var result = submitForm();
+      // WebMCP declarativo: si lo ha rellenado un agente, recibe el resultado del envío.
+      if (e.agentInvoked && typeof e.respondWith === 'function') {
+        e.respondWith(result);
+      } else {
+        result.catch(function () {});
       }
     });
   });

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getTranslations } from '../../utils/i18n.js';
+import { PROJECT_MEDIA } from '../../data/profile.js';
 
 const lang = 'en';
 const t = getTranslations(lang).projects;
@@ -19,7 +20,7 @@ const idMap: Record<string, any> = {
       CubeSat: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25',
       LaTeX: 'bg-violet-500/10 text-violet-300 border-violet-500/25'
     },
-    media: { type: 'image', src: '/images/MST_Imagen.jpg' }
+    media: PROJECT_MEDIA.ksat
   },
   emprendimiento: {
     borderHover: 'hover:border-emerald-500/40',
@@ -33,7 +34,7 @@ const idMap: Record<string, any> = {
       Business: 'bg-teal-500/10 text-teal-300 border-teal-500/25',
       Innovation: 'bg-sky-500/10 text-sky-300 border-sky-500/25'
     },
-    media: { type: 'image', src: '/images/CursoEmprendimiento_Imagen.jpg' }
+    media: PROJECT_MEDIA.emprendimiento
   },
   kursaatelite: {
     borderHover: 'hover:border-indigo-500/40',
@@ -50,7 +51,7 @@ const idMap: Record<string, any> = {
       CanSat: 'bg-violet-500/10 text-violet-300 border-violet-500/25',
       'Data Analysis': 'bg-purple-500/10 text-purple-300 border-purple-500/25'
     },
-    media: { type: 'video', src: '/images/videos/kursaatelite-demo.mp4' }
+    media: PROJECT_MEDIA.kursaatelite
   },
   kursaalmars: {
     borderHover: 'hover:border-rose-500/40',
@@ -64,7 +65,7 @@ const idMap: Record<string, any> = {
       'Space Research': 'bg-orange-500/10 text-orange-300 border-orange-500/25',
       Biology: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/25'
     },
-    media: { type: 'image', src: '/images/kursaalmars-team.jpg' }
+    media: PROJECT_MEDIA.kursaalmars
   },
   porunasonrisa: {
     borderHover: 'hover:border-rose-400/40',
@@ -77,7 +78,7 @@ const idMap: Record<string, any> = {
       'Volunteering': 'bg-rose-500/10 text-rose-300 border-rose-500/25',
       'Bénévolat': 'bg-rose-500/10 text-rose-300 border-rose-500/25'
     },
-    media: { type: 'image', src: '/images/porunasonrisa.jpg' }
+    media: PROJECT_MEDIA.porunasonrisa
   },
   sensordeco2: {
     borderHover: 'hover:border-emerald-500/40',
@@ -89,7 +90,7 @@ const idMap: Record<string, any> = {
       'ThingSpeak': 'bg-teal-500/10 text-teal-300 border-teal-500/25',
       'OLED': 'bg-sky-500/10 text-sky-300 border-sky-500/25'
     },
-    media: { type: 'image', src: '/images/sensordeco2.png' }
+    media: PROJECT_MEDIA.sensordeco2
   },
   smartdoor: {
     borderHover: 'hover:border-blue-500/40',
@@ -104,7 +105,7 @@ const idMap: Record<string, any> = {
       'Efficiency': 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25',
       'Efficacité': 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25'
     },
-    media: { type: 'image', src: '/images/smartdoor.jpg' }
+    media: PROJECT_MEDIA.smartdoor
   },
   dustnet: {
     borderHover: 'hover:border-violet-500/40',
@@ -115,7 +116,7 @@ const idMap: Record<string, any> = {
       'LoRaWAN': 'bg-violet-500/10 text-violet-300 border-violet-500/25',
       'PM2.5': 'bg-purple-500/10 text-purple-300 border-purple-500/25'
     },
-    media: { type: 'image', src: '/images/Dustnet_Image.png' }
+    media: PROJECT_MEDIA.dustnet
   },
   oracle: {
     borderHover: 'hover:border-amber-500/40',
@@ -130,7 +131,7 @@ const idMap: Record<string, any> = {
       Firebase: 'bg-orange-500/10 text-orange-300 border-orange-500/25',
       'Full-Stack': 'bg-sky-500/10 text-sky-300 border-sky-500/25'
     },
-    media: { type: 'image', src: '/images/Oracle_Image.jpg' }
+    media: PROJECT_MEDIA.oracle
   },
   futuro: {
     borderHover: 'hover:border-sky-500/40',
@@ -142,7 +143,7 @@ const idMap: Record<string, any> = {
       'Trading': 'bg-blue-500/10 text-blue-300 border-blue-500/25',
       'Quantum': 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25'
     },
-    media: { type: 'image', src: '/images/FuturosProyectos_Image.jpg' }
+    media: PROJECT_MEDIA.futuro
   }
 };
 

@@ -1,0 +1,50 @@
+---
+// Enlaces de descubrimiento para agentes de IA (se incluyen en el <head> de todas
+// las páginas) y registro de herramientas WebMCP en el navegador.
+import { getTranslations } from '../../utils/i18n.js';
+import { CONTACT, PERSON_NAME, PROFILE_PHOTOS, LANGS, DEFAULT_LANG, pageHref, markdownHref } from '../../data/profile.js';
+
+interface Props {
+  lang: string;
+  currentPath: string;
+}
+
+const { lang, currentPath } = Astro.props;
+const origin = new URL(Astro.site ?? Astro.url).origin;
+const t = getTranslations(lang);
+
+// /es/proyectos → idioma "es", página "proyectos"
+const [pathLang, pathSlug = ''] = currentPath.split('/').filter(Boolean);
+const isLangPage = LANGS.includes(pathLang);
+const slug = isLangPage ? pathSlug : '';
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${origin}/#person`,
+  name: PERSON_NAME,
+  url: `${origin}${pageHref(lang, '')}`,
+  image: `${origin}${PROFILE_PHOTOS[0]}`,
+  jobTitle: t.index.hero.role,
+  description: t.index.hero.about,
+  email: `mailto:${CONTACT.personalEmail}`,
+  telephone: CONTACT.phone.e164,
+  affiliation: { '@type': 'CollegeOrUniversity', name: 'Universidad de Málaga' },
+  knowsLanguage: ['es', 'en', 'fr'],
+  sameAs: [CONTACT.linkedin.url, CONTACT.github.url],
+};
+---
+
+<link rel="alternate" type="text/markdown" href={isLangPage ? markdownHref(lang, slug) : '/index.md'} title="Markdown" />
+{isLangPage && LANGS.map((l) => <link rel="alternate" hreflang={l} href={`${origin}${pageHref(l, slug)}`} />)}
+{isLangPage && <link rel="alternate" hreflang="x-default" href={`${origin}${pageHref(DEFAULT_LANG, slug)}`} />}
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+<link rel="describedby" type="text/plain" href="/llms.txt" title="llms.txt" />
+<link rel="api-catalog" type="application/linkset+json" href="/.well-known/api-catalog" />
+<link rel="service-desc" type="application/vnd.oai.openapi+json" href="/api/v1/openapi.json" />
+<link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json" />
+<link rel="mcp-server-card" type="application/json" href="/.well-known/mcp/server-card.json" />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(person)} />
+<script>
+  import '../../scripts/webmcp.js';
+</script>

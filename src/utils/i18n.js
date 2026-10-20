@@ -23,6 +23,11 @@ const translations = {
         description: 'Estudiante en la <strong>Universidad de Málaga (UMA)</strong> con un historial comprobado en el liderazgo de misiones suborbitales complejas y la ingeniería de enlaces de comunicación LoRa. Mi objetivo es dominar los protocolos de prueba ambiental y AIT de naves espaciales para cumplir con los más altos estándares del sector espacial europeo.',
         cta_projects: 'Ver mis proyectos',
         cta_cv: 'Descargar CV',
+        // Textos visibles en la portada (antes fijos en es/index.astro)
+        role: 'Estudiante de Ingeniería Informática',
+        role_tagline: 'Software, Hardware & Aerospace Tech',
+        about: 'Soy estudiante de Ingeniería Informática con una gran vocación por la tecnología, el desarrollo de software y el sector aeroespacial. Disfruto creando soluciones completas combinando hardware y software, desde el diseño de PCBs y enlaces de radiofrecuencia hasta el desarrollo de aplicaciones y modelos de IA. Siempre busco innovar y aportar valor técnico en cada proyecto.',
+        photo_alt: 'Daniel Carrasco García',
       },
       location: {
         title: 'Ubicación',
@@ -604,6 +609,11 @@ const translations = {
         description: 'Computer Engineering student at the <strong>University of Málaga (UMA)</strong> with a proven track record in leading complex suborbital missions and engineering LoRa communication links. My goal is to master spacecraft environmental testing and AIT protocols to meet the highest standards of the European space sector.',
         cta_projects: 'View my projects',
         cta_cv: 'Download Resume',
+        // Visible home texts (previously hardcoded in en/index.astro)
+        role: 'Computer Engineering Student',
+        role_tagline: 'Software, Hardware & Aerospace Tech',
+        about: "I'm Daniel Carrasco García, a Computer Engineering student at the University of Málaga, with a deep passion for technology, software development, and the aerospace sector. I enjoy building practical and innovative solutions by combining hardware and software, from PCB design and RF links to full-stack applications and AI models.",
+        photo_alt: 'Daniel Carrasco García',
       },
       location: {
         title: 'Location',
@@ -1185,6 +1195,11 @@ const translations = {
         description: 'Étudiant en Génie Informatique à l\'<strong>Université de Malaga (UMA)</strong>, avec une expérience reconnue dans la direction de missions suborbitales complexes et l\'ingénierie de liaisons de communication LoRa. Mon objectif est de maîtriser les protocoles de tests environnementaux et d\'AIT pour répondre aux normes les plus élevées du secteur spatial européen.',
         cta_projects: 'Voir mes projets',
         cta_cv: 'Télécharger le CV',
+        // Textes visibles de l'accueil (auparavant en dur dans fr/index.astro)
+        role: 'Étudiant en Génie Informatique',
+        role_tagline: 'Software, Hardware & Aerospace Tech',
+        about: "Je suis Daniel Carrasco García, étudiant en Génie Informatique à l'Université de Malaga, passionné par la technologie, le développement logiciel et le secteur aérospatial. J'aime créer des solutions pratiques et innovantes combinant matériel et logiciel, de la conception de PCB et liaisons RF au développement d'applications et de modèles d'IA.",
+        photo_alt: 'Daniel Carrasco García',
       },
       location: {
         title: 'Localisation',

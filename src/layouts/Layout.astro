@@ -1,6 +1,7 @@
 ---
 import Navbar from '../components/ui/Navbar.astro';
 import AccessibilityMenu from '../components/ui/AccessibilityMenu.astro';
+import AgentDiscovery from '../components/agent/AgentDiscovery.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -34,6 +35,9 @@ const currentPath = Astro.url.pathname;
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.href} />
 
+    <!-- Descubrimiento para agentes de IA: Markdown, idiomas, API, MCP y datos estructurados -->
+    <AgentDiscovery lang={lang} currentPath={currentPath} />
+
     <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,7 +46,21 @@ const currentPath = Astro.url.pathname;
       rel="stylesheet"
     />
 
-    <!-- SVG Filters daltonismo -->
+    <!-- Script de preferencias (sin FOUC) -->
+    <script is:inline>
+      (function () {
+        var contrast = localStorage.getItem('a11y-contrast') === 'true';
+        var fontSize  = localStorage.getItem('a11y-font') || 'normal';
+        var sizes = { small: '14px', normal: '16px', large: '19px' };
+        if (contrast) document.documentElement.setAttribute('data-theme', 'high-contrast');
+        document.documentElement.style.fontSize = sizes[fontSize] || '16px';
+      })();
+    </script>
+  </head>
+
+  <body class="bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] antialiased font-sans">
+
+    <!-- SVG Filters daltonismo (en el body: <svg> no es válido dentro de <head>) -->
     <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
       <defs>
         <filter id="deuteranopia">
@@ -68,20 +86,6 @@ const currentPath = Astro.url.pathname;
         </filter>
       </defs>
     </svg>
-
-    <!-- Script de preferencias (sin FOUC) -->
-    <script is:inline>
-      (function () {
-        var contrast = localStorage.getItem('a11y-contrast') === 'true';
-        var fontSize  = localStorage.getItem('a11y-font') || 'normal';
-        var sizes = { small: '14px', normal: '16px', large: '19px' };
-        if (contrast) document.documentElement.setAttribute('data-theme', 'high-contrast');
-        document.documentElement.style.fontSize = sizes[fontSize] || '16px';
-      })();
-    </script>
-  </head>
-
-  <body class="bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] antialiased font-sans">
 
     <Navbar lang={lang} currentPath={currentPath} />
 

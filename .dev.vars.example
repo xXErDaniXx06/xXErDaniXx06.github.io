@@ -1,0 +1,9 @@
+# Variables para `npx wrangler dev` (copia este fichero a .dev.vars).
+# Claves de prueba de Turnstile que siempre aprueban: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
+SITE_ORIGIN=http://localhost:8787
+TURNSTILE_SITE_KEY=1x00000000000000000000AA
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+# Clave privada de EmailJS (Account → Security). Sin ella, send_contact_message responde que no está configurado.
+EMAILJS_PRIVATE_KEY=
+# Clave Ed25519 de Web Bot Auth (npm run wba:key). Sin ella no se publica el directorio de claves.
+WEB_BOT_AUTH_PRIVATE_KEY=

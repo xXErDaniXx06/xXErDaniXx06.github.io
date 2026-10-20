@@ -25,7 +25,7 @@ El proyecto está construido sobre tecnologías web de vanguardia:
 - **Core Framework**: [Astro v6.4.2](https://astro.build/) — Framework web optimizado para la velocidad con arquitectura de islas y generación estática ultra rápida (SSG).
 - **Estilos y Layout**: [Tailwind CSS v3.4.17](https://tailwindcss.com/) — Framework CSS utility-first para un control milimétrico del diseño responsivo, transiciones complejas y efectos visuales de alta gama.
 - **Tipografía y Gráficos**: Google Fonts (Inter, Roboto, Outfit) y SVG vectoriales puros para máxima nitidez y rendimiento de carga.
-- **Seguridad y Despliegue**: Configuración avanzada de cabeceras de seguridad HTTP (CSP, X-Frame-Options) en Netlify y Vercel. Despliegue automatizado con GitHub Actions.
+- **Seguridad y Despliegue**: Configuración avanzada de cabeceras de seguridad HTTP (CSP, X-Frame-Options) en el Worker de Cloudflare, Netlify y Vercel. Integración continua con GitHub Actions y despliegue en Cloudflare con Wrangler.
 
 ---
 
@@ -58,6 +58,14 @@ El portfolio cuenta con configuraciones estrictas de cabeceras de respuesta HTTP
 - Cabeceras `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff` y `Referrer-Policy: strict-origin-when-cross-origin`.
 - Integración segura para la carga exclusiva de recursos desde CDNs verificados, Google Fonts, Google reCAPTCHA y EmailJS.
 
+### 5. 🤖 Preparado para Agentes de IA
+La web obtiene el **nivel 5 (Agent-Native)** en [isitagentready.com](https://isitagentready.com) cuando se sirve desde el Worker de Cloudflare (ver [DEPLOY-CLOUDFLARE.md](DEPLOY-CLOUDFLARE.md)). Todo se genera a partir de los mismos textos que las páginas, así que nunca se desincroniza:
+- **Contenido legible por máquinas**: versión Markdown de cada página (`/es/proyectos.md` o `Accept: text/markdown`), `llms.txt`, `llms-full.txt`, `sitemap.xml` con alternativas de idioma y una API JSON de solo lectura descrita con OpenAPI (`/api/v1/openapi.json`).
+- **Descubrimiento**: `robots.txt` con reglas para bots de IA y Content Signals, cabeceras `Link`, catálogo de APIs (RFC 9727), catálogo de IA (`/.well-known/ai-catalog.json`), Agent Skills y datos estructurados `Person` (JSON-LD).
+- **Servidor MCP** en `/mcp` con herramientas de solo lectura y `send_contact_message`, protegido con OAuth 2.1 (`auth.md`, registro dinámico de clientes, PKCE y Turnstile; sin cuentas).
+- **WebMCP**: las páginas ofrecen herramientas a los agentes que usan el navegador, y el formulario de contacto se expone de forma declarativa (la persona confirma el envío).
+- **Web Bot Auth**: el Worker firma sus peticiones automáticas y publica su clave en `/.well-known/http-message-signatures-directory`.
+
 ---
 
 ## 📂 Estructura del Proyecto
@@ -68,27 +76,43 @@ La arquitectura del proyecto sigue una estructura limpia y modular de Astro:
 mi-portfolio/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml          # Pipeline de despliegue automático a GitHub Pages
+│       └── ci.yml              # Integración continua: tipos, compilación y empaquetado del Worker
+├── DEPLOY-CLOUDFLARE.md        # Guía de despliegue en Cloudflare (Worker, OAuth, DNS)
 ├── public/                     # Recursos estáticos (documentos, imágenes, iconos)
 │   ├── docs/
 │   │   └── CV_Daniel.pdf       # Curriculum Vitae descargable
 │   └── images/                 # Fotografías de perfil y recursos visuales
+├── scripts/
+│   └── web-bot-auth-key.mjs    # Genera la clave de Web Bot Auth (npm run wba:key)
 ├── src/
+│   ├── agent/                  # Versiones para agentes: Markdown, llms.txt, API JSON, skills, MCP
 │   ├── components/
+│   │   ├── agent/
+│   │   │   └── AgentDiscovery.astro    # Enlaces de descubrimiento, JSON-LD y WebMCP en el <head>
 │   │   ├── sections/           # Secciones modulares de las páginas (Hero, Contacto, etc.)
 │   │   └── ui/
 │   │       ├── AccessibilityMenu.astro # Menú de accesibilidad universal
 │   │       └── Navbar.astro            # Navegación premium y adaptativa
+│   ├── data/
+│   │   └── profile.js          # Datos de contacto, medios de los proyectos y rutas
 │   ├── layouts/
 │   │   └── Layout.astro        # Layout base con HTML, metadatos SEO y scripts globales
 │   ├── pages/
 │   │   ├── en/                 # Páginas localizadas en Inglés (index, proyectos, habilidades, etc.)
 │   │   ├── es/                 # Páginas localizadas en Español
 │   │   ├── fr/                 # Páginas localizadas en Francés
+│   │   ├── .well-known/        # Catálogos de IA y de APIs, Server Card MCP y Agent Skills
+│   │   ├── api/v1/             # API JSON de solo lectura y su OpenAPI
+│   │   ├── [lang]/[page].md.ts # Versión Markdown de cada página
+│   │   ├── auth.md.ts, llms.txt.ts, robots.txt.ts, sitemap.xml.ts …
 │   │   └── index.astro         # Archivo raíz que gestiona la redirección de idioma
+│   ├── scripts/
+│   │   └── webmcp.js           # Herramientas WebMCP registradas en el navegador
 │   ├── styles/                 # Estilos CSS globales y variables
 │   └── utils/
 │       └── i18n.js             # Motor de traducciones y diccionarios centralizados
+├── worker/                     # Worker de Cloudflare: Markdown, cabeceras, MCP, OAuth, Web Bot Auth
+├── wrangler.jsonc              # Configuración del Worker (dominio, KV, variables)
 ├── astro.config.mjs            # Configuración general de Astro e integración de Tailwind
 ├── netlify.toml                # Cabeceras de seguridad y redirecciones para Netlify
 ├── vercel.json                 # Cabeceras de seguridad y redirecciones para Vercel
@@ -102,15 +126,15 @@ mi-portfolio/
 
 > [!NOTE]  
 > **Redirección de Idioma Automatizada:**  
-> Cuando un usuario accede a la raíz del sitio web (`/`), la página ejecuta una redirección instantánea hacia la versión en español (`/es/`). Astro utiliza la directiva HTML `<meta http-equiv="refresh" content="0;url=/es/" />` para asegurar la máxima compatibilidad en navegadores y buscadores sin retardar el tiempo de renderizado.
+> Cuando un usuario accede a la raíz del sitio web (`/`), ve la versión en español. Servida desde el Worker de Cloudflare, la raíz muestra directamente la portada de `/es/` (su URL canónica), sin redirección. En hosts estáticos como GitHub Pages se usa `index.astro`, que redirige a `/es/` con `<meta http-equiv="refresh" content="0;url=/es/" />`.
 
 > [!IMPORTANT]  
 > **Modificación de Textos y Añadir Proyectos:**  
-> Todas las cadenas de texto del portfolio, incluyendo la información detallada de los proyectos, logros y competencias, se gestionan desde `src/utils/i18n.js`. Si deseas añadir un nuevo logro o proyecto, no es necesario tocar el código HTML o Astro de los componentes; simplemente actualiza los arrays `projects.list`, `skills.categories` o `achievements.list` correspondientes a cada idioma (`es`, `en`, `fr`). ¡Así mantienes la consistencia multilingüe!
+> Todas las cadenas de texto del portfolio, incluyendo la información detallada de los proyectos, logros y competencias, se gestionan desde `src/utils/i18n.js`. Si deseas añadir un nuevo logro o proyecto, no es necesario tocar el código HTML o Astro de los componentes; simplemente actualiza los arrays `projects.list`, `skills.categories` o `achievements.list` correspondientes a cada idioma (`es`, `en`, `fr`). ¡Así mantienes la consistencia multilingüe! Los datos de contacto y la imagen o vídeo de cada proyecto están en `src/data/profile.js`. Las versiones para agentes (Markdown, API, MCP) se regeneran solas.
 
 > [!TIP]  
 > **Añadir Nuevas Cabeceras Externas en CSP:**  
-> Si integras una nueva API o un script externo (por ejemplo, Google Analytics o un nuevo proveedor de chat en vivo), debes actualizar la cabecera `Content-Security-Policy` tanto en `netlify.toml` como en `vercel.json` agregando los dominios requeridos en las directivas `script-src` y `connect-src`. De lo contrario, los navegadores bloquearán la conexión por seguridad.
+> Si integras una nueva API o un script externo (por ejemplo, Google Analytics o un nuevo proveedor de chat en vivo), debes actualizar la cabecera `Content-Security-Policy` en `worker/site.js`, en la etiqueta `<meta>` de `Layout.astro`, en `netlify.toml` y en `vercel.json` agregando los dominios requeridos en las directivas `script-src` y `connect-src`. De lo contrario, los navegadores bloquearán la conexión por seguridad.
 
 > [!WARNING]  
 > **Formulario de Contacto en Entorno Local:**  
@@ -175,10 +199,17 @@ npm run preview
 
 ## 🌐 Integración Continua y Despliegue (CI/CD)
 
-El proyecto incluye un flujo de integración continua automatizado mediante **GitHub Actions** (`.github/workflows/deploy.yml`):
-- Cada vez que se realiza un `push` a la rama `main`, la acción compila automáticamente el sitio con Astro.
-- Tras verificar la compilación, despliega de forma transparente los archivos estáticos en **GitHub Pages**.
-- El flujo de trabajo deshabilita la telemetría de Astro para acelerar la compilación (`ASTRO_TELEMETRY_DISABLED: 1`).
+La web se sirve desde un **Worker de Cloudflare** (plan gratuito) en `danielcarrascogarcia.me`, con todas las capacidades para agentes: Markdown, cabeceras, MCP y OAuth. La guía de la migración está en [DEPLOY-CLOUDFLARE.md](DEPLOY-CLOUDFLARE.md).
+
+- **Integración continua** (`.github/workflows/ci.yml`): en cada `push` a `main` y en cada pull request, GitHub Actions comprueba los tipos, compila el sitio con Astro y empaqueta el Worker en modo de prueba. No despliega.
+- **Despliegue**: compila y publica el Worker con Wrangler, que tiene que tener la sesión iniciada con `npx wrangler login`:
+  ```bash
+  npm run deploy
+  ```
+- **Probar el Worker en local**:
+  ```bash
+  cp .dev.vars.example .dev.vars && npm run worker:dev
+  ```
 
 ---
 
