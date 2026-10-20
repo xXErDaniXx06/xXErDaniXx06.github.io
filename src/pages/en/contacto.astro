@@ -355,6 +355,10 @@ const PUBLIC_EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ||
           from_email:           form.email.value.trim(),
           subject:              form.subject.value.trim(),
           message:              form.message.value.trim(),
+          // La plantilla usa estas en las cabeceras: remitente, Reply-To y asunto
+          name:                 form.name.value.trim(),
+          email:                form.email.value.trim(),
+          title:                form.subject.value.trim(),
           'g-recaptcha-response': token,
         });
 
