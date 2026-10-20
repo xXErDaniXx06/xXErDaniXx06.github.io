@@ -10,7 +10,8 @@
     "astro": "astro",
     "deploy": "npm run build && wrangler deploy",
     "worker:dev": "astro build && wrangler dev",
-    "wba:key": "node scripts/web-bot-auth-key.mjs"
+    "wba:key": "node scripts/web-bot-auth-key.mjs",
+    "score": "node scripts/agent-score.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",

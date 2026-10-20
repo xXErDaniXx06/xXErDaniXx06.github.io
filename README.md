@@ -206,6 +206,10 @@ La web se sirve desde un **Worker de Cloudflare** (plan gratuito) en `danielcarr
   ```bash
   npm run deploy
   ```
+- **Comprobar la puntuación para agentes**: la web debe estar siempre en 100/100 y nivel 5 en isitagentready.com (ver [CLAUDE.md](CLAUDE.md)):
+  ```bash
+  npm run score
+  ```
 - **Probar el Worker en local**:
   ```bash
   cp .dev.vars.example .dev.vars && npm run worker:dev
