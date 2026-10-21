@@ -110,6 +110,7 @@ Ningún cambio está terminado si baja alguna de ellas.
   - Bot Preference Sync **desactivado**, porque reescribiría `robots.txt`.
   - Bots de IA permitidos.
   - Always Use HTTPS activado.
+  - TLS mínimo 1.2 (SSL/TLS → Edge Certificates → Minimum TLS Version): TLS 1.0 y 1.1 están obsoletos (RFC 8996).
   - DNSSEC activo.
   - Registros SVCB `_index._agents` y `_mcp._agents`.
 - Para probar con el escáner real antes de publicar, usa un túnel de localhost.run y arranca el Worker con `--local-upstream <host del túnel>` y `SITE_ORIGIN` con su URL. El de trycloudflare.com bloquea la petición de Markdown y el navegador del escáner. En el túnel, DNS-AID no puede pasar (el dominio del túnel no tiene esos registros).

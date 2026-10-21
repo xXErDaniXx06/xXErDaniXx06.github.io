@@ -70,7 +70,7 @@ npm run wba:key
 
 ## 5. Desplegar el Worker
 
-**Antes de nada:** en Cloudflare → **SSL/TLS** → **Edge Certificates**, comprueba que el certificado *Universal* está **Active**. Activa también **Always Use HTTPS**, que es lo que hacía GitHub Pages.
+**Antes de nada:** en Cloudflare → **SSL/TLS** → **Edge Certificates**, comprueba que el certificado *Universal* está **Active**. Activa también **Always Use HTTPS**, que es lo que hacía GitHub Pages, y pon **Minimum TLS Version** en **TLS 1.2**: TLS 1.0 y 1.1 están obsoletos (RFC 8996) y ningún navegador actual los necesita.
 
 Así se hizo, con menos de un minuto sin web:
 
