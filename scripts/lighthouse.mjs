@@ -76,6 +76,11 @@ try {
       `${ok ? '✓' : '✗'} ${path.padEnd(18)} P${scores.performance} A${scores.accessibility} BP${scores['best-practices']} SEO${scores.seo} | ${metrics}`,
     );
     if (failing.length) console.log(`    ${[...new Set(failing)].join(' ')}`);
+    // Por qué falla del todo una auditoría (p. ej. robots.txt que no se pudo descargar)
+    for (const id of new Set(failing.map((f) => f.split('(')[0]))) {
+      const audit = best?.audits[id];
+      if (audit?.score === 0 && audit.explanation) console.log(`      ${id}: ${audit.explanation.slice(0, 200)}`);
+    }
   }
 } finally {
   chrome.kill();
