@@ -33,6 +33,7 @@ Ningún cambio está terminado si baja alguna de ellas.
   ```
 
 - Sin argumentos mide la web publicada. Para medir antes de publicar: `npm run worker:dev` y `npm run lighthouse -- http://localhost:8787`.
+- Cada página se mide hasta tres veces y vale la primera pasada que llega al mínimo. Antes hay una pasada de calentamiento que no cuenta: con Chrome recién abierto, la primera medición sale peor sin que la página tenga la culpa.
 - El rendimiento depende sobre todo de no cargar nada que bloquee el primer pintado: CSS en línea, la fuente propia precargada (26 KB) y ningún script ni estilo de terceros al cargar (Turnstile se carga al empezar a rellenar el formulario). No añadas fuentes, CDNs ni scripts externos.
 - El CI exige 100 en accesibilidad, buenas prácticas y SEO, y al menos 90 en rendimiento (las máquinas de CI miden peor). El 100 de rendimiento se comprueba con `npm run lighthouse` contra la web publicada.
 
