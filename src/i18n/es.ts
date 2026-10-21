@@ -575,6 +575,7 @@ export const es: Dictionary = {
       placeholderMessage: 'Cuéntame tu propuesta, proyecto o simplemente saluda...',
       submit: 'Enviar mensaje',
       sending: 'Enviando…',
+      verify: 'Marca la casilla de Cloudflare para confirmar que eres una persona y enviar el mensaje.',
       notice:
         'Protegido por Cloudflare Turnstile. Se aplica la <a href="https://www.cloudflare.com/turnstile-privacy-policy/">Política de privacidad de Turnstile</a>.',
       success: '¡Mensaje enviado! Te responderé lo antes posible.',
@@ -585,7 +586,7 @@ export const es: Dictionary = {
         rateLimit: 'Por favor, espere un minuto entre mensajes.',
         hourlyLimit: 'Ha excedido el límite de mensajes por hora.',
         dailyLimit: 'Se ha alcanzado el límite diario de mensajes. Escríbeme directamente por email.',
-        verification: 'No se pudo verificar que eres una persona. Inténtalo de nuevo.',
+        verification: 'No se pudo verificar que eres una persona. Inténtalo de nuevo o escríbeme por email.',
         sending: 'Error al enviar. Por favor, inténtalo de nuevo.',
       },
     },

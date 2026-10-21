@@ -153,6 +153,8 @@ export interface Dictionary {
       placeholderMessage: string;
       submit: string;
       sending: string;
+      /** Turnstile espera a que la persona marque su casilla. */
+      verify: string;
       /** HTML en línea. */
       notice: string;
       success: string;

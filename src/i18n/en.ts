@@ -573,6 +573,7 @@ export const en: Dictionary = {
       placeholderMessage: 'Tell me about your proposal, project, or just say hi...',
       submit: 'Send message',
       sending: 'Sending…',
+      verify: 'Tick the Cloudflare box to confirm you are a person and send your message.',
       notice:
         'Protected by Cloudflare Turnstile. The <a href="https://www.cloudflare.com/turnstile-privacy-policy/">Turnstile Privacy Policy</a> applies.',
       success: 'Message sent successfully! I will reply as soon as possible.',
@@ -583,7 +584,7 @@ export const en: Dictionary = {
         rateLimit: 'Please wait one minute between messages.',
         hourlyLimit: 'You have exceeded the hourly message limit.',
         dailyLimit: 'The daily message limit has been reached. Please write to me by email instead.',
-        verification: 'We could not verify that you are a person. Please try again.',
+        verification: 'We could not verify that you are a person. Please try again or write to me by email.',
         sending: 'Error sending message. Please try again.',
       },
     },

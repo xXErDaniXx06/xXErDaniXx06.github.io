@@ -9,6 +9,7 @@ import { trustedScriptUrl } from './trusted-types';
 interface Messages {
   submit: string;
   sending: string;
+  verify: string;
   success: string;
   errors: Record<
     'required' | 'invalidEmail' | 'tooLong' | 'rateLimit' | 'hourlyLimit' | 'dailyLimit' | 'verification' | 'sending',
@@ -25,6 +26,9 @@ interface TurnstileOptions {
   language: string;
   callback: (token: string) => void;
   'error-callback': () => void;
+  'timeout-callback': () => void;
+  'before-interactive-callback': () => void;
+  'after-interactive-callback': () => void;
 }
 
 /** Tema del widget: el que muestra la página (elegido o, si no, el del sistema). */
@@ -65,16 +69,25 @@ const ERROR_MESSAGES: Record<ContactError, keyof Messages['errors']> = {
 
 class ContactFormError extends Error {}
 
+const STATUS_STYLES = {
+  success: 'bg-success-soft text-success',
+  error: 'bg-danger-soft text-danger',
+  info: 'bg-accent-soft text-fg',
+} as const;
+
 /** Carga Turnstile una sola vez y devuelve tokens nuevos bajo demanda. */
 class TurnstileChallenge {
   #widgetId: string | undefined;
   #loading: Promise<Turnstile> | undefined;
   #pending: { resolve: (token: string) => void; reject: (error: Error) => void } | undefined;
+  #timer: ReturnType<typeof setTimeout> | undefined;
 
   constructor(
     private readonly container: HTMLElement,
     private readonly siteKey: string,
     private readonly language: string,
+    /** Avisa de cuándo Turnstile espera a que la persona marque su casilla y de cuándo deja de esperar. */
+    private readonly onInteraction: (waiting: boolean) => void,
   ) {}
 
   /** Empieza a cargar el script de Turnstile (sin esperar). */
@@ -94,18 +107,38 @@ class TurnstileChallenge {
         appearance: 'interaction-only',
         theme: widgetTheme(),
         language: this.language,
-        callback: (token) => this.#pending?.resolve(token),
-        'error-callback': () => this.#pending?.reject(new Error('turnstile')),
+        callback: (token) => this.#settle(() => this.#pending?.resolve(token)),
+        'error-callback': () => this.#settle(() => this.#pending?.reject(new Error('turnstile'))),
+        // La persona no marcó la casilla en el tiempo que da Turnstile
+        'timeout-callback': () => this.#settle(() => this.#pending?.reject(new Error('turnstile timeout'))),
+        // Mientras espera a la persona solo cuenta el límite de Turnstile, no el nuestro
+        'before-interactive-callback': () => {
+          clearTimeout(this.#timer);
+          this.onInteraction(true);
+        },
+        'after-interactive-callback': () => this.onInteraction(false),
       });
     } else {
       turnstile.reset(this.#widgetId);
     }
     const token = new Promise<string>((resolve, reject) => {
       this.#pending = { resolve, reject };
-      setTimeout(() => reject(new Error('turnstile timeout')), 60_000);
+      // Por si Turnstile no llega a responder (sin red, script bloqueado…)
+      this.#timer = setTimeout(() => this.#settle(() => reject(new Error('turnstile timeout'))), 60_000);
     });
     turnstile.execute(this.#widgetId);
     return token;
+  }
+
+  /** Tras un fallo, devuelve el widget a su estado inicial: no deja a la vista una casilla que ya no sirve. */
+  reset(): void {
+    if (this.#widgetId !== undefined) window.turnstile?.reset(this.#widgetId);
+  }
+
+  #settle(finish: () => void): void {
+    clearTimeout(this.#timer);
+    this.onInteraction(false);
+    finish();
   }
 
   #load(): Promise<Turnstile> {
@@ -133,16 +166,25 @@ function setUp(form: HTMLFormElement): void {
   const label = form.querySelector<HTMLElement>('[data-submit-label]');
   const container = form.querySelector<HTMLElement>('[data-turnstile]');
   if (!status || !button || !label || !container) return;
-  const challenge = new TurnstileChallenge(container, form.dataset.sitekey ?? '', form.dataset.lang ?? 'es');
 
   const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement;
 
-  const showStatus = (text: string, kind: 'success' | 'error') => {
+  const showStatus = (text: string, kind: keyof typeof STATUS_STYLES) => {
     status.textContent = text;
-    status.className = `rounded-md px-4 py-3 text-sm font-medium ${
-      kind === 'success' ? 'bg-success-soft text-success' : 'bg-danger-soft text-danger'
-    }`;
+    status.className = `rounded-md px-4 py-3 text-sm font-medium ${STATUS_STYLES[kind]}`;
   };
+
+  const hideStatus = () => {
+    status.textContent = '';
+    status.className = 'hidden';
+  };
+
+  const challenge = new TurnstileChallenge(
+    container,
+    form.dataset.sitekey ?? '',
+    form.dataset.lang ?? 'es',
+    (waiting) => (waiting ? showStatus(messages.verify, 'info') : hideStatus()),
+  );
 
   const setSending = (sending: boolean) => {
     button.disabled = sending;
@@ -163,12 +205,14 @@ function setUp(form: HTMLFormElement): void {
       throw new ContactFormError(messages.errors[ERROR_MESSAGES[invalid.error]]);
     }
 
+    hideStatus();
     setSending(true);
     try {
       let token: string;
       try {
         token = await challenge.token();
       } catch {
+        challenge.reset();
         throw new ContactFormError(messages.errors.verification);
       }
       const response = await fetch(form.action, {
