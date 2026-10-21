@@ -31,6 +31,8 @@ describe('web estática', () => {
     expect(response.headers.get('Link')).toBe(DISCOVERY_LINKS.join(', '));
     expect(response.headers.get('Vary')).toBe('Accept');
     expect(response.headers.get('Content-Type')).toBe('text/html; charset=utf-8');
+    // Sin preload: la web no pide entrar en la lista de precarga HSTS de los navegadores
+    expect(response.headers.get('Strict-Transport-Security')).toBe('max-age=63072000; includeSubDomains');
   });
 
   it('la política de la página viaja también en la cabecera, con frame-ancestors', async () => {

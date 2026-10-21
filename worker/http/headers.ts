@@ -24,12 +24,19 @@ export const DISCOVERY_LINKS = [
 const FRAME_ANCESTORS = "frame-ancestors 'none'";
 
 /**
+ * HSTS durante dos años, también en los subdominios. Sin `preload` a propósito: esa directiva
+ * pide entrar en la lista de precarga de los navegadores, que hstspreload.org ya no recomienda
+ * y que tarda meses en deshacerse.
+ */
+const HSTS = 'max-age=63072000; includeSubDomains';
+
+/**
  * Cabeceras de seguridad de las páginas. Esta política es la mínima; para las páginas HTML
  * se envía la completa de cada una (ver pagePolicy).
  */
 export const SECURITY_HEADERS: Readonly<Record<string, string>> = {
   'Content-Security-Policy': `${FRAME_ANCESTORS}; object-src 'none'; base-uri 'self'; form-action 'self'`,
-  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+  'Strict-Transport-Security': HSTS,
   'Cross-Origin-Opener-Policy': 'same-origin',
   'X-Frame-Options': 'DENY',
   'X-Content-Type-Options': 'nosniff',

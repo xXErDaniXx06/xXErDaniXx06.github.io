@@ -20,7 +20,7 @@ Se publica en <https://danielcarrascogarcia.me> en **español, inglés y francé
 - **Accesibilidad**: menú con tema, tamaño de texto, alto contraste (negro y amarillo, o negro sobre blanco con el tema claro, ambos con contraste AAA) y filtros de corrección para daltonismo. Las preferencias se recuerdan entre visitas y se aplican antes de pintar. Además: enlace para saltar al contenido, navegación completa con teclado y textos traducidos en los tres idiomas. Se comprueba con axe en todos los temas y estados, no solo en el que mide Lighthouse.
 - **Seguridad** (A+ en [Mozilla Observatory](https://developer.mozilla.org/en-US/observatory/analyze?host=danielcarrascogarcia.me)):
   - Política de seguridad de contenidos estricta, enviada en la cabecera: hashes de cada script y estilo, `'strict-dynamic'`, integridad de subrecursos y Trusted Types.
-  - HSTS, `Cross-Origin-Opener-Policy` y protección contra el encuadre.
+  - HSTS de dos años que incluye los subdominios, `Cross-Origin-Opener-Policy` y protección contra el encuadre.
   - Formulario protegido con Cloudflare Turnstile y límites de envío en el servidor.
   - `/.well-known/security.txt` (RFC 9116).
 - **Preparado para agentes de IA** (nivel 5 en [isitagentready.com](https://isitagentready.com)): todo sale de los mismos datos que las páginas, así que nunca se desincroniza.

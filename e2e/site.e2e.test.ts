@@ -12,7 +12,7 @@ describe('web', () => {
     expect(policy).toContain("frame-ancestors 'none'");
     expect(policy).toContain("'strict-dynamic'");
     expect(policy).toContain("require-trusted-types-for 'script'");
-    expect(response.headers.get('strict-transport-security')).toContain('max-age=');
+    expect(response.headers.get('strict-transport-security')).toBe('max-age=63072000; includeSubDomains');
     expect(response.headers.get('link')).toContain('rel="api-catalog"');
     const html = await response.text();
     expect(html).toContain('<meta http-equiv="content-security-policy"');

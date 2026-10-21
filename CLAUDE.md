@@ -104,6 +104,7 @@ Ningún cambio está terminado si baja alguna de ellas.
   - Un script en línea nuevo necesita su hash (`Astro.csp.insertScriptHash`, como en `PreferencesScript.astro`).
   - Trusted Types: el DOM no acepta cadenas en `innerHTML` ni URL de scripts sin pasar por la política `portfolio` (`src/scripts/trusted-types.ts`). Usa `textContent` y crea elementos con el DOM.
   - La página de autorización OAuth (la genera el Worker) usa un nonce por respuesta.
+- La cabecera HSTS (`worker/http/headers.ts`) no lleva `preload` a propósito. Esa directiva pide entrar en la lista de precarga de los navegadores, que hstspreload.org ya no recomienda y que tarda meses en deshacerse. Se decidió así el 21-10-2026: no la añadas ni envíes el dominio a hstspreload.org sin preguntar antes.
 - `/mcp` y todo lo que cuelga de él exige token OAuth. Lo público bajo esa ruta, como `/mcp/server-card`, tiene que servirse en `worker/index.ts` antes de pasar por la librería OAuth.
 - `wrangler dev` reescribe la URL de las peticiones con el dominio de producción: arráncalo con `--local-upstream` (ya lo hace `npm run worker:dev`) o la librería OAuth no encontrará sus metadatos.
 - Ajustes de la zona en Cloudflare que hay que mantener:
