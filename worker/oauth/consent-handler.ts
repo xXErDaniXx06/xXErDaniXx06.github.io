@@ -5,7 +5,7 @@ import { AuthorizationError, CimdFetchError, type OAuthHelpers } from '@cloudfla
 import { MCP_SCOPES } from '../../src/agent/mcp-info';
 import { DEFAULT_LANG, getDictionary, isLang, type Lang } from '../../src/i18n';
 import type { TurnstileVerifier } from '../contact/turnstile';
-import { consentDocument, consentFormBody, consentPagePolicy, createNonce, messageBody } from './consent-page';
+import { consentDocument, consentFormBody, consentPageHeaders, createNonce, messageBody } from './consent-page';
 
 export interface ConsentDependencies {
   oauth: OAuthHelpers;
@@ -39,12 +39,7 @@ function html(
   headers = new Headers(),
   nonce = createNonce(),
 ): Response {
-  headers.set('Content-Type', 'text/html; charset=utf-8');
-  headers.set('Content-Security-Policy', consentPagePolicy(nonce));
-  headers.set('X-Frame-Options', 'DENY');
-  headers.set('Referrer-Policy', 'no-referrer');
-  headers.set('Cache-Control', 'no-store');
-  headers.set('X-Content-Type-Options', 'nosniff');
+  for (const [name, value] of Object.entries(consentPageHeaders(nonce))) headers.set(name, value);
   return new Response(consentDocument(lang, title, body), { status, headers });
 }
 

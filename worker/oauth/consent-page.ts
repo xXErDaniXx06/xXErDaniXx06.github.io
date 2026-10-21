@@ -4,6 +4,7 @@
 import { PERSON_NAME } from '../../src/data/profile';
 import { fillTemplate, type Dictionary, type Lang } from '../../src/i18n';
 import { TURNSTILE_SCRIPT } from '../../src/config/turnstile';
+import { COMMON_SECURITY_HEADERS } from '../http/headers';
 
 /** Escapa un texto para insertarlo en HTML (todo lo que viene del cliente OAuth). */
 export const escapeHtml = (value: string): string => value.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
@@ -24,6 +25,20 @@ export const consentPagePolicy = (nonce: string): string =>
     "form-action 'self'",
     "frame-ancestors 'none'",
   ].join('; ');
+
+/**
+ * Cabeceras de la página: las comunes del dominio más su política con nonce. Sin
+ * Cross-Origin-Opener-Policy a propósito: los clientes OAuth que abren la autorización en una
+ * ventana emergente perderían la referencia a ella y no recibirían el código.
+ */
+export const consentPageHeaders = (nonce: string): Record<string, string> => ({
+  ...COMMON_SECURITY_HEADERS,
+  'Content-Type': 'text/html; charset=utf-8',
+  'Content-Security-Policy': consentPagePolicy(nonce),
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'no-referrer',
+  'Cache-Control': 'no-store',
+});
 
 /** Nonce aleatorio para una respuesta. */
 export const createNonce = (): string => btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(16))));

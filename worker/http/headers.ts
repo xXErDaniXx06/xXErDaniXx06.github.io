@@ -31,17 +31,27 @@ const FRAME_ANCESTORS = "frame-ancestors 'none'";
 const HSTS = 'max-age=63072000; includeSubDomains';
 
 /**
+ * Cabeceras de seguridad de todos los documentos del dominio: las páginas de la web y la
+ * página de autorización OAuth. CORP impide que otro sitio cargue el documento como recurso
+ * (no afecta a la navegación ni a las peticiones con CORS de los agentes).
+ */
+export const COMMON_SECURITY_HEADERS: Readonly<Record<string, string>> = {
+  'Strict-Transport-Security': HSTS,
+  'Cross-Origin-Resource-Policy': 'same-origin',
+  'X-Content-Type-Options': 'nosniff',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
+};
+
+/**
  * Cabeceras de seguridad de las páginas. Esta política es la mínima; para las páginas HTML
  * se envía la completa de cada una (ver pagePolicy).
  */
 export const SECURITY_HEADERS: Readonly<Record<string, string>> = {
+  ...COMMON_SECURITY_HEADERS,
   'Content-Security-Policy': `${FRAME_ANCESTORS}; object-src 'none'; base-uri 'self'; form-action 'self'`,
-  'Strict-Transport-Security': HSTS,
   'Cross-Origin-Opener-Policy': 'same-origin',
   'X-Frame-Options': 'DENY',
-  'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
 };
 
 /** CORS para los datos públicos que pueden leer los agentes desde cualquier origen. */

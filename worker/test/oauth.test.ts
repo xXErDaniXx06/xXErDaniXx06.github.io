@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { pickLang } from '../oauth/consent-handler';
-import { consentFormBody, consentPagePolicy, createNonce, escapeHtml } from '../oauth/consent-page';
+import { COMMON_SECURITY_HEADERS } from '../http/headers';
+import { consentFormBody, consentPageHeaders, consentPagePolicy, createNonce, escapeHtml } from '../oauth/consent-page';
 import { authorizationServerExtras, normalizeResource, originResourceMetadata } from '../oauth/metadata';
 import { withNormalizedResource } from '../oauth/resource-normalizer';
 import { getDictionary } from '../../src/i18n';
@@ -93,5 +94,14 @@ describe('página de autorización', () => {
       nonce,
     });
     expect(html).toContain(`<script nonce="${nonce}" src="https://challenges.cloudflare.com/turnstile/v0/api.js"`);
+  });
+
+  it('lleva las cabeceras de seguridad del dominio, sin Cross-Origin-Opener-Policy', () => {
+    const headers = consentPageHeaders('n0nce');
+    for (const [name, value] of Object.entries(COMMON_SECURITY_HEADERS)) expect(headers[name]).toBe(value);
+    expect(headers['Content-Security-Policy']).toBe(consentPagePolicy('n0nce'));
+    expect(headers['Cache-Control']).toBe('no-store');
+    // Con COOP, el cliente que abre la autorización en una ventana emergente la perdería
+    expect(headers['Cross-Origin-Opener-Policy']).toBeUndefined();
   });
 });

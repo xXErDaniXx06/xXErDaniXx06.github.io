@@ -108,6 +108,14 @@ describe('OAuth y MCP', () => {
     );
   });
 
+  it('la página de autorización lleva las cabeceras de seguridad del dominio, sin COOP', async () => {
+    const response = await fetch(`${BASE}/authorize`);
+    expect(response.headers.get('content-type')).toBe('text/html; charset=utf-8');
+    expect(response.headers.get('strict-transport-security')).toBe('max-age=63072000; includeSubDomains');
+    expect(response.headers.get('cross-origin-resource-policy')).toBe('same-origin');
+    expect(response.headers.get('cross-origin-opener-policy')).toBeNull();
+  });
+
   it('con portfolio:read se leen datos, pero enviar mensajes exige contact:send', async () => {
     const token = await authorize('portfolio:read');
     const tools = await rpc(token, 'tools/list');
