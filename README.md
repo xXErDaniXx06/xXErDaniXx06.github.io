@@ -17,11 +17,15 @@ Se publica en <https://danielcarrascogarcia.me> en **español, inglés y francé
 
 - **Diseño sobrio y profesional**: tipografía Inter, una sola paleta con tema claro y oscuro (según el sistema o a elección), sin efectos superfluos. Contraste AA en todos los textos.
 - **Rendimiento**: 100 en Lighthouse en las 16 páginas, en móvil y en escritorio. CSS en línea, una única fuente propia de 26 KB, imágenes AVIF/WebP con tamaños adaptados y nada de terceros al cargar.
-- **Accesibilidad**: menú con tema, tamaño de texto, alto contraste y filtros de corrección para daltonismo (se recuerdan entre visitas y se aplican antes de pintar), enlace para saltar al contenido, navegación completa con teclado y textos traducidos en los tres idiomas.
-- **Seguridad**: política de seguridad de contenidos estricta (hashes de cada script y estilo, `'strict-dynamic'`, integridad de subrecursos y Trusted Types) enviada en la cabecera, HSTS, `Cross-Origin-Opener-Policy`, protección contra el encuadre y formulario protegido con Cloudflare Turnstile y límites de envío en el servidor.
+- **Accesibilidad**: menú con tema, tamaño de texto, alto contraste (negro y amarillo, o negro sobre blanco con el tema claro, ambos con contraste AAA) y filtros de corrección para daltonismo. Las preferencias se recuerdan entre visitas y se aplican antes de pintar. Además: enlace para saltar al contenido, navegación completa con teclado y textos traducidos en los tres idiomas. Se comprueba con axe en todos los temas y estados, no solo en el que mide Lighthouse.
+- **Seguridad** (A+ en [Mozilla Observatory](https://developer.mozilla.org/en-US/observatory/analyze?host=danielcarrascogarcia.me)):
+  - Política de seguridad de contenidos estricta, enviada en la cabecera: hashes de cada script y estilo, `'strict-dynamic'`, integridad de subrecursos y Trusted Types.
+  - HSTS, `Cross-Origin-Opener-Policy` y protección contra el encuadre.
+  - Formulario protegido con Cloudflare Turnstile y límites de envío en el servidor.
+  - `/.well-known/security.txt` (RFC 9116).
 - **Preparado para agentes de IA** (nivel 5 en [isitagentready.com](https://isitagentready.com)): todo sale de los mismos datos que las páginas, así que nunca se desincroniza.
   - Versión Markdown de cada página (`/es/proyectos.md` o `Accept: text/markdown`), `llms.txt`, `llms-full.txt` y `sitemap.xml` con los idiomas alternativos.
-  - API JSON descrita con OpenAPI (`/api/v1/openapi.json`), catálogo de APIs (RFC 9727), catálogo de IA, Agent Skills y datos estructurados (JSON-LD).
+  - API JSON con índice en `/api/v1/` y descrita con OpenAPI (`/api/v1/openapi.json`), catálogo de APIs (RFC 9727), catálogo de IA, Agent Skills y datos estructurados (JSON-LD).
   - Servidor MCP en `/mcp` con OAuth 2.1 (`/auth.md`, registro dinámico de clientes, PKCE y Turnstile; sin cuentas) y herramientas WebMCP en el navegador.
   - `robots.txt` con reglas para bots de IA y Content Signals, Web Bot Auth y registros DNS-AID.
 
@@ -81,13 +85,14 @@ npm run dev
 | `npm run build` | Compila la web en `dist/` |
 | `npm run validate:html` | Valida el HTML compilado |
 | `npm run lighthouse` | Mide todas las páginas con Lighthouse (`-- --desktop` para escritorio, `-- http://localhost:8787` para el local) |
+| `npm run a11y` | Pasa axe por todas las páginas en los temas claro y oscuro, con y sin alto contraste, en móvil y escritorio y con los menús abiertos (`-- http://localhost:8787` para el local) |
 | `npm run score` | Comprueba que la web publicada sigue en 100/100 y nivel 5 en isitagentready.com |
 | `npm run deploy` | Comprueba, compila, valida y publica en Cloudflare (`npx wrangler login` antes) |
 | `npm run fonts` / `npm run brand-assets` | Regeneran la fuente reducida y los iconos e imágenes para compartir |
 
 ## Integración continua y despliegue
 
-- **CI** (`.github/workflows/ci.yml`): en cada push a `main` y en cada pull request comprueba tipos, estilo y pruebas, compila, valida el HTML y empaqueta el Worker. Después arranca el Worker en local y pasa las pruebas de extremo a extremo y Lighthouse en móvil y escritorio. No despliega.
+- **CI** (`.github/workflows/ci.yml`): en cada push a `main` y en cada pull request comprueba tipos, estilo y pruebas, compila, valida el HTML y empaqueta el Worker. Después arranca el Worker en local y pasa las pruebas de extremo a extremo, Lighthouse en móvil y escritorio y la comprobación de accesibilidad en todos los temas. No despliega.
 - **Despliegue**: `npm run deploy`. La configuración de Cloudflare (dominio, DNSSEC, Turnstile, EmailJS, secretos y registros DNS-AID) está en [DEPLOY-CLOUDFLARE.md](DEPLOY-CLOUDFLARE.md).
 - **Reglas del proyecto**: [CLAUDE.md](CLAUDE.md). La web debe estar siempre en 100 en Lighthouse y en 100/100 y nivel 5 en isitagentready.com.
 

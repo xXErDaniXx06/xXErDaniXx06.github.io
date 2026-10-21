@@ -43,6 +43,7 @@ Ningún cambio está terminado si baja alguna de ellas.
 - **Una sola fuente de datos.**
   - Textos: `src/i18n/es.ts`, `en.ts` y `fr.ts`, con el tipo `Dictionary` (`src/i18n/types.ts`). Las listas van indexadas por id: si a un idioma le falta un elemento, no compila.
   - Datos que no dependen del idioma: `src/data/` (perfil y contacto, proyectos, logros, habilidades, imágenes y páginas).
+  - Rutas y recursos de la API (`/api/v1/…`): `src/agent/api-resources.ts` (`API_PATHS`, `apiResourcePath`, `RESOURCE_DOCS`). Los usan las páginas, OpenAPI, los catálogos y el Worker: no escribas esas rutas a mano.
   - `src/portfolio/` combina datos y textos; las páginas (`src/components`, `src/views`) y las versiones para agentes (`src/agent/`) salen de ahí. No dupliques datos.
 - Una página nueva se añade a `PAGE_IDS` (`src/data/pages.ts`). Así aparece en la navegación, el Markdown, el sitemap, `llms.txt`, la API, los recursos MCP y WebMCP.
 - Los ids de página (`index`, `proyectos`…) son parámetros públicos de las herramientas MCP y WebMCP: no se cambian.
@@ -65,18 +66,20 @@ Ningún cambio está terminado si baja alguna de ellas.
 
 - Colores solo con los tokens semánticos de `src/styles/global.css` (`bg-surface`, `text-muted`, `border-line`, `text-accent`…). La paleta de Tailwind está desactivada a propósito: así funcionan el tema oscuro y el alto contraste en toda la web.
 - Contraste AA como mínimo en los tres temas. Nada de degradados, brillos ni animaciones decorativas; respeta `prefers-reduced-motion`.
+- El alto contraste es negro, blanco y amarillo; con el tema claro elegido, negro sobre blanco. Los dos llegan al nivel AAA (7:1).
+- Lighthouse solo mide el tema por defecto con los menús cerrados. `npm run a11y` pasa axe por todas las páginas en los temas claro y oscuro, con y sin alto contraste, en escritorio y en móvil, y con los menús abiertos. Sale con error si hay alguna infracción. Lo ejecuta el CI; contra el Worker local: `npm run a11y -- http://localhost:8787`.
 - Los textos que la interfaz muestra o lee un lector de pantalla van en los diccionarios, nunca escritos en los componentes.
 - Si el contenido añade caracteres que no están en la fuente, la prueba `tests/i18n.test.ts` falla: amplía `scripts/font-ranges.mjs` y ejecuta `npm run fonts`.
 - Los iconos y las imágenes para compartir se generan con `npm run brand-assets` a partir de `public/favicon.svg`.
 
 ## Arquitectura
 
-- `src/pages/`: rutas. Las páginas de cada idioma son `[lang]/*.astro` (con `build.format: 'preserve'`: `/es/proyectos.html` se sirve en `/es/proyectos`) y `[lang]/404.astro`, la página de error de cada idioma. Endpoints estáticos: `robots.txt`, `sitemap.xml`, `llms.txt`, `llms-full.txt`, las versiones `.md`, `api/v1/` con OpenAPI, `.well-known/` (catálogo de APIs, catálogo de IA, Server Card MCP, Agent Skills), `auth.md` e `images/` (originales para los agentes).
+- `src/pages/`: rutas. Las páginas de cada idioma son `[lang]/*.astro` (con `build.format: 'preserve'`: `/es/proyectos.html` se sirve en `/es/proyectos`) y `[lang]/404.astro`, la página de error de cada idioma. Endpoints estáticos: `robots.txt`, `sitemap.xml`, `llms.txt`, `llms-full.txt`, las versiones `.md`, `api/v1/` con OpenAPI y su índice (`index.json`, que el Worker sirve en `/api/v1/`), `.well-known/` (catálogo de APIs, catálogo de IA, Server Card MCP, Agent Skills), `auth.md` e `images/` (originales para los agentes).
 - `src/layouts/BaseLayout.astro`: cabecera, pie, SEO, enlaces para agentes, JSON-LD y el script en línea que aplica las preferencias antes de pintar.
 - `src/scripts/`: código del navegador (preferencias, formulario de contacto, vídeo y WebMCP).
 - `worker/`:
   - `index.ts`: punto de entrada y enrutado.
-  - `site/`: web estática, negociación de Markdown, cabeceras y documentos de descubrimiento.
+  - `site/`: web estática, negociación de Markdown, cabeceras, documentos de descubrimiento y `/.well-known/security.txt` (RFC 9116). Este se genera en cada petición para que su fecha de caducidad no venza mientras la web siga publicada.
   - `oauth/`: OAuth 2.1 con `@cloudflare/workers-oauth-provider` y la página de autorización con Turnstile.
   - `mcp/`: servidor MCP en `/mcp`.
   - `contact/`: envío de mensajes (validación, límites, Turnstile y EmailJS) para el formulario (`POST /api/v1/contact`) y la herramienta MCP.
@@ -90,12 +93,13 @@ Ningún cambio está terminado si baja alguna de ellas.
 - `npm run check`, `npm run test:e2e`, `npm run validate:html`: comprobaciones (ver arriba).
 - `npm run deploy`: comprueba, compila, valida y publica en Cloudflare. Necesita `npx wrangler login`.
 - `npm run lighthouse` y `npm run score`: las dos mediciones que deben estar al máximo.
+- `npm run a11y`: accesibilidad con axe en todos los temas y estados.
 
 ## Cuidado con
 
 - Despliega siempre con `npm run deploy`, nunca con `wrangler deploy` a secas: `npm run worker:dev` deja en `dist/` una compilación con las URL de localhost.
 - Política de seguridad de contenidos estricta:
-  - Astro la genera en una `<meta>` con los hashes de cada script y estilo (`security.csp` en `astro.config.mjs`), con `'strict-dynamic'` y Trusted Types. El Worker la copia en la cabecera HTTP y le añade `frame-ancestors`.
+  - Astro la genera en una `<meta>` con los hashes de cada script y estilo (`security.csp` en `astro.config.mjs`), con `'strict-dynamic'` y Trusted Types. El Worker la copia en la cabecera HTTP y le añade `frame-ancestors`, también en las respuestas a HEAD. En los 304 no la envía: el navegador conserva la que guardó con la página.
   - Con `'strict-dynamic'` un script externo solo se ejecuta si su hash está en la política y lleva `integrity`: lo añade `scripts/subresource-integrity.mjs` al compilar. Por eso todo el código del navegador entra por un único script (`src/scripts/main.ts`, en `BaseLayout.astro`): las importaciones entre trozos no heredan la confianza de un hash. No añadas `<script>` en otros componentes; importa el módulo en `main.ts`.
   - Un script en línea nuevo necesita su hash (`Astro.csp.insertScriptHash`, como en `PreferencesScript.astro`).
   - Trusted Types: el DOM no acepta cadenas en `innerHTML` ni URL de scripts sin pasar por la política `portfolio` (`src/scripts/trusted-types.ts`). Usa `textContent` y crea elementos con el DOM.

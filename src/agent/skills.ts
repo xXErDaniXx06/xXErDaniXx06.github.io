@@ -2,6 +2,7 @@
 // los agentes sepan usar el porfolio. El índice y sus huellas se generan al compilar.
 
 import { CONTACT, PERSON_NAME } from '../data/profile';
+import { API_PATHS, API_RESOURCE_TEMPLATE, apiResourcePath } from './api-resources';
 
 export interface AgentSkill {
   name: string;
@@ -28,7 +29,7 @@ The portfolio at ${o} is published in Spanish (\`es\`, default), English (\`en\`
 
 Use the first one that works for you; they all hold the same content.
 
-1. **JSON API** (no authentication): \`${o}/api/v1/{lang}/{resource}.json\` with resource \`portfolio\` (everything), \`profile\`, \`projects\`, \`skills\`, \`achievements\` or \`contact\`. Description: ${o}/api/v1/openapi.json
+1. **JSON API** (no authentication): \`${o}${API_RESOURCE_TEMPLATE}\` with resource \`portfolio\` (everything), \`profile\`, \`projects\`, \`skills\`, \`achievements\` or \`contact\`. Description: ${o}${API_PATHS.openapi}
 2. **Markdown pages**: \`${o}/{lang}/{page}.md\` with page \`index\`, \`proyectos\` (projects), \`habilidades\` (skills), \`logros\` (achievements) or \`contacto\` (contact). Any page URL also returns Markdown when you send \`Accept: text/markdown\`. All pages in one file: ${o}/llms-full.txt
 3. **MCP server** at \`${o}/mcp\` (OAuth 2.1, see ${o}/auth.md): tools \`get_profile\`, \`list_projects\`, \`get_project\`, \`list_skills\`, \`list_achievements\`, \`get_contact_info\` and \`get_page_markdown\`.
 4. **In a browser on the site**: WebMCP tools \`get_page_content\` and \`get_portfolio_data\`.
@@ -68,7 +69,7 @@ description: Help someone get in touch with Daniel Carrasco García (job offers,
 - GitHub: ${CONTACT.github.url}
 - CV (PDF): ${o}${CONTACT.cvPath}
 
-Meeting hours and spoken languages are in \`${o}/api/v1/en/contact.json\` (\`meetings\`, \`languages\`).
+Meeting hours and spoken languages are in \`${o}${apiResourcePath('contact', 'en')}\` (\`meetings\`, \`languages\`).
 
 ## Sending a message
 

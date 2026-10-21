@@ -1,8 +1,19 @@
 import type { APIRoute } from 'astro';
+import {
+  API_INFO,
+  API_PATHS,
+  apiResourcePath,
+  CONTACT_FORM_NOTE,
+  PORTFOLIO_RESOURCES,
+  RESOURCE_DOCS,
+} from '../../../agent/api-resources';
 import { jsonResponse, siteOrigin } from '../../../agent/endpoint';
+import { LEGACY_SERVER_CARD_PATH } from '../../../agent/mcp-info';
+import { pageHref } from '../../../data/pages';
 import { PERSON_NAME } from '../../../data/profile';
+import { DEFAULT_LANG, LANGS } from '../../../i18n';
 import { MESSAGE_LIMITS } from '../../../lib/contact';
-import { LANGS } from '../../../i18n';
+import { absoluteUrl } from '../../../lib/text';
 
 // OpenAPI 3.1 de la API JSON de solo lectura del porfolio.
 const str = { type: 'string' };
@@ -136,23 +147,6 @@ const schemas = {
   },
 };
 
-const RESOURCE_DOCS = {
-  portfolio: [
-    'Everything',
-    'Profile, projects, skills, achievements and contact details in one document.',
-    'Portfolio',
-  ],
-  profile: ['Profile', 'Name, role, short bio, photos and CV link (home page).', 'Profile'],
-  projects: [
-    'Projects',
-    'Missions and projects with organization, period, status, milestones, tags and media.',
-    'Projects',
-  ],
-  skills: ['Skills', 'Technical stack grouped by category, with a note for each skill.', 'Skills'],
-  achievements: ['Achievements', 'Awards and recognitions with date, scope, issuer and description.', 'Achievements'],
-  contact: ['Contact', 'Email addresses, phone, LinkedIn, GitHub, CV and availability.', 'Contact'],
-} as const;
-
 export const GET: APIRoute = () => {
   const origin = siteOrigin();
   const langParam = {
@@ -163,7 +157,8 @@ export const GET: APIRoute = () => {
     schema: { type: 'string', enum: LANGS },
   };
   const paths: Record<string, unknown> = {};
-  for (const [resource, [summary, description, schema]] of Object.entries(RESOURCE_DOCS)) {
+  for (const resource of PORTFOLIO_RESOURCES) {
+    const { summary, description, schema } = RESOURCE_DOCS[resource];
     const wrapped =
       resource === 'portfolio'
         ? { $ref: `#/components/schemas/${schema}` }
@@ -171,7 +166,7 @@ export const GET: APIRoute = () => {
             type: 'object',
             properties: { lang: str, name: str, [resource]: { $ref: `#/components/schemas/${schema}` } },
           };
-    paths[`/api/v1/{lang}/${resource}.json`] = {
+    paths[apiResourcePath(resource)] = {
       get: {
         operationId: `get${schema}`,
         summary,
@@ -181,7 +176,7 @@ export const GET: APIRoute = () => {
       },
     };
   }
-  paths['/api/v1/status'] = {
+  paths[API_PATHS.status] = {
     get: {
       operationId: 'getStatus',
       summary: 'Service status',
@@ -213,12 +208,11 @@ export const GET: APIRoute = () => {
       },
     },
   });
-  paths['/api/v1/contact'] = {
+  paths[API_PATHS.contact] = {
     post: {
       operationId: 'sendContactMessage',
       summary: 'Contact form',
-      description:
-        "Endpoint of the website's contact form. Every request needs a Cloudflare Turnstile token, so it only works from the form at /{lang}/contacto. Agents should use the MCP tool send_contact_message instead (see /auth.md) or write to the email address in /api/v1/{lang}/contact.json.",
+      description: CONTACT_FORM_NOTE,
       requestBody: {
         required: true,
         content: {
@@ -267,15 +261,12 @@ export const GET: APIRoute = () => {
   return jsonResponse({
     openapi: '3.1.0',
     info: {
-      title: `${PERSON_NAME} — Portfolio API`,
-      version: '1.0.0',
-      summary: `JSON API with the content of ${PERSON_NAME}'s portfolio in Spanish, English and French.`,
-      description:
-        'The content endpoints are public, unauthenticated and read-only. The same content is published as HTML, as Markdown (Accept: text/markdown or the .md URLs) and through the MCP server described at /.well-known/mcp/server-card.json. POST /api/v1/contact is the endpoint of the website contact form and requires a Turnstile token.',
-      contact: { name: PERSON_NAME, url: `${origin}/es/contacto` },
+      ...API_INFO,
+      description: `The content endpoints are public, unauthenticated and read-only. The same content is published as HTML, as Markdown (Accept: text/markdown or the .md URLs) and through the MCP server described at ${LEGACY_SERVER_CARD_PATH}. POST ${API_PATHS.contact} is the endpoint of the website contact form and requires a Turnstile token.`,
+      contact: { name: PERSON_NAME, url: absoluteUrl(origin, pageHref(DEFAULT_LANG, 'contacto')) },
     },
     servers: [{ url: origin }],
-    externalDocs: { description: 'API and MCP documentation for agents', url: `${origin}/api/v1/docs.md` },
+    externalDocs: { description: 'API and MCP documentation for agents', url: absoluteUrl(origin, API_PATHS.docs) },
     paths,
     components: { schemas },
   });

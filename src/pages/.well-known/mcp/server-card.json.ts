@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { SUPPORTED_PROTOCOL_VERSIONS } from '@modelcontextprotocol/sdk/types.js';
+import { API_PATHS } from '../../../agent/api-resources';
 import { jsonResponse, siteOrigin } from '../../../agent/endpoint';
 import { MCP_PATH, MCP_SERVER } from '../../../agent/mcp-info';
 import { SOURCE_REPOSITORY } from '../../../data/profile';
@@ -33,6 +34,6 @@ export const GET: APIRoute = () => {
       protectedResourceMetadata: `${origin}/.well-known/oauth-protected-resource/mcp`,
       documentation: `${origin}/auth.md`,
     },
-    documentationUrl: `${origin}/api/v1/docs.md`,
+    documentationUrl: `${origin}${API_PATHS.docs}`,
   });
 };

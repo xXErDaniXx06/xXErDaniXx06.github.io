@@ -21,10 +21,16 @@ interface TurnstileOptions {
   action: string;
   execution: 'execute';
   appearance: 'interaction-only';
-  theme: 'auto';
+  theme: 'auto' | 'light' | 'dark';
   language: string;
   callback: (token: string) => void;
   'error-callback': () => void;
+}
+
+/** Tema del widget: el que muestra la página (elegido o, si no, el del sistema). */
+function widgetTheme(): TurnstileOptions['theme'] {
+  const scheme = getComputedStyle(document.documentElement).colorScheme;
+  return scheme === 'light' || scheme === 'dark' ? scheme : 'auto';
 }
 
 interface Turnstile {
@@ -86,7 +92,7 @@ class TurnstileChallenge {
         action: 'contact',
         execution: 'execute',
         appearance: 'interaction-only',
-        theme: 'auto',
+        theme: widgetTheme(),
         language: this.language,
         callback: (token) => this.#pending?.resolve(token),
         'error-callback': () => this.#pending?.reject(new Error('turnstile')),

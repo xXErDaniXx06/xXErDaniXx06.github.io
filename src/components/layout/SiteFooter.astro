@@ -1,4 +1,5 @@
 ---
+import { API_PATHS } from '../../agent/api-resources';
 import { markdownHref, PAGE_IDS, pageHref, type PageId } from '../../data/pages';
 import { CONTACT, PERSON_NAME, SOURCE_REPOSITORY } from '../../data/profile';
 import { getDictionary, type Lang } from '../../i18n';
@@ -17,7 +18,7 @@ const link = 'text-muted transition-colors hover:text-fg';
 const agentLinks = [
   { label: 'Markdown', href: markdownHref(lang, page) },
   { label: 'llms.txt', href: '/llms.txt' },
-  { label: 'API', href: '/api/v1/docs.md' },
+  { label: 'API', href: API_PATHS.docs },
   { label: 'MCP', href: '/auth.md' },
 ];
 ---

@@ -2,7 +2,7 @@
 // @font-face (astro.config.mjs). Cubre todo el contenido en español, inglés y francés.
 
 /** @type {readonly (readonly [number, number])[]} */
-export const UNICODE_RANGES = [
+const UNICODE_RANGES = [
   [0x20, 0x7e], // ASCII
   [0xa0, 0xff], // Latin-1: acentos del español y del francés, ¿ ¡ « » ° ·
   [0x152, 0x153], // Œ œ

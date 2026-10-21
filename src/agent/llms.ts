@@ -5,6 +5,7 @@ import { markdownHref, PAGE_IDS, pageHref } from '../data/pages';
 import { CONTACT, PERSON_NAME } from '../data/profile';
 import { DEFAULT_LANG, getDictionary, LANGS } from '../i18n';
 import { absoluteUrl } from '../lib/text';
+import { API_PATHS } from './api-resources';
 import { renderPageBody, renderPageFooter } from './markdown';
 
 /** Recursos para agentes que se enumeran en llms.txt, la raíz y la documentación de la API. */
@@ -15,7 +16,7 @@ export const AGENT_RESOURCES = [
     note: 'Remote MCP server (Streamable HTTP, OAuth 2.1) with read tools for this portfolio and a tool to send Daniel a message.',
   },
   {
-    path: '/api/v1/openapi.json',
+    path: API_PATHS.openapi,
     name: 'Portfolio JSON API',
     note: 'OpenAPI 3.1 description of the read-only JSON API (profile, projects, skills, achievements, contact) in es, en and fr.',
   },
@@ -34,7 +35,7 @@ export const AGENT_RESOURCES = [
   { path: '/sitemap.xml', name: 'Sitemap', note: 'Every HTML page with its language alternates.' },
 ] as const;
 
-export const SITE_SUMMARY =
+const SITE_SUMMARY =
   'Personal portfolio of Daniel Carrasco García, a Computer Engineering student at the University of Málaga (UMA) working across software, hardware (PCB design, embedded systems, RF and LoRa links) and aerospace technology (CubeSat, CanSat, stratospheric balloons). The site is available in Spanish (default), English and French.';
 
 const resourceList = (origin: string): string[] =>

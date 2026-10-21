@@ -1,19 +1,27 @@
 // Cabeceras HTTP comunes: seguridad, descubrimiento para agentes (Link) y CORS.
 
+import { API_PATHS } from '../../src/agent/api-resources';
+import { LEGACY_SERVER_CARD_PATH } from '../../src/agent/mcp-info';
+
+/** Descripción y documentación de la API (RFC 8631). */
+export const API_LINKS = [
+  `<${API_PATHS.openapi}>; rel="service-desc"; type="application/vnd.oai.openapi+json"`,
+  `<${API_PATHS.docs}>; rel="service-doc"; type="text/markdown"`,
+] as const;
+
 /** Recursos que se anuncian en la cabecera Link de cada página (RFC 8288). */
 export const DISCOVERY_LINKS = [
   '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
-  '</api/v1/openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json"',
-  '</api/v1/docs.md>; rel="service-doc"; type="text/markdown"',
+  ...API_LINKS,
   '</llms.txt>; rel="describedby"; type="text/plain"',
-  '</.well-known/mcp/server-card.json>; rel="mcp-server-card"; type="application/json"',
+  `<${LEGACY_SERVER_CARD_PATH}>; rel="mcp-server-card"; type="application/json"`,
   '</.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/json"',
   '</.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"',
   '</sitemap.xml>; rel="sitemap"; type="application/xml"',
 ] as const;
 
 /** Lo que una política en <meta> no puede declarar: se añade siempre en la cabecera. */
-export const FRAME_ANCESTORS = "frame-ancestors 'none'";
+const FRAME_ANCESTORS = "frame-ancestors 'none'";
 
 /**
  * Cabeceras de seguridad de las páginas. Esta política es la mínima; para las páginas HTML

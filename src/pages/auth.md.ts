@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { API_PATHS } from '../agent/api-resources';
 import { markdownResponse, siteOrigin } from '../agent/endpoint';
 import { MCP_MESSAGES_PER_HOUR, MCP_SCOPES, MCP_TOOLS } from '../agent/mcp-info';
 import { PERSON_NAME } from '../data/profile';
@@ -19,7 +20,7 @@ How AI agents get access to the MCP server of ${PERSON_NAME}'s portfolio.
 - Protected resource metadata: ${o}/.well-known/oauth-protected-resource and ${o}/.well-known/oauth-protected-resource/mcp
 - Authorization server metadata: ${o}/.well-known/oauth-authorization-server
 
-Everything this server returns is also public without authentication (HTML, Markdown, \`${o}/llms.txt\` and the JSON API at \`${o}/api/v1/\`). Authorization exists so that a person approves each agent before it can use the MCP server, and above all before it can send Daniel a message.
+Everything this server returns is also public without authentication (HTML, Markdown, \`${o}/llms.txt\` and the JSON API at \`${o}${API_PATHS.root}\`). Authorization exists so that a person approves each agent before it can use the MCP server, and above all before it can send Daniel a message.
 
 ## Step 1 — Discover
 

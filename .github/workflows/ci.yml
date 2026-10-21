@@ -1,7 +1,7 @@
 name: CI
 
 # Comprueba tipos, estilo y pruebas; compila la web y empaqueta el Worker; arranca el Worker
-# en local para las pruebas de extremo a extremo y Lighthouse.
+# en local para las pruebas de extremo a extremo, Lighthouse y la accesibilidad en todos los temas.
 # No despliega: el despliegue se hace con `npm run deploy` (ver DEPLOY-CLOUDFLARE.md).
 
 on:
@@ -48,7 +48,7 @@ jobs:
         run: npx wrangler deploy --dry-run --outdir worker-bundle
 
   e2e:
-    name: Worker en local, extremo a extremo y Lighthouse
+    name: Worker en local, extremo a extremo, Lighthouse y accesibilidad
     runs-on: ubuntu-latest
     needs: check
     steps:
@@ -89,6 +89,10 @@ jobs:
 
       - name: Lighthouse (escritorio)
         run: npm run lighthouse -- http://localhost:8787 --desktop --min-performance=90
+
+      # Lighthouse solo mide el tema claro con los menús cerrados.
+      - name: Accesibilidad en todos los temas y estados (axe)
+        run: npm run a11y -- http://localhost:8787
 
       - name: Registro del Worker
         if: failure()

@@ -87,7 +87,8 @@
   }
 }
 
-/* Alto contraste: negro, blanco y amarillo (opción del menú de accesibilidad) */
+/* Alto contraste (opción del menú de accesibilidad): negro, blanco y amarillo; con el tema
+   claro elegido, negro sobre blanco (más abajo). Todo con contraste AAA (7:1 o más). */
 :root[data-contrast='high'] {
   color-scheme: dark;
   --bg: #000000;
@@ -106,6 +107,27 @@
   --success-soft: #000000;
   --danger: #ff8080;
   --danger-soft: #000000;
+  --shadow: none;
+}
+
+:root[data-contrast='high'][data-theme='light'] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --raised: #ffffff;
+  --line: #000000;
+  --line-strong: #000000;
+  --fg: #000000;
+  --muted: #000000;
+  --subtle: #000000;
+  --accent: #1e40af;
+  --accent-hover: #172554;
+  --accent-fg: #ffffff;
+  --accent-soft: #ffffff;
+  --success: #065f46;
+  --success-soft: #ffffff;
+  --danger: #991b1b;
+  --danger-soft: #ffffff;
   --shadow: none;
 }
 

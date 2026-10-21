@@ -6,10 +6,8 @@ import { jsonNoStore, methodNotAllowed } from '../http/headers';
 import type { ContactService } from './contact-service';
 import type { TurnstileVerifier } from './turnstile';
 
-export const CONTACT_API_PATH = '/api/v1/contact';
-
 /** Mensajes por hora y IP desde el formulario de la web. */
-export const WEB_MESSAGES_PER_HOUR = 5;
+const WEB_MESSAGES_PER_HOUR = 5;
 
 const MAX_BODY_BYTES = 16 * 1024;
 

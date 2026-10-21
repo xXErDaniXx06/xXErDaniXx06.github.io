@@ -3,6 +3,7 @@
 // 'strict-dynamic' (las importaciones de un script con hash no heredan la confianza).
 // Cada módulo solo actúa si su parte de la página existe.
 import './preferences-menu';
+import './theme-color';
 import './contact-form';
 import './lazy-video';
 import './webmcp';

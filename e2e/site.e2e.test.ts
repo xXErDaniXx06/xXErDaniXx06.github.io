@@ -7,7 +7,7 @@ describe('web', () => {
   it.each(PAGES)('%s responde con cabeceras de seguridad y de descubrimiento', async (path) => {
     const response = await get(path);
     expect(response.status).toBe(200);
-    expect(response.headers.get('content-type')).toContain('text/html');
+    expect(response.headers.get('content-type')).toBe('text/html; charset=utf-8');
     const policy = response.headers.get('content-security-policy') ?? '';
     expect(policy).toContain("frame-ancestors 'none'");
     expect(policy).toContain("'strict-dynamic'");
@@ -21,6 +21,43 @@ describe('web', () => {
     for (const [, integrity] of html.matchAll(/<script[^>]* src="\/_astro\/[^"]+"[^>]* integrity="([^"]+)"/g)) {
       expect(policy).toContain(`'${integrity}'`);
     }
+  });
+
+  it('HEAD lleva la misma política que GET', async () => {
+    const head = await fetch(`${BASE}/es/logros`, { method: 'HEAD' });
+    const page = await get('/es/logros');
+    expect(head.headers.get('content-security-policy')).toBe(page.headers.get('content-security-policy'));
+    expect(head.headers.get('etag')).toBe(page.headers.get('etag'));
+  });
+
+  it('una página sin cambios responde 304 sin sustituir su política', async () => {
+    const etag = (await get('/es/')).headers.get('etag') ?? '';
+    expect(etag).not.toBe('');
+    const response = await get('/es/', { 'If-None-Match': etag });
+    expect(response.status).toBe(304);
+    expect(response.headers.get('content-security-policy')).toBeNull();
+  });
+
+  it('la URL base de la API devuelve su índice', async () => {
+    const response = await get('/api/v1/');
+    expect(response.headers.get('content-type')).toBe('application/json; charset=utf-8');
+    expect(response.headers.get('link')).toContain('rel="service-desc"');
+    const index = (await response.json()) as { resources: { urls: Record<string, string> }[] };
+    for (const url of index.resources.flatMap((resource) => Object.values(resource.urls))) {
+      expect((await get(new URL(url).pathname)).status).toBe(200);
+    }
+    const redirect = await get('/api/v1');
+    expect(redirect.status).toBe(308);
+    expect(redirect.headers.get('location')).toBe(`${BASE}/api/v1/`);
+  });
+
+  it('security.txt (RFC 9116) con contacto y caducidad futura', async () => {
+    const response = await get('/.well-known/security.txt');
+    expect(response.headers.get('content-type')).toBe('text/plain; charset=utf-8');
+    const text = await response.text();
+    expect(text).toMatch(/^Contact: mailto:/m);
+    const expires = Date.parse(/^Expires: (.+)$/m.exec(text)?.[1] ?? '');
+    expect(expires).toBeGreaterThan(Date.now());
   });
 
   it('las rutas con barra final redirigen a la canónica', async () => {

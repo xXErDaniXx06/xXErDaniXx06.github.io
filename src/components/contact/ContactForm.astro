@@ -3,6 +3,7 @@
 // con una comprobación de Cloudflare Turnstile que solo se carga al empezar a escribir.
 // También es una herramienta WebMCP declarativa (send_contact_message): un agente puede
 // rellenarlo y la persona confirma el envío pulsando el botón.
+import { API_PATHS } from '../../agent/api-resources';
 import { TURNSTILE_SITE_KEY } from '../../config/turnstile';
 import { getDictionary, type Lang } from '../../i18n';
 import Icon from '../ui/Icon.astro';
@@ -29,7 +30,7 @@ const messages = { submit: t.submit, sending: t.sending, success: t.success, err
 
   <form
     method="post"
-    action="/api/v1/contact"
+    action={API_PATHS.contact}
     novalidate
     class="mt-6 space-y-5"
     data-contact-form

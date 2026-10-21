@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { API_PATHS } from '../../agent/api-resources';
 import { jsonResponse, siteOrigin } from '../../agent/endpoint';
 import { MCP_SERVER, MCP_TOOLS, SERVER_CARD_PATH } from '../../agent/mcp-info';
 import { PERSON_NAME } from '../../data/profile';
@@ -36,7 +37,7 @@ export const GET: APIRoute = () => {
         identifier: urn('api', 'portfolio'),
         displayName: `${PERSON_NAME} — Portfolio JSON API`,
         type: 'application/vnd.oai.openapi+json',
-        url: `${origin}/api/v1/openapi.json`,
+        url: `${origin}${API_PATHS.openapi}`,
         description:
           'Read-only JSON API (no authentication) with the profile, projects, skills, achievements and contact details in es, en and fr.',
         tags: ['portfolio', 'json', 'openapi'],

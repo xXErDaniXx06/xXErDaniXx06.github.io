@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { API_PATHS, apiResourcePath, PORTFOLIO_RESOURCES, RESOURCE_DOCS } from '../../../agent/api-resources';
 import { markdownResponse, siteOrigin } from '../../../agent/endpoint';
 import { AGENT_RESOURCES } from '../../../agent/llms';
 import { PERSON_NAME } from '../../../data/profile';
@@ -19,18 +20,13 @@ Everything on ${o} is published for AI agents in four equivalent forms: HTML pag
 
 ## JSON API (no authentication)
 
-OpenAPI 3.1: ${o}/api/v1/openapi.json · Status: ${o}/api/v1/status · CORS: \`*\`
+Index: ${o}${API_PATHS.root} · OpenAPI 3.1: ${o}${API_PATHS.openapi} · Status: ${o}${API_PATHS.status} · CORS: \`*\`
 
 | Endpoint | Content |
 |---|---|
-| \`GET /api/v1/{lang}/portfolio.json\` | Everything below in one document |
-| \`GET /api/v1/{lang}/profile.json\` | Name, role, bio, photos, CV link |
-| \`GET /api/v1/{lang}/projects.json\` | Projects with organization, period, status, milestones, tags, media |
-| \`GET /api/v1/{lang}/skills.json\` | Skills by category with notes |
-| \`GET /api/v1/{lang}/achievements.json\` | Awards with date, scope, issuer, prize, description |
-| \`GET /api/v1/{lang}/contact.json\` | Emails, phone, LinkedIn, GitHub, CV, availability |
+${PORTFOLIO_RESOURCES.map((resource) => `| \`GET ${apiResourcePath(resource)}\` | ${RESOURCE_DOCS[resource].description} |`).join('\n')}
 
-\`POST /api/v1/contact\` is the endpoint of the website contact form. It needs a Cloudflare Turnstile token from the form, so agents should send messages with the MCP tool \`send_contact_message\` instead.
+\`POST ${API_PATHS.contact}\` is the endpoint of the website contact form. It needs a Cloudflare Turnstile token from the form, so agents should send messages with the MCP tool \`send_contact_message\` instead.
 
 ## MCP server (OAuth 2.1)
 

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { CONTACT_API_PATH, handleContactApi, type ContactApiDependencies } from '../contact/contact-api';
+import { API_PATHS } from '../../src/agent/api-resources';
+import { handleContactApi, type ContactApiDependencies } from '../contact/contact-api';
 import { ContactService } from '../contact/contact-service';
 import { EmailJsSender } from '../contact/emailjs-sender';
 import { KvMessageLimits, MESSAGES_PER_DAY, type MessageLimits } from '../contact/message-limits';
@@ -129,7 +130,7 @@ describe('TurnstileVerifier', () => {
   });
 });
 
-describe(`POST ${CONTACT_API_PATH}`, () => {
+describe(`POST ${API_PATHS.contact}`, () => {
   function deps(overrides: Partial<ContactApiDependencies> = {}): ContactApiDependencies & { sender: RecordingSender } {
     const sender = new RecordingSender();
     return {
@@ -146,7 +147,7 @@ describe(`POST ${CONTACT_API_PATH}`, () => {
   }
 
   const post = (body: unknown, headers: Record<string, string> = {}) =>
-    new Request(`${ORIGIN}${CONTACT_API_PATH}`, {
+    new Request(`${ORIGIN}${API_PATHS.contact}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Origin: ORIGIN, 'CF-Connecting-IP': '203.0.113.7', ...headers },
       body: typeof body === 'string' ? body : JSON.stringify(body),
@@ -193,7 +194,7 @@ describe(`POST ${CONTACT_API_PATH}`, () => {
   });
 
   it('solo admite POST', async () => {
-    const response = await handleContactApi(new Request(`${ORIGIN}${CONTACT_API_PATH}`), deps());
+    const response = await handleContactApi(new Request(`${ORIGIN}${API_PATHS.contact}`), deps());
     expect(response.status).toBe(405);
     expect(response.headers.get('Allow')).toBe('POST');
   });

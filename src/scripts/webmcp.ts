@@ -7,7 +7,7 @@ import { CONTACT } from '../data/profile';
 import { isPageId, PAGE_IDS, pageHref, type PageId } from '../data/pages';
 import { isLang, LANGS, type Lang } from '../i18n/langs';
 import { COLOR_FILTERS, TEXT_SIZES, THEMES, type Preferences } from '../lib/preferences';
-import { PORTFOLIO_RESOURCES } from '../agent/api-resources';
+import { apiResourcePath, PORTFOLIO_RESOURCES } from '../agent/api-resources';
 import { setPreferences } from './preferences';
 
 interface ToolDefinition<Input> {
@@ -88,7 +88,7 @@ const TOOLS = [
     annotations: { readOnlyHint: true },
     execute: async ({ resource, lang }: { resource?: string; lang?: string }) => {
       const name = PORTFOLIO_RESOURCES.find((r) => r === resource) ?? 'portfolio';
-      return fetchResource(`/api/v1/${langOf(lang)}/${name}.json`, 'application/json');
+      return fetchResource(apiResourcePath(name, langOf(lang)), 'application/json');
     },
   },
   {

@@ -1,6 +1,7 @@
 ---
 // Enlaces de descubrimiento para agentes de IA y datos estructurados (JSON-LD) en el <head>.
 // Las herramientas WebMCP se registran en src/scripts/webmcp.ts (BaseLayout).
+import { API_PATHS } from '../../agent/api-resources';
 import { imagePath, PROFILE_PHOTOS } from '../../data/media';
 import { pageHref, type PageId } from '../../data/pages';
 import { AFFILIATION, CONTACT, PERSON_NAME } from '../../data/profile';
@@ -68,7 +69,7 @@ const structuredData = {
 <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 <link rel="describedby" type="text/plain" href="/llms.txt" title="llms.txt" />
 <link rel="api-catalog" type="application/linkset+json" href="/.well-known/api-catalog" />
-<link rel="service-desc" type="application/vnd.oai.openapi+json" href="/api/v1/openapi.json" />
+<link rel="service-desc" type="application/vnd.oai.openapi+json" href={API_PATHS.openapi} />
 <link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json" />
 <link rel="mcp-server-card" type="application/json" href="/.well-known/mcp/server-card.json" />
 <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />

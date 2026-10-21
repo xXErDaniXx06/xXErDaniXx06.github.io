@@ -3,8 +3,9 @@
 // - la API del formulario de contacto (POST /api/v1/contact);
 // - el servidor MCP en /mcp, protegido con OAuth 2.1, y su servidor de autorización.
 
+import { API_PATHS } from '../src/agent/api-resources';
 import { SERVER_CARD_PATH } from '../src/agent/mcp-info';
-import { CONTACT_API_PATH, handleContactApi } from './contact/contact-api';
+import { handleContactApi } from './contact/contact-api';
 import { jsonNoStore } from './http/headers';
 import { addJsonFields } from './oauth/json-extras';
 import {
@@ -54,7 +55,7 @@ export default {
     // OAuth, pero es pública: se sirve antes de que la librería exija un token.
     if (url.pathname === SERVER_CARD_PATH) return serveDiscoveryDocument(request, env.ASSETS);
 
-    if (url.pathname === CONTACT_API_PATH) {
+    if (url.pathname === API_PATHS.contact) {
       const services = createServices(env);
       return handleContactApi(request, {
         contact: services.contact,

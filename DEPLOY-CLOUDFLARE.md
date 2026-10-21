@@ -134,7 +134,7 @@ Hecho el 20-10-2026: Pages está desactivado en el repositorio y se han eliminad
 1. Escanea <https://danielcarrascogarcia.me> en [isitagentready.com](https://isitagentready.com).
 2. Conecta el servidor MCP desde un cliente (por ejemplo, Claude → *Connectors* → URL `https://danielcarrascogarcia.me/mcp`): debe abrirse la página de autorización con Turnstile.
 3. Envía un mensaje desde el formulario de `/es/contacto` (y, si quieres, con `send_contact_message`) para confirmar que llega el correo. Si EmailJS lo rechaza, revisa el paso 4: la plantilla no debe exigir reCAPTCHA para llamadas desde servidor.
-4. Mide Lighthouse en todas las páginas (móvil y escritorio): `npm run lighthouse` y `npm run lighthouse -- --desktop`.
+4. Mide Lighthouse en todas las páginas (móvil y escritorio) con `npm run lighthouse` y `npm run lighthouse -- --desktop`, y la accesibilidad en todos los temas con `npm run a11y`.
 
 Comprobaciones rápidas desde la terminal:
 
