@@ -30,14 +30,21 @@ const chrome = await launch({
   chromePath: process.env.CHROME_PATH,
   chromeFlags: ['--headless=new', '--no-first-run', '--no-default-browser-check'],
 });
-const audit = async (path) =>
-  (
-    await lighthouse(
+// Un fallo de la herramienta (p. ej. Chrome cierra la pestaña a mitad de medición) cuenta
+// como una pasada sin resultado: se repite como las que no tienen métricas.
+const audit = async (path) => {
+  try {
+    const result = await lighthouse(
       origin + path,
       { port: chrome.port, output: 'json', logLevel: 'error', onlyCategories: CATEGORIES },
       desktop ? desktopConfig : undefined,
-    )
-  )?.lhr;
+    );
+    return result?.lhr;
+  } catch (error) {
+    console.warn(`  (${path}: ${String(error?.message ?? error).split('\n')[0]}; se repite)`);
+    return undefined;
+  }
+};
 const scoresOf = (lhr) =>
   Object.fromEntries(CATEGORIES.map((c) => [c, Math.round((lhr?.categories[c]?.score ?? 0) * 100)]));
 const meetsMinimums = (scores) =>

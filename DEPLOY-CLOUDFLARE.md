@@ -125,6 +125,14 @@ En Cloudflare → **DNS** → **Add record**, tipo **SVCB**:
 
 `_index._agents` es el punto de entrada que buscan los agentes (y el escáner): apunta al servidor que publica el catálogo `/.well-known/ai-catalog.json`. `_mcp._agents` anuncia el servidor MCP.
 
+Añade también un registro **CAA** para que solo las autoridades de certificación que usa Cloudflare puedan emitir certificados para el dominio:
+
+| Tipo | Nombre | Flags | Tag | CA domain name |
+|---|---|---|---|---|
+| CAA | `@` | 0 | Only allow specific hostnames | `pki.goog` |
+
+Cloudflare responde además con los registros de las otras autoridades que usa (Let's Encrypt, SSL.com…), así que la renovación del certificado no se rompe. Compruébalo con `dig +short CAA danielcarrascogarcia.me`.
+
 ## 7. Retirar GitHub Pages
 
 Hecho el 20-10-2026: Pages está desactivado en el repositorio y se han eliminado `public/CNAME` y el workflow que desplegaba a Pages. Lo sustituye `.github/workflows/ci.yml`, que solo compila y comprueba; el despliegue se hace con `npm run deploy`.
