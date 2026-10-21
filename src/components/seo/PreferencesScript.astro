@@ -1,0 +1,10 @@
+---
+// Aplica las preferencias guardadas antes de pintar la página (sin parpadeo).
+// El script va en línea; su hash se añade a la política de seguridad de contenidos.
+import { createHash } from 'node:crypto';
+import bootstrap from '../../scripts/preferences-bootstrap.js?raw';
+
+Astro.csp?.insertScriptHash(`sha256-${createHash('sha256').update(bootstrap).digest('base64')}`);
+---
+
+<script is:inline set:html={bootstrap} />

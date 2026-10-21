@@ -1,0 +1,12 @@
+---
+import type { InferGetStaticPropsType } from 'astro';
+import { langPaths } from '../../lib/routes';
+import HomeView from '../../views/HomeView.astro';
+
+export const getStaticPaths = langPaths;
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { lang } = Astro.props;
+---
+
+<HomeView lang={lang} />

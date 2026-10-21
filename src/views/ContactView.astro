@@ -1,0 +1,31 @@
+---
+import ContactChannels from '../components/contact/ContactChannels.astro';
+import ContactForm from '../components/contact/ContactForm.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import { pageHref } from '../data/pages';
+import { getDictionary, type Lang } from '../i18n';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  page="contacto"
+  title={t.pages.contacto.title}
+  description={t.pages.contacto.description}
+  canonicalPath={pageHref(lang, 'contacto')}
+>
+  <PageHeader eyebrow={t.contact.tag} title={t.contact.title}>
+    <span slot="eyebrow-icon" class="size-2 rounded-full bg-success" aria-hidden="true"></span>
+  </PageHeader>
+  <div class="mx-auto grid max-w-6xl gap-12 px-5 py-14 sm:px-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16 lg:py-20">
+    <ContactChannels lang={lang} />
+    <ContactForm lang={lang} />
+  </div>
+</BaseLayout>

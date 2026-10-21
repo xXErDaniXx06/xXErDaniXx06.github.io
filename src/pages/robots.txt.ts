@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { siteOrigin, textResponse } from '../agent/site.js';
+import { plainTextResponse, siteOrigin } from '../agent/endpoint';
 
 // Política de rastreo (RFC 9309) con reglas explícitas para bots de IA y
 // preferencias de uso del contenido (Content Signals, contentsignals.org).
@@ -13,7 +13,15 @@ const PRIVATE_PATHS = ['/authorize', '/oauth/', '/mcp'];
 
 const SEARCH_BOTS = ['OAI-SearchBot', 'Claude-SearchBot', 'PerplexityBot'];
 const USER_BOTS = ['ChatGPT-User', 'Claude-User', 'Perplexity-User'];
-const TRAINING_BOTS = ['GPTBot', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended', 'CCBot', 'Bytespider', 'Amazonbot'];
+const TRAINING_BOTS = [
+  'GPTBot',
+  'ClaudeBot',
+  'Google-Extended',
+  'Applebot-Extended',
+  'CCBot',
+  'Bytespider',
+  'Amazonbot',
+];
 
 const group = (comment: string, agents: string[]) =>
   [
@@ -39,8 +47,7 @@ export const GET: APIRoute = () => {
     group('Peticiones hechas por un asistente en nombre de una persona', USER_BOTS),
     group('Rastreadores de entrenamiento de modelos', TRAINING_BOTS),
     `Sitemap: ${origin}/sitemap.xml`,
-    `Agentmap: ${origin}/.well-known/ai-catalog.json`,
     '',
   ].join('\n');
-  return textResponse(body, 'text/plain; charset=utf-8');
+  return plainTextResponse(body);
 };

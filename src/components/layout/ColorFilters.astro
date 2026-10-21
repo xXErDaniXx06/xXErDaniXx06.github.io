@@ -1,0 +1,21 @@
+---
+// Filtros SVG de corrección para daltonismo (daltonización): llevan la información de los
+// colores que la persona no distingue a los que sí distingue. Matrices de simulación de
+// Machado, Oliveira y Fernandes (2009) y corrección de Fidaner, Lin y Ozguven (2005),
+// precalculadas: C = I + M·(I − S). Se aplican con data-color-filter en <html>.
+const FILTERS = {
+  protanopia: '1 0 0 0 0  0.479 0.477 0.044 0 0  0.597 -0.689 1.091 0 0  0 0 0 1 0',
+  deuteranopia: '1 0 0 0 0  0.163 0.725 0.112 0 0  0.455 -0.645 1.191 0 0  0 0 0 1 0',
+  tritanopia: '0.741 -0.407 0.666 0 0  0.075 0.585 0.340 0 0  0 0 1 0 0  0 0 0 1 0',
+};
+---
+
+<svg aria-hidden="true" focusable="false" class="absolute size-0 overflow-hidden">
+  <defs>
+    {Object.entries(FILTERS).map(([name, values]) => (
+      <filter id={`a11y-${name}`}>
+        <feColorMatrix type="matrix" values={values} />
+      </filter>
+    ))}
+  </defs>
+</svg>

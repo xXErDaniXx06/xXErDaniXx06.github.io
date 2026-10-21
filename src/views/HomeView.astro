@@ -1,0 +1,26 @@
+---
+import Hero from '../components/home/Hero.astro';
+import { pageHref } from '../data/pages';
+import { getDictionary, type Lang } from '../i18n';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+  lang: Lang;
+  /** Versión Markdown que se anuncia (la raíz tiene la suya, con los recursos para agentes). */
+  markdownPath?: string;
+}
+
+const { lang, markdownPath } = Astro.props;
+const meta = getDictionary(lang).pages.index;
+---
+
+<BaseLayout
+  lang={lang}
+  page="index"
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={pageHref(lang, 'index')}
+  markdownPath={markdownPath}
+>
+  <Hero lang={lang} />
+</BaseLayout>

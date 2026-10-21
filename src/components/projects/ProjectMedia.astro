@@ -1,0 +1,48 @@
+---
+import { getImage, Picture } from 'astro:assets';
+import { getDictionary, type Lang } from '../../i18n';
+import { imageAsset } from '../../lib/images';
+import type { LocalizedProject } from '../../portfolio';
+
+interface Props {
+  project: LocalizedProject;
+  lang: Lang;
+  /** La primera imagen de la página se carga sin esperar. */
+  eager?: boolean;
+}
+
+const { project, lang, eager = false } = Astro.props;
+const { media } = project;
+const frame = 'aspect-video w-full overflow-hidden rounded-lg border border-line bg-surface';
+const poster =
+  media.type === 'video' ? await getImage({ src: imageAsset(media.poster), width: 640, format: 'webp' }) : undefined;
+const videoLabel = `${getDictionary(lang).markdown.video}: ${project.title}`;
+---
+
+{media.type === 'image' ? (
+  <Picture
+    src={imageAsset(media.file)}
+    alt={project.title}
+    widths={[360, 480, 640, 800, 960]}
+    sizes="(min-width: 1152px) 440px, (min-width: 768px) 40vw, calc(100vw - 2.5rem)"
+    formats={['avif', 'webp']}
+    loading={eager ? 'eager' : 'lazy'}
+    class={`${frame} object-cover`}
+  />
+) : (
+  <video
+    class={`${frame} object-cover`}
+    poster={poster?.src}
+    width="640"
+    height="352"
+    controls
+    muted
+    loop
+    playsinline
+    preload="none"
+    data-autoplay
+    aria-label={videoLabel}
+  >
+    <source src={media.src} type="video/mp4" />
+  </video>
+)}

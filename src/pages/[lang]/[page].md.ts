@@ -1,13 +1,13 @@
 import type { APIRoute, GetStaticPaths } from 'astro';
-import { siteOrigin, textResponse } from '../../agent/site.js';
-import { LANGS, PAGES, renderPageMarkdown } from '../../agent/content.js';
+import { markdownResponse, siteOrigin } from '../../agent/endpoint';
+import { renderPageMarkdown } from '../../agent/markdown';
+import { PAGE_IDS, type PageId } from '../../data/pages';
+import { LANGS, type Lang } from '../../i18n';
 
 // Versión Markdown de cada página: /es/index.md, /es/proyectos.md, …
 // El Worker la sirve también en la URL HTML cuando llega Accept: text/markdown.
-export const getStaticPaths: GetStaticPaths = () =>
-  LANGS.flatMap((lang) => PAGES.map((page) => ({ params: { lang, page: page.slug || 'index' } })));
+export const getStaticPaths = (() =>
+  LANGS.flatMap((lang) => PAGE_IDS.map((page) => ({ params: { lang, page } })))) satisfies GetStaticPaths;
 
-export const GET: APIRoute = ({ params }) => {
-  const page = PAGES.find((p) => (p.slug || 'index') === params.page)!;
-  return textResponse(renderPageMarkdown(params.lang!, page.id, siteOrigin()), 'text/markdown; charset=utf-8');
-};
+export const GET: APIRoute = ({ params }) =>
+  markdownResponse(renderPageMarkdown(params.lang as Lang, params.page as PageId, siteOrigin()));

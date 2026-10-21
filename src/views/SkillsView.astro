@@ -1,0 +1,30 @@
+---
+import SkillCategory from '../components/skills/SkillCategory.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import { pageHref } from '../data/pages';
+import { getDictionary, type Lang } from '../i18n';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getSkillCategories } from '../portfolio';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  page="habilidades"
+  title={t.pages.habilidades.title}
+  description={t.pages.habilidades.description}
+  canonicalPath={pageHref(lang, 'habilidades')}
+>
+  <PageHeader eyebrow={t.skills.tag} title={t.skills.title + t.skills.titleHighlight} description={t.skills.subtitle} />
+  <div class="mx-auto max-w-6xl divide-y divide-line px-5 sm:px-8">
+    {getSkillCategories(lang).map((category) => (
+      <SkillCategory category={category} />
+    ))}
+  </div>
+</BaseLayout>

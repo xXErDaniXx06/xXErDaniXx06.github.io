@@ -1,0 +1,74 @@
+---
+// Enlaces de descubrimiento para agentes de IA y datos estructurados (JSON-LD) en el <head>.
+// Las herramientas WebMCP se registran en src/scripts/webmcp.ts (BaseLayout).
+import { imagePath, PROFILE_PHOTOS } from '../../data/media';
+import { pageHref, type PageId } from '../../data/pages';
+import { AFFILIATION, CONTACT, PERSON_NAME } from '../../data/profile';
+import { getDictionary, LANGS, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+  /** Página que se muestra; la portada se declara además como página de perfil. */
+  page?: PageId | undefined;
+  /** Versión Markdown de la página. */
+  markdownPath: string;
+}
+
+const { lang, page, markdownPath } = Astro.props;
+const origin = new URL(Astro.site ?? Astro.url).origin;
+const t = getDictionary(lang);
+
+const person = `${origin}/#person`;
+const website = `${origin}/#website`;
+const home = `${origin}${pageHref(lang, 'index')}`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': website,
+      url: `${origin}/`,
+      name: PERSON_NAME,
+      inLanguage: [...LANGS],
+      publisher: { '@id': person },
+    },
+    {
+      '@type': 'Person',
+      '@id': person,
+      name: PERSON_NAME,
+      url: home,
+      image: `${origin}${imagePath(PROFILE_PHOTOS[0].file)}`,
+      jobTitle: t.home.role,
+      description: t.home.about,
+      email: `mailto:${CONTACT.personalEmail}`,
+      telephone: CONTACT.phone.e164,
+      affiliation: { '@type': 'CollegeOrUniversity', name: AFFILIATION },
+      knowsLanguage: [...LANGS],
+      sameAs: [CONTACT.linkedin.url, CONTACT.github.url],
+    },
+    // La portada es la página de perfil (schema.org ProfilePage)
+    ...(page === 'index'
+      ? [
+          {
+            '@type': 'ProfilePage',
+            '@id': `${home}#profile`,
+            url: home,
+            name: t.pages.index.title,
+            inLanguage: lang,
+            isPartOf: { '@id': website },
+            mainEntity: { '@id': person },
+          },
+        ]
+      : []),
+  ],
+};
+---
+
+<link rel="alternate" type="text/markdown" href={markdownPath} title="Markdown" />
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+<link rel="describedby" type="text/plain" href="/llms.txt" title="llms.txt" />
+<link rel="api-catalog" type="application/linkset+json" href="/.well-known/api-catalog" />
+<link rel="service-desc" type="application/vnd.oai.openapi+json" href="/api/v1/openapi.json" />
+<link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json" />
+<link rel="mcp-server-card" type="application/json" href="/.well-known/mcp/server-card.json" />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />

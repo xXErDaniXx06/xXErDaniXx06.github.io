@@ -1,11 +1,15 @@
 import type { APIRoute } from 'astro';
-import { siteOrigin, textResponse } from '../agent/site.js';
-import { PERSON_NAME } from '../data/profile.js';
+import { markdownResponse, siteOrigin } from '../agent/endpoint';
+import { MCP_MESSAGES_PER_HOUR, MCP_SCOPES, MCP_TOOLS } from '../agent/mcp-info';
+import { PERSON_NAME } from '../data/profile';
 
 // /auth.md (https://workos.com/auth-md): cómo obtiene un agente acceso al servidor MCP.
 export const GET: APIRoute = () => {
   const o = siteOrigin();
   const host = new URL(o).host;
+  const tools = MCP_TOOLS.map((tool) => `\`${tool}\``);
+  const toolList = `${tools.slice(0, -1).join(', ')} and ${tools.at(-1)}`;
+  const { read, contact, offlineAccess } = MCP_SCOPES;
   const body = `# auth.md
 
 How AI agents get access to the MCP server of ${PERSON_NAME}'s portfolio.
@@ -37,9 +41,9 @@ This service supports one identity type: **anonymous**. There are no user accoun
 
 | Scope | Grants |
 |---|---|
-| \`portfolio:read\` | Every read tool and resource of the MCP server. Required for any call. |
-| \`contact:send\` | The \`send_contact_message\` tool (emails Daniel; at most 3 messages per hour per authorization). |
-| \`offline_access\` | A refresh token, valid for 30 days. |
+| \`${read}\` | Every read tool and resource of the MCP server. Required for any call. |
+| \`${contact}\` | The \`send_contact_message\` tool (emails Daniel; at most ${MCP_MESSAGES_PER_HOUR} messages per hour per authorization). |
+| \`${offlineAccess}\` | A refresh token, valid for 30 days. |
 
 ## Step 3 — Register
 
@@ -107,7 +111,7 @@ Accept: application/json, text/event-stream
 {"jsonrpc":"2.0","id":1,"method":"tools/list"}
 \`\`\`
 
-Tools: \`get_profile\`, \`list_projects\`, \`get_project\`, \`list_skills\`, \`list_achievements\`, \`get_contact_info\`, \`get_page_markdown\` and \`send_contact_message\`. Confirm every message with the person before calling \`send_contact_message\`.
+Tools: ${toolList}. Confirm every message with the person before calling \`send_contact_message\`.
 
 ## Errors
 
@@ -132,5 +136,5 @@ Content-Type: application/x-www-form-urlencoded
 token=ACCESS_OR_REFRESH_TOKEN&client_id=CLIENT_ID
 \`\`\`
 `;
-  return textResponse(body, 'text/markdown; charset=utf-8');
+  return markdownResponse(body);
 };

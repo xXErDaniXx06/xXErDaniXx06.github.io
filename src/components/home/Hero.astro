@@ -1,0 +1,70 @@
+---
+import type { ImageOutputFormat } from 'astro';
+import { Picture } from 'astro:assets';
+import { PROFILE_PHOTOS } from '../../data/media';
+import { pageHref } from '../../data/pages';
+import { CONTACT, PERSON_NAME } from '../../data/profile';
+import { getDictionary, type Lang } from '../../i18n';
+import { imageAsset } from '../../lib/images';
+import ButtonLink from '../ui/ButtonLink.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang).home;
+const [photo, hoverPhoto] = PROFILE_PHOTOS;
+const sizes = '(min-width: 1024px) 352px, (min-width: 640px) 320px, 256px';
+const formats: ImageOutputFormat[] = ['avif', 'webp'];
+---
+
+<section class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
+  <div class="max-w-2xl">
+    <p class="inline-flex items-center gap-2.5 text-sm font-medium text-muted">
+      <span class="size-2 rounded-full bg-success" aria-hidden="true"></span>
+      {t.availability}
+    </p>
+    <h1 class="mt-6 text-4xl font-semibold tracking-tight text-fg sm:text-5xl lg:text-[3.5rem] lg:leading-[1.05]">
+      <span class="mb-2 block text-xl font-medium tracking-normal text-muted sm:text-2xl">{t.greeting}</span>{' '}
+      {PERSON_NAME}
+    </h1>
+    <p class="mt-6 text-lg font-medium text-fg sm:text-xl">
+      {t.role} <span class="px-1 text-subtle">|</span> <span class="text-muted">{t.roleTagline}</span>
+    </p>
+    <p class="mt-6 text-base leading-relaxed text-muted sm:text-lg">{t.about}</p>
+    <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+      <ButtonLink href={pageHref(lang, 'proyectos')} icon="arrow-right">
+        {t.ctaProjects}
+      </ButtonLink>
+      <ButtonLink href={CONTACT.cvPath} download variant="secondary" icon="download" iconPosition="start">
+        {t.ctaCv}
+      </ButtonLink>
+    </div>
+  </div>
+
+  <div class="group relative mx-auto aspect-[4/5] w-64 overflow-hidden rounded-xl border border-line bg-surface shadow-[var(--shadow)] sm:w-80 lg:w-[22rem]">
+    <Picture
+      src={imageAsset(photo.file)}
+      alt={t.photoAlt}
+      widths={[256, 320, 384, 512, 640, 768]}
+      sizes={sizes}
+      formats={formats}
+      fallbackFormat="jpg"
+      loading="eager"
+      fetchpriority="high"
+      class="absolute inset-0 size-full object-cover object-top transition-opacity duration-500 group-hover:opacity-0"
+    />
+    <Picture
+      src={imageAsset(hoverPhoto.file)}
+      alt=""
+      widths={[256, 320, 416]}
+      sizes={sizes}
+      formats={formats}
+      fallbackFormat="jpg"
+      loading="lazy"
+      fetchpriority="low"
+      class="absolute inset-0 size-full object-cover object-top opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+    />
+  </div>
+</section>

@@ -1,0 +1,31 @@
+---
+import type { LocalizedSkillCategory } from '../../portfolio';
+
+interface Props {
+  category: LocalizedSkillCategory;
+}
+
+const { category } = Astro.props;
+const titleId = `skills-block-${category.id}-title`;
+---
+
+<section
+  id={`skills-block-${category.id}`}
+  aria-labelledby={titleId}
+  class="grid gap-6 py-12 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-12 lg:py-16"
+>
+  <div>
+    <h2 id={titleId} class="text-xl font-semibold tracking-tight text-fg">
+      {category.title}
+    </h2>
+    <p class="mt-2 text-sm leading-relaxed text-muted">{category.description}</p>
+  </div>
+  <dl class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+    {category.skills.map((skill) => (
+      <div class="border-l-2 border-line pl-4">
+        <dt class="text-sm font-semibold text-fg">{skill.name}</dt>
+        <dd class="mt-0.5 text-sm text-muted">{skill.note}</dd>
+      </div>
+    ))}
+  </dl>
+</section>

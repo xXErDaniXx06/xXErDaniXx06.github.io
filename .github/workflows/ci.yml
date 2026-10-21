@@ -1,40 +1,95 @@
 name: CI
 
-# Comprueba que la web compila y que el Worker de Cloudflare empaqueta.
+# Comprueba tipos, estilo y pruebas; compila la web y empaqueta el Worker; arranca el Worker
+# en local para las pruebas de extremo a extremo y Lighthouse.
 # No despliega: el despliegue se hace con `npm run deploy` (ver DEPLOY-CLOUDFLARE.md).
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   ASTRO_TELEMETRY_DISABLED: 1
   WRANGLER_SEND_METRICS: false
 
 jobs:
-  build:
-    name: Build
+  check:
+    name: Tipos, estilo, pruebas y compilación
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Install, cache, and configure Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
+      - run: npm ci
 
-      - name: Type-check and build Astro
+      - name: Tipos (Astro y Worker), ESLint, Prettier y pruebas unitarias
+        run: npm run check
+
+      - name: Compilar la web
         run: npm run build
 
-      - name: Bundle the Cloudflare Worker (dry run)
+      - name: Validar el HTML generado
+        run: npm run validate:html
+
+      - name: Empaquetar el Worker (sin desplegar)
         run: npx wrangler deploy --dry-run --outdir worker-bundle
+
+  e2e:
+    name: Worker en local, extremo a extremo y Lighthouse
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Compilar para localhost (con las claves de prueba de Turnstile)
+        run: npx astro build
+        env:
+          SITE_URL: http://localhost:8787
+          PUBLIC_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
+
+      - name: Arrancar el Worker
+        run: |
+          cp .dev.vars.example .dev.vars
+          npx wrangler dev --port 8787 --local-upstream localhost:8787 > wrangler.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null http://localhost:8787/api/v1/status && exit 0
+            sleep 2
+          done
+          cat wrangler.log
+          exit 1
+
+      - name: Pruebas de extremo a extremo
+        run: npm run test:e2e
+
+      # En las máquinas de CI el rendimiento medido varía: se exige 100 en accesibilidad,
+      # buenas prácticas y SEO, y al menos 90 en rendimiento. El 100 de rendimiento se
+      # comprueba con `npm run lighthouse` contra la web publicada.
+      - name: Lighthouse (móvil)
+        run: npm run lighthouse -- http://localhost:8787 --min-performance=90
+
+      - name: Lighthouse (escritorio)
+        run: npm run lighthouse -- http://localhost:8787 --desktop --min-performance=90
+
+      - name: Registro del Worker
+        if: failure()
+        run: cat wrangler.log

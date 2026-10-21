@@ -1,0 +1,94 @@
+---
+import { markdownHref, PAGE_IDS, pageHref, type PageId } from '../../data/pages';
+import { CONTACT, PERSON_NAME, SOURCE_REPOSITORY } from '../../data/profile';
+import { getDictionary, type Lang } from '../../i18n';
+import ExternalLink from '../ui/ExternalLink.astro';
+
+interface Props {
+  lang: Lang;
+  page?: PageId | undefined;
+}
+
+const { lang, page = 'index' } = Astro.props;
+const t = getDictionary(lang);
+const year = new Date().getFullYear();
+const heading = 'mb-3 text-xs font-semibold tracking-wide text-subtle uppercase';
+const link = 'text-muted transition-colors hover:text-fg';
+const agentLinks = [
+  { label: 'Markdown', href: markdownHref(lang, page) },
+  { label: 'llms.txt', href: '/llms.txt' },
+  { label: 'API', href: '/api/v1/docs.md' },
+  { label: 'MCP', href: '/auth.md' },
+];
+---
+
+<footer class="mt-auto border-t border-line bg-surface text-sm" data-print="hide">
+  <div class="mx-auto grid max-w-6xl gap-10 px-5 py-12 sm:px-8 md:grid-cols-[2fr_1fr_1fr]">
+    <div>
+      <p class="font-semibold text-fg">{PERSON_NAME}</p>
+      <p class="mt-1 max-w-xs text-muted">
+        {t.home.role} · {t.home.roleTagline}
+      </p>
+    </div>
+
+    <nav aria-labelledby="footer-sections">
+      <h2 id="footer-sections" class={heading}>
+        {t.footer.sections}
+      </h2>
+      <ul class="space-y-2">
+        {PAGE_IDS.map((id) => (
+          <li>
+            <a href={pageHref(lang, id)} class={link}>
+              {t.nav.pages[id]}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class={heading}>{t.footer.contact}</h2>
+      <ul class="space-y-2">
+        <li>
+          <a href={`mailto:${CONTACT.personalEmail}`} class={link}>
+            {CONTACT.personalEmail}
+          </a>
+        </li>
+        <li>
+          <ExternalLink href={CONTACT.linkedin.url} locale={lang} class={link}>
+            LinkedIn
+          </ExternalLink>
+        </li>
+        <li>
+          <ExternalLink href={CONTACT.github.url} locale={lang} class={link}>
+            GitHub
+          </ExternalLink>
+        </li>
+        <li>
+          <a href={CONTACT.cvPath} download class={link}>
+            {t.nav.cv} (PDF)
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-line">
+    <div class="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-6 text-subtle sm:px-8 md:flex-row md:items-center md:justify-between">
+      <p>
+        © {year} {PERSON_NAME}
+      </p>
+      <p class="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span>{t.footer.agents}:</span>
+        {agentLinks.map((item) => (
+          <a href={item.href} class="underline-offset-4 hover:text-fg hover:underline">
+            {item.label}
+          </a>
+        ))}
+        <ExternalLink href={SOURCE_REPOSITORY} locale={lang} class="underline-offset-4 hover:text-fg hover:underline">
+          {t.footer.source}
+        </ExternalLink>
+      </p>
+    </div>
+  </div>
+</footer>

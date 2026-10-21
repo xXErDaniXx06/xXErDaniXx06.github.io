@@ -1,0 +1,34 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon from './Icon.astro';
+import type { IconName } from './icons';
+
+interface Props extends HTMLAttributes<'a'> {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  icon?: IconName;
+  /** Posición del icono respecto al texto. */
+  iconPosition?: 'start' | 'end';
+}
+
+const { variant = 'primary', icon, iconPosition = 'end', class: className, ...attributes } = Astro.props;
+const VARIANTS = {
+  primary: 'bg-accent text-accent-fg hover:bg-accent-hover border-transparent',
+  secondary: 'bg-raised text-fg border-line-strong/60 hover:border-line-strong hover:bg-surface',
+};
+---
+
+<a
+  {...attributes}
+  class:list={[
+    'group inline-flex items-center justify-center gap-2 rounded-md border px-5 py-3 text-sm font-semibold transition-colors',
+    VARIANTS[variant],
+    className,
+  ]}
+>
+  {icon && iconPosition === 'start' && <Icon name={icon} class="size-4" />}
+  <slot />
+  {icon && iconPosition === 'end' && (
+    <Icon name={icon} class="size-4 transition-transform group-hover:translate-x-0.5" />
+  )}
+</a>

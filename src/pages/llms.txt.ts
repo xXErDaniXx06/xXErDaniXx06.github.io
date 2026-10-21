@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { siteOrigin, textResponse } from '../agent/site.js';
-import { renderLlmsTxt } from '../agent/content.js';
+import { plainTextResponse, siteOrigin } from '../agent/endpoint';
+import { renderLlmsTxt } from '../agent/llms';
 
-export const GET: APIRoute = () => textResponse(renderLlmsTxt(siteOrigin()), 'text/plain; charset=utf-8');
+export const GET: APIRoute = () => plainTextResponse(renderLlmsTxt(siteOrigin()));

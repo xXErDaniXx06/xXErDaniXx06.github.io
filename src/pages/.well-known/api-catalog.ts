@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { jsonResponse, siteOrigin } from '../../agent/site.js';
+import { jsonResponse, siteOrigin } from '../../agent/endpoint';
 
 // Catálogo de APIs (RFC 9727) en formato linkset (RFC 9264).
 // El Worker lo sirve como application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727".
@@ -22,6 +22,6 @@ export const GET: APIRoute = () => {
         },
       ],
     },
-    'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"'
+    'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
   );
 };

@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
-import { jsonResponse, siteOrigin } from '../../agent/site.js';
-import { MCP_SERVER, SERVER_CARD_PATH } from '../../agent/mcp-info.js';
-import { PERSON_NAME } from '../../data/profile.js';
+import { jsonResponse, siteOrigin } from '../../agent/endpoint';
+import { MCP_SERVER, MCP_TOOLS, SERVER_CARD_PATH } from '../../agent/mcp-info';
+import { PERSON_NAME } from '../../data/profile';
 
 // Catálogo de IA (ARD / AI Catalog): todo lo que el sitio ofrece a los agentes.
 // El Worker añade Access-Control-Allow-Origin: * y negocia application/ai-catalog+json.
@@ -24,11 +24,11 @@ export const GET: APIRoute = () => {
         url: `${origin}${SERVER_CARD_PATH}`,
         description: MCP_SERVER.description,
         tags: ['portfolio', 'resume', 'aerospace', 'software', 'contact'],
-        capabilities: ['get_profile', 'list_projects', 'get_project', 'list_skills', 'list_achievements', 'get_contact_info', 'get_page_markdown', 'send_contact_message'],
+        capabilities: [...MCP_TOOLS],
         representativeQueries: [
-          "what projects has Daniel Carrasco García worked on",
+          'what projects has Daniel Carrasco García worked on',
           "list Daniel Carrasco García's awards and achievements",
-          "which programming languages and RF tools does Daniel Carrasco know",
+          'which programming languages and RF tools does Daniel Carrasco know',
           'send a message to Daniel Carrasco García about an internship',
         ],
       },
@@ -37,7 +37,8 @@ export const GET: APIRoute = () => {
         displayName: `${PERSON_NAME} — Portfolio JSON API`,
         type: 'application/vnd.oai.openapi+json',
         url: `${origin}/api/v1/openapi.json`,
-        description: 'Read-only JSON API (no authentication) with the profile, projects, skills, achievements and contact details in es, en and fr.',
+        description:
+          'Read-only JSON API (no authentication) with the profile, projects, skills, achievements and contact details in es, en and fr.',
         tags: ['portfolio', 'json', 'openapi'],
         representativeQueries: [
           "get Daniel Carrasco García's profile as JSON",
@@ -64,10 +65,7 @@ export const GET: APIRoute = () => {
         url: `${origin}/llms.txt`,
         description: 'Index of every portfolio page in Markdown, in Spanish, English and French.',
         tags: ['llms.txt', 'markdown'],
-        representativeQueries: [
-          'who is Daniel Carrasco García',
-          'summary of Daniel Carrasco García portfolio',
-        ],
+        representativeQueries: ['who is Daniel Carrasco García', 'summary of Daniel Carrasco García portfolio'],
       },
     ],
   });

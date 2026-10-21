@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { createHash } from 'node:crypto';
-import { jsonResponse, siteOrigin } from '../../../agent/site.js';
-import { SKILLS } from '../../../agent/skills.js';
+import { jsonResponse, siteOrigin } from '../../../agent/endpoint';
+import { SKILLS } from '../../../agent/skills';
 
 // Índice de Agent Skills (Agent Skills Discovery RFC v0.2.0). La huella es el SHA-256
 // de los bytes exactos de cada SKILL.md publicado.

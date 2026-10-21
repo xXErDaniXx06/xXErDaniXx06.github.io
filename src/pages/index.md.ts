@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { siteOrigin, textResponse } from '../agent/site.js';
-import { renderRootMarkdown } from '../agent/content.js';
+import { markdownResponse, siteOrigin } from '../agent/endpoint';
+import { renderRootMarkdown } from '../agent/llms';
 
-// Versión Markdown de la raíz (/), que en HTML redirige a /es/.
-export const GET: APIRoute = () => textResponse(renderRootMarkdown(siteOrigin()), 'text/markdown; charset=utf-8');
+// Versión Markdown de la raíz (/), que muestra la portada en el idioma por defecto.
+export const GET: APIRoute = () => markdownResponse(renderRootMarkdown(siteOrigin()));

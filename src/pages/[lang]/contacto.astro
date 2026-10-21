@@ -1,0 +1,12 @@
+---
+import type { InferGetStaticPropsType } from 'astro';
+import { langPaths } from '../../lib/routes';
+import ContactView from '../../views/ContactView.astro';
+
+export const getStaticPaths = langPaths;
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { lang } = Astro.props;
+---
+
+<ContactView lang={lang} />

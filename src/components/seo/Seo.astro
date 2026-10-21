@@ -1,0 +1,49 @@
+---
+// Título, descripción, URL canónica, idiomas alternativos y Open Graph.
+import { pageHref, type PageId } from '../../data/pages';
+import { PERSON_NAME } from '../../data/profile';
+import { DEFAULT_LANG, LANGS, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Ruta canónica de la página. */
+  canonicalPath: string;
+  /** Página con versiones en los demás idiomas (enlaces hreflang). */
+  page?: PageId | undefined;
+  noindex?: boolean;
+}
+
+const { lang, title, description, canonicalPath, page, noindex = false } = Astro.props;
+const origin = new URL(Astro.site ?? Astro.url).origin;
+const canonical = new URL(canonicalPath, origin).href;
+const OG_LOCALES: Record<Lang, string> = { es: 'es_ES', en: 'en_US', fr: 'fr_FR' };
+// Imagen para compartir de cada idioma (scripts/brand-assets.mjs)
+const image = new URL(`/og/${lang}.jpg`, origin).href;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content={PERSON_NAME} />
+{noindex && <meta name="robots" content="noindex" />}
+{!noindex && <link rel="canonical" href={canonical} />}
+{page &&
+  LANGS.map((code) => <link rel="alternate" hreflang={code} href={new URL(pageHref(code, page), origin).href} />)}
+{page && <link rel="alternate" hreflang="x-default" href={new URL(pageHref(DEFAULT_LANG, page), origin).href} />}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={PERSON_NAME} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={OG_LOCALES[lang]} />
+{LANGS.filter((code) => code !== lang).map((code) => (
+  <meta property="og:locale:alternate" content={OG_LOCALES[code]} />
+))}
+<meta property="og:image" content={image} />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={PERSON_NAME} />
+<meta name="twitter:card" content="summary_large_image" />

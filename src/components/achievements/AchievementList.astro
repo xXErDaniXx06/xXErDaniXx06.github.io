@@ -1,0 +1,30 @@
+---
+import type { LocalizedAchievement } from '../../portfolio';
+
+interface Props {
+  achievements: LocalizedAchievement[];
+}
+
+const { achievements } = Astro.props;
+---
+
+<ol class="divide-y divide-line border-y border-line">
+  {achievements.map((achievement) => (
+    <li class="grid gap-3 py-7 md:grid-cols-[10rem_minmax(0,1fr)] md:gap-10">
+      <div class="flex flex-wrap items-start gap-2 md:flex-col md:gap-2.5">
+        <time datetime={achievement.datetime} class="font-mono text-sm text-muted">
+          {achievement.date}
+        </time>
+        <span class="rounded-full px-2.5 py-0.5 text-xs font-medium text-muted ring-1 ring-line ring-inset">
+          {achievement.scopeLabel}
+        </span>
+      </div>
+      <div>
+        <p class="text-xs font-semibold tracking-wide text-subtle uppercase">{achievement.organization}</p>
+        <h2 class="mt-1.5 text-lg font-semibold tracking-tight text-fg">{achievement.title}</h2>
+        <p class="mt-1 text-sm font-semibold text-accent">{achievement.prize}</p>
+        <p class="mt-2 text-sm leading-relaxed text-muted">{achievement.description}</p>
+      </div>
+    </li>
+  ))}
+</ol>

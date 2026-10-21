@@ -1,0 +1,91 @@
+---
+import { CONTACT } from '../../data/profile';
+import { getDictionary, type Lang } from '../../i18n';
+import ButtonLink from '../ui/ButtonLink.astro';
+import ExternalLink from '../ui/ExternalLink.astro';
+import Icon from '../ui/Icon.astro';
+import type { IconName } from '../ui/icons';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang).contact.info;
+
+interface Channel {
+  icon: IconName;
+  label: string;
+  value: string;
+  href: string;
+  external?: boolean;
+}
+
+const channels: Channel[] = [
+  { icon: 'mail', label: t.personalEmail, value: CONTACT.personalEmail, href: `mailto:${CONTACT.personalEmail}` },
+  { icon: 'mail', label: t.umaEmail, value: CONTACT.umaEmail, href: `mailto:${CONTACT.umaEmail}` },
+  // Espacios de no separación: el número no se parte entre líneas
+  { icon: 'phone', label: t.phone, value: CONTACT.phone.display.replaceAll(' ', '\u00a0'), href: CONTACT.phone.href },
+  { icon: 'linkedin', label: 'LinkedIn', value: CONTACT.linkedin.label, href: CONTACT.linkedin.url, external: true },
+  { icon: 'github', label: 'GitHub', value: CONTACT.github.label, href: CONTACT.github.url, external: true },
+];
+const row = 'group flex items-center gap-4 py-4';
+---
+
+<section aria-labelledby="contact-info-title">
+  <h2 id="contact-info-title" class="text-2xl font-semibold tracking-tight text-fg">
+    {t.title}
+  </h2>
+  <p class="mt-3 leading-relaxed text-muted">{t.description}</p>
+
+  <ul class="mt-8 divide-y divide-line border-y border-line" aria-label={t.channels}>
+    {channels.map((channel) => {
+      const content = (
+        <>
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-md border border-line bg-surface text-muted group-hover:text-accent">
+            <Icon name={channel.icon} class="size-[1.125rem]" />
+          </span>
+          <span class="min-w-0">
+            <span class="block text-xs font-medium tracking-wide text-subtle uppercase">{channel.label}</span>
+            <span class="block truncate text-sm font-medium text-fg group-hover:text-accent">{channel.value}</span>
+          </span>
+        </>
+      );
+      return (
+        <li>
+          {channel.external ? (
+            <ExternalLink href={channel.href} locale={lang} class={row}>
+              {content}
+            </ExternalLink>
+          ) : (
+            <a href={channel.href} class={row}>
+              {content}
+            </a>
+          )}
+        </li>
+      );
+    })}
+  </ul>
+
+  <ButtonLink
+    href={CONTACT.cvPath}
+    download
+    variant="secondary"
+    icon="download"
+    iconPosition="start"
+    class="mt-8 w-full sm:w-auto"
+  >
+    {t.downloadCv}
+  </ButtonLink>
+
+  <ul class="mt-8 space-y-3 text-sm text-muted">
+    <li class="flex items-start gap-3">
+      <Icon name="calendar" class="mt-0.5 size-4 shrink-0 text-subtle" />
+      <span>{t.meetings}</span>
+    </li>
+    <li class="flex items-start gap-3">
+      <Icon name="globe" class="mt-0.5 size-4 shrink-0 text-subtle" />
+      <span>{t.languages}</span>
+    </li>
+  </ul>
+</section>

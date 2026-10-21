@@ -1,0 +1,68 @@
+---
+import { Font } from 'astro:assets';
+import AgentDiscovery from '../components/seo/AgentDiscovery.astro';
+import ColorFilters from '../components/layout/ColorFilters.astro';
+import PreferencesScript from '../components/seo/PreferencesScript.astro';
+import Seo from '../components/seo/Seo.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import SkipLink from '../components/layout/SkipLink.astro';
+import { markdownHref, type PageId } from '../data/pages';
+import type { Lang } from '../i18n';
+import '../styles/global.css';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  canonicalPath: string;
+  /** Página de la web que se muestra (marca la navegación y enlaza sus otros idiomas). */
+  page?: PageId | undefined;
+  /** Versión Markdown de la página; por defecto, la de `page` o la de la raíz. */
+  markdownPath?: string | undefined;
+  noindex?: boolean;
+}
+
+const { lang, title, description, canonicalPath, page, markdownPath, noindex = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <PreferencesScript />
+    <Seo
+      lang={lang}
+      title={title}
+      description={description}
+      canonicalPath={canonicalPath}
+      page={page}
+      noindex={noindex}
+    />
+    <Font cssVariable="--font-inter" preload />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <AgentDiscovery
+      lang={lang}
+      page={page}
+      markdownPath={markdownPath ?? (page ? markdownHref(lang, page) : '/index.md')}
+    />
+  </head>
+  <body class="bg-bg text-fg antialiased">
+    <SkipLink lang={lang} />
+    <ColorFilters />
+    <SiteHeader lang={lang} page={page} />
+    <main id="main" tabindex="-1" class="flex-1 focus:outline-none">
+      <slot />
+    </main>
+    <SiteFooter lang={lang} page={page} />
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>

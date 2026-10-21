@@ -1,0 +1,14 @@
+---
+// Página de error de cada idioma (/es/404.html): Cloudflare la sirve con estado 404
+// para cualquier ruta inexistente bajo /es/, /en/ o /fr/.
+import type { InferGetStaticPropsType } from 'astro';
+import { langPaths } from '../../lib/routes';
+import NotFoundView from '../../views/NotFoundView.astro';
+
+export const getStaticPaths = langPaths;
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { lang } = Astro.props;
+---
+
+<NotFoundView lang={lang} />

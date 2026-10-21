@@ -1,0 +1,35 @@
+---
+// Enlaces a la misma página en los demás idiomas.
+import { pageHref, type PageId } from '../../data/pages';
+import { getDictionary, LANGS, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+  /** Página actual; sin ella (p. ej. en la página de error) se enlaza la portada. */
+  page?: PageId | undefined;
+  class?: string;
+}
+
+const { lang, page = 'index', class: className } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<ul class:list={['flex items-center gap-1', className]} aria-label={t.nav.languageLabel}>
+  {LANGS.map((code) => (
+    <li>
+      <a
+        href={pageHref(code, page)}
+        hreflang={code}
+        lang={code}
+        aria-current={code === lang ? 'true' : undefined}
+        class:list={[
+          'inline-flex min-h-9 min-w-9 items-center justify-center rounded-md px-2 text-xs font-semibold tracking-wide transition-colors',
+          code === lang ? 'bg-surface text-fg' : 'text-muted hover:bg-surface hover:text-fg',
+        ]}
+      >
+        <span aria-hidden="true">{code.toUpperCase()}</span>
+        <span class="sr-only">{getDictionary(code).languageName}</span>
+      </a>
+    </li>
+  ))}
+</ul>

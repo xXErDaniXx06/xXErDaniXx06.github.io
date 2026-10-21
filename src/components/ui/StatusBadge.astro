@@ -1,0 +1,20 @@
+---
+import type { ProjectStatus } from '../../data/projects';
+
+interface Props {
+  status: ProjectStatus;
+  label: string;
+}
+
+const { status, label } = Astro.props;
+---
+
+<span
+  class:list={[
+    'inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold',
+    status === 'active' ? 'bg-success-soft text-success' : 'bg-surface text-muted ring-1 ring-line ring-inset',
+  ]}
+>
+  {status === 'active' && <span class="size-1.5 rounded-full bg-success" aria-hidden="true" />}
+  {label}
+</span>

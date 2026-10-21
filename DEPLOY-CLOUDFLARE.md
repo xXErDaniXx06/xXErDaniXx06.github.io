@@ -4,6 +4,7 @@ Esta guía mueve **danielcarrascogarcia.me** de GitHub Pages a un Worker de Clou
 
 - negociación de Markdown, cabeceras `Link` y cabeceras de seguridad, que GitHub Pages no permite;
 - servidor MCP en `/mcp`, con OAuth 2.1, Turnstile y la herramienta para enviarte mensajes;
+- la API del formulario de contacto (`POST /api/v1/contact`), que envía los correos desde el servidor;
 - Web Bot Auth y los registros DNS para agentes (DNS-AID, con DNSSEC).
 
 **Coste: 0 €.** Todo cabe en los planes gratuitos de Cloudflare (Workers, KV, Turnstile, DNS y DNSSEC) y de EmailJS. El dominio sigue registrado en Namecheap; solo cambia quién responde a su DNS.
@@ -49,17 +50,17 @@ Tiempo: unos 45 minutos, más la espera a que Cloudflare active el dominio (de m
 
 ## 4. Crear las claves
 
-**Turnstile** (el CAPTCHA de la página de autorización):
+**Turnstile** (la comprobación de que hay una persona en la página de autorización y en el formulario de contacto):
 
 1. Cloudflare → **Turnstile** → **Add widget**: nombre `Porfolio OAuth`, hostname `danielcarrascogarcia.me`, modo **Managed**.
-2. Copia la **Site Key** en `wrangler.jsonc`, en `"TURNSTILE_SITE_KEY"`; es pública y puede ir al repositorio.
+2. Copia la **Site Key** en `src/config/turnstile.ts`; es pública y va en el repositorio. La usan el formulario de contacto y la página de autorización.
 3. Guarda la **Secret Key** para el paso 5. Está en el widget → *Edit Widget* → *Widget Keys* → **Show**. Mide unos 35 caracteres; el *Site key*, que es fácil copiar por error, mide 24.
 
-**EmailJS** (para que el servidor MCP pueda enviarte mensajes con la misma plantilla que el formulario):
+**EmailJS** (el Worker envía con él los mensajes del formulario de la web y de la herramienta MCP):
 
 1. EmailJS → **Account** → **Security** → activa **Allow EmailJS API for non-browser applications**.
 2. Copia la **Private Key** (Account → API keys) para el paso 5.
-3. La plantilla `template_mkc43b2` no debe tener activado *Enable reCAPTCHA V2 verification* (en sus *Settings*), porque bloquearía los envíos desde el servidor. Ojo: las cabeceras de la plantilla (remitente, *Reply To* y asunto) usan `{{name}}`, `{{email}}` y `{{title}}`. El servidor MCP las envía, pero el formulario de la web no.
+3. La plantilla `template_mkc43b2` no debe tener activado *Enable reCAPTCHA V2 verification* (en sus *Settings*), porque bloquearía los envíos desde el servidor. Las cabeceras de la plantilla (remitente, *Reply To* y asunto) usan `{{name}}`, `{{email}}` y `{{title}}`, y el Worker las rellena siempre.
 
 **Web Bot Auth** (la clave con la que el Worker firma sus peticiones automáticas): ejecuta este comando y guarda la línea que imprime.
 
@@ -85,7 +86,7 @@ Para el día a día hay dos formas de desplegar:
 
 - **Desde Cloudflare, con despliegue automático en cada push** (recomendado):
   1. Cloudflare → **Workers & Pages** → **Create** → **Import a repository** → autoriza GitHub y elige `xXErDaniXx06/xXErDaniXx06.github.io`.
-  2. Build command: `npm run build`. Deploy command: `npx wrangler deploy`.
+  2. Build command: `npm run build`. Deploy command: `npx wrangler deploy`. (Compila siempre antes de desplegar: `dist/` puede contener una compilación para localhost si has usado `npm run worker:dev`.)
   3. Cuando termine el primer despliegue, ve a **Settings** → **Variables and Secrets** y añade tres secretos (tipo *Secret*): `TURNSTILE_SECRET_KEY`, `EMAILJS_PRIVATE_KEY` y `WEB_BOT_AUTH_PRIVATE_KEY`, con los valores del paso 4.
 - **Desde tu terminal**, con estos comandos en orden:
 
@@ -111,7 +112,7 @@ Para el día a día hay dos formas de desplegar:
 
   Wrangler pregunta si quieres crear el Worker la primera vez que guardas un secreto: responde que sí.
 
-El primer despliegue crea solo el almacenamiento KV (`OAUTH_KV`) y conecta los dominios `danielcarrascogarcia.me` y `www.danielcarrascogarcia.me`.
+El primer despliegue crea solo el almacenamiento KV (`OAUTH_KV`), los dos limitadores (`OAUTH_RATE_LIMITER` y `CONTACT_RATE_LIMITER`) y conecta los dominios `danielcarrascogarcia.me` y `www.danielcarrascogarcia.me`.
 
 ## 6. Registros DNS para agentes (DNS-AID)
 
@@ -132,7 +133,8 @@ Hecho el 20-10-2026: Pages está desactivado en el repositorio y se han eliminad
 
 1. Escanea <https://danielcarrascogarcia.me> en [isitagentready.com](https://isitagentready.com).
 2. Conecta el servidor MCP desde un cliente (por ejemplo, Claude → *Connectors* → URL `https://danielcarrascogarcia.me/mcp`): debe abrirse la página de autorización con Turnstile.
-3. Prueba `send_contact_message` una vez para confirmar que llega el correo. Si EmailJS lo rechaza, revisa el paso 4: la plantilla no debe exigir reCAPTCHA para llamadas desde servidor.
+3. Envía un mensaje desde el formulario de `/es/contacto` (y, si quieres, con `send_contact_message`) para confirmar que llega el correo. Si EmailJS lo rechaza, revisa el paso 4: la plantilla no debe exigir reCAPTCHA para llamadas desde servidor.
+4. Mide Lighthouse en todas las páginas (móvil y escritorio): `npm run lighthouse` y `npm run lighthouse -- --desktop`.
 
 Comprobaciones rápidas desde la terminal:
 
@@ -148,7 +150,7 @@ dig +short SVCB _index._agents.danielcarrascogarcia.me
 
 ## Mantenimiento
 
-- **Contenido**: se edita como siempre en `src/utils/i18n.js` y `src/data/profile.js`. El Markdown, `llms.txt`, la API JSON, el servidor MCP y las skills se regeneran solos en cada compilación.
+- **Contenido**: los textos están en `src/i18n/` (`es.ts`, `en.ts`, `fr.ts`) y los datos que no dependen del idioma en `src/data/` (perfil, proyectos, logros, habilidades, imágenes). El Markdown, `llms.txt`, la API JSON, el servidor MCP y las skills se regeneran solos en cada compilación.
 - **Probar el Worker en local**:
 
   ```bash
@@ -159,6 +161,6 @@ dig +short SVCB _index._agents.danielcarrascogarcia.me
   npm run worker:dev
   ```
 
-  Se abre en <http://localhost:8787>. Las claves de Turnstile de `.dev.vars.example` son las de prueba de Cloudflare, que siempre aprueban.
+  Compila la web para <http://localhost:8787> y arranca el Worker. Las claves de Turnstile de `.dev.vars.example` son las de prueba de Cloudflare, que siempre aprueban; sin clave de EmailJS no se envía ningún correo. Las pruebas de extremo a extremo se lanzan contra él con `npm run test:e2e`.
 - **Entrenamiento de modelos de IA**: `robots.txt` mantiene lo que había antes, es decir, todo permitido, y lo declara con Content Signals (`ai-train=yes`). Para excluir el entrenamiento, cambia `SIGNALS` y las reglas de `TRAINING_BOTS` en `src/pages/robots.txt.ts`.
-- **Límites**: el servidor MCP acepta 3 mensajes por hora y autorización y 20 al día en total. Las rutas OAuth admiten 10 peticiones por minuto y por IP.
+- **Límites**: el formulario admite un mensaje por minuto y cinco por hora desde cada IP; el servidor MCP, 3 mensajes por hora y autorización; entre los dos, 20 al día en total. Las rutas OAuth admiten 10 peticiones por minuto y por IP.

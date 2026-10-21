@@ -1,7 +1,8 @@
 import type { APIRoute } from 'astro';
 import { SUPPORTED_PROTOCOL_VERSIONS } from '@modelcontextprotocol/sdk/types.js';
-import { jsonResponse, siteOrigin } from '../../../agent/site.js';
-import { MCP_SERVER, MCP_PATH } from '../../../agent/mcp-info.js';
+import { jsonResponse, siteOrigin } from '../../../agent/endpoint';
+import { MCP_PATH, MCP_SERVER } from '../../../agent/mcp-info';
+import { SOURCE_REPOSITORY } from '../../../data/profile';
 
 // MCP Server Card. Cumple el formato aprobado en SEP-2127 (esquema v1: name, version,
 // description, remotes…) y conserva los campos del borrador anterior (SEP-1649:
@@ -17,7 +18,7 @@ export const GET: APIRoute = () => {
     title: MCP_SERVER.title,
     description: MCP_SERVER.description,
     websiteUrl: `${origin}/`,
-    repository: { url: 'https://github.com/xXErDaniXx06/xXErDaniXx06.github.io', source: 'github' },
+    repository: { url: SOURCE_REPOSITORY, source: 'github' },
     remotes: [{ type: 'streamable-http', url: endpoint, supportedProtocolVersions: [...SUPPORTED_PROTOCOL_VERSIONS] }],
 
     // Campos del borrador SEP-1649

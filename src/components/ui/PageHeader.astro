@@ -1,0 +1,22 @@
+---
+// Cabecera de las páginas interiores: etiqueta, título y entradilla.
+interface Props {
+  eyebrow: string;
+  title: string;
+  description?: string;
+}
+
+const { eyebrow, title, description } = Astro.props;
+---
+
+<header class="border-b border-line bg-surface">
+  <div class="mx-auto max-w-6xl px-5 py-14 sm:px-8 md:py-20">
+    <p class="eyebrow flex items-center gap-2">
+      <slot name="eyebrow-icon" />
+      {eyebrow}
+    </p>
+    <h1 class="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-fg sm:text-5xl">{title}</h1>
+    {description && <p class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">{description}</p>}
+    <slot />
+  </div>
+</header>

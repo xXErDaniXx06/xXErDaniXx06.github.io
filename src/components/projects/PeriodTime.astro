@@ -1,0 +1,23 @@
+---
+// Periodo de un proyecto con fechas legibles por máquina: «<time>15/07/2025</time> – Actualidad».
+import type { PeriodPart, PeriodView } from '../../portfolio';
+
+interface Props {
+  period: PeriodView;
+  class?: string;
+}
+
+const { period, class: className } = Astro.props;
+const parts = [period.start, period.end].filter((part): part is PeriodPart => Boolean(part));
+---
+
+<span class={className}>
+  {parts.length === 0
+    ? period.text
+    : parts.map((part, index) => (
+        <>
+          {index > 0 && ' – '}
+          {part.datetime ? <time datetime={part.datetime}>{part.text}</time> : part.text}
+        </>
+      ))}
+</span>

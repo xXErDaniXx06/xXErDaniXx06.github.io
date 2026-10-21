@@ -1,13 +1,7 @@
 ---
-// Redirección automática al idioma por defecto (español)
+// La raíz muestra la portada en el idioma por defecto. Su URL canónica es la de /es/.
+import { DEFAULT_LANG } from '../i18n';
+import HomeView from '../views/HomeView.astro';
 ---
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0;url=/es/" />
-    <title>Redirigiendo…</title>
-  </head>
-  <body>
-    <p>Redirigiendo a <a href="/es/">la versión en español</a>…</p>
-  </body>
-</html>
+
+<HomeView lang={DEFAULT_LANG} markdownPath="/index.md" />

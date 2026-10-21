@@ -1,0 +1,35 @@
+---
+import ProjectArticle from '../components/projects/ProjectArticle.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import { pageHref } from '../data/pages';
+import { getDictionary, type Lang } from '../i18n';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getProjects } from '../portfolio';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+const projects = getProjects(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  page="proyectos"
+  title={t.pages.proyectos.title}
+  description={t.pages.proyectos.description}
+  canonicalPath={pageHref(lang, 'proyectos')}
+>
+  <PageHeader
+    eyebrow={t.projects.tag}
+    title={t.projects.title + t.projects.titleHighlight}
+    description={t.projects.subtitle}
+  />
+  <div class="mx-auto max-w-6xl divide-y divide-line px-5 sm:px-8">
+    {projects.map((project, index) => (
+      <ProjectArticle project={project} lang={lang} eager={index === 0} />
+    ))}
+  </div>
+</BaseLayout>

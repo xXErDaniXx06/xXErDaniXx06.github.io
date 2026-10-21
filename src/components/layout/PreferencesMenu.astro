@@ -1,0 +1,127 @@
+---
+// Menú de accesibilidad: tema, tamaño de texto, alto contraste y filtro de color.
+// Es un popover nativo: se abre y cierra sin JavaScript (Esc o clic fuera también lo cierran).
+import { getDictionary, type Lang } from '../../i18n';
+import { COLOR_FILTERS, DEFAULT_PREFERENCES, TEXT_SIZES, THEMES } from '../../lib/preferences';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = getDictionary(Astro.props.lang).preferences;
+const SIZE_SYMBOLS = { small: 'A−', normal: 'A', large: 'A+' } as const;
+
+const option =
+  'flex min-h-9 cursor-pointer items-center justify-center rounded-md border border-line px-2.5 text-sm font-medium text-muted transition-colors hover:border-line-strong hover:text-fg peer-checked:border-accent peer-checked:bg-accent-soft peer-checked:text-accent peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent';
+const legend = 'mb-2 text-xs font-semibold tracking-wide text-subtle uppercase';
+---
+
+<button
+  type="button"
+  popovertarget="preferences-panel"
+  class="inline-flex size-10 items-center justify-center rounded-md text-muted transition-colors hover:bg-surface hover:text-fg"
+  aria-label={t.open}
+  title={t.title}
+>
+  <Icon name="accessibility" class="size-5" />
+</button>
+
+<div
+  id="preferences-panel"
+  popover
+  role="dialog"
+  aria-labelledby="preferences-title"
+  class="fixed inset-auto top-[4.5rem] right-4 m-0 w-[min(21rem,calc(100vw-2rem))] rounded-lg border border-line bg-raised p-5 text-fg shadow-[0_12px_32px_rgb(15_23_42/0.14)] sm:right-8"
+>
+  <div class="mb-4 flex items-center justify-between">
+    <h2 id="preferences-title" class="text-base font-semibold">
+      {t.title}
+    </h2>
+    <button
+      type="button"
+      popovertarget="preferences-panel"
+      popovertargetaction="hide"
+      class="inline-flex size-8 items-center justify-center rounded-md text-muted hover:bg-surface hover:text-fg"
+      aria-label={t.close}
+    >
+      <Icon name="close" class="size-4" />
+    </button>
+  </div>
+
+  <div data-preferences-form class="space-y-5">
+    <fieldset>
+      <legend class={legend}>{t.theme}</legend>
+      <div class="grid grid-cols-3 gap-2">
+        {THEMES.map((theme) => (
+          <label>
+            <input
+              type="radio"
+              name="theme"
+              value={theme}
+              class="peer sr-only"
+              checked={theme === DEFAULT_PREFERENCES.theme}
+            />
+            <span class={option}>{t.themes[theme]}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend class={legend}>{t.textSize}</legend>
+      <div class="grid grid-cols-3 gap-2">
+        {TEXT_SIZES.map((size) => (
+          <label>
+            <input
+              type="radio"
+              name="textSize"
+              value={size}
+              class="peer sr-only"
+              checked={size === DEFAULT_PREFERENCES.textSize}
+            />
+            <span class={option} aria-hidden="true">
+              {SIZE_SYMBOLS[size]}
+            </span>
+            <span class="sr-only">{t.textSizes[size]}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <label class="flex cursor-pointer items-center justify-between gap-4">
+      <span class="text-sm font-medium">{t.contrast}</span>
+      <input type="checkbox" role="switch" name="highContrast" class="peer sr-only" />
+      <span
+        aria-hidden="true"
+        class="relative h-6 w-11 shrink-0 rounded-full border border-line-strong bg-surface transition-colors peer-checked:border-accent peer-checked:bg-accent peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent after:absolute after:top-0.5 after:left-0.5 after:size-4 after:rounded-full after:bg-muted after:transition-transform peer-checked:after:translate-x-5 peer-checked:after:bg-accent-fg"
+      ></span>
+    </label>
+
+    <fieldset>
+      <legend class={legend}>{t.colorFilter}</legend>
+      <div class="grid grid-cols-2 gap-2">
+        {COLOR_FILTERS.map((filter) => (
+          <label>
+            <input
+              type="radio"
+              name="colorFilter"
+              value={filter}
+              class="peer sr-only"
+              checked={filter === DEFAULT_PREFERENCES.colorFilter}
+            />
+            <span class={option}>{t.colorFilters[filter]}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <button
+      type="button"
+      data-preferences-reset
+      class="w-full rounded-md border border-line px-3 py-2 text-sm font-medium text-muted transition-colors hover:border-line-strong hover:text-fg"
+    >
+      {t.reset}
+    </button>
+  </div>
+</div>

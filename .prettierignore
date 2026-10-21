@@ -1,0 +1,7 @@
+dist/
+.astro/
+.wrangler/
+worker-bundle/
+package-lock.json
+public/
+*.md

@@ -1,120 +1,231 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* =============================================
-   VARIABLES CSS – PALETA TECNOLÓGICA OSCURA
-   ============================================= */
-:root {
-  /* Fondos */
-  --color-bg-primary:    #0a0f1e;
-  --color-bg-secondary:  #111827;
-  --color-bg-card:       #1a2235;
-  --color-bg-muted:      #1e293b;
-
-  /* Texto */
-  --color-text-primary:  #e2e8f0;
-  --color-text-secondary:#94a3b8;
-  --color-text-muted:    #64748b;
-
-  /* Acentos técnicos */
-  --color-accent-primary:   #38bdf8;   /* sky-400  */
-  --color-accent-secondary: #818cf8;   /* indigo-400 */
-  --color-accent-hover:     #7dd3fc;   /* sky-300  */
-
-  /* Bordes */
-  --color-border:        #1e293b;
-  --color-border-accent: #38bdf8;
-
-  /* Sombras */
-  --shadow-glow:         0 0 20px rgba(56, 189, 248, 0.15);
-
-  /* Tipografía */
-  --font-sans: 'Inter', 'Outfit', system-ui, sans-serif;
-
-  /* Transiciones */
-  --transition-base: 0.2s ease;
-}
-
-/* =============================================
-   ALTO CONTRASTE – ACCESIBILIDAD
-   ============================================= */
-[data-theme="high-contrast"] {
-  --color-bg-primary:    #000000;
-  --color-bg-secondary:  #0a0a0a;
-  --color-bg-card:       #111111;
-  --color-bg-muted:      #1a1a1a;
-
-  --color-text-primary:  #ffffff;
-  --color-text-secondary:#ffffff;
-  --color-text-muted:    #eeeeee;
-
-  --color-accent-primary:   #ffff00;  /* amarillo – alta visibilidad */
-  --color-accent-secondary: #00ffff;  /* cian  – daltonismo */
-  --color-accent-hover:     #ffff66;
-
-  --color-border:        #ffffff;
-  --color-border-accent: #ffff00;
-
-  --shadow-glow:         0 0 0 2px #ffff00;
-}
-
-/* =============================================
-   FILTROS DALTONISMO (preparados para SVG)
-   ============================================= */
+@import 'tailwindcss';
 
 /*
-  Para activar el filtro, aplica la clase al <html> o al <body>.
-  Los filtros SVG reales se inyectarán vía un elemento <svg>
-  invisible en el Layout. Las clases aquí enlazan al filtro por ID.
-*/
-
-.deuteranopia-filter {
-  filter: url(#deuteranopia);
+ * Sistema de diseño
+ * ─────────────────
+ * Los componentes solo usan los colores semánticos de abajo (bg-surface, text-muted,
+ * border-line…), nunca la paleta de Tailwind: así el tema claro, el oscuro y el de alto
+ * contraste cambian toda la web desde un único sitio. Se elimina la paleta por defecto
+ * para que no se pueda usar por error.
+ */
+@theme {
+  --color-*: initial;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Segoe UI Mono', Menlo, Consolas, monospace;
 }
 
-.protanopia-filter {
-  filter: url(#protanopia);
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
 }
 
-.tritanopia-filter {
-  filter: url(#tritanopia);
+/* Tema claro (por defecto y en navegadores sin light-dark()) */
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #f6f8fa;
+  --raised: #ffffff;
+  --line: #e3e8ef;
+  --line-strong: #7b8698;
+  --fg: #0f172a;
+  --muted: #475569;
+  --subtle: #5b6779;
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-fg: #ffffff;
+  --accent-soft: #eef4ff;
+  --success: #047857;
+  --success-soft: #ecfdf5;
+  --danger: #b91c1c;
+  --danger-soft: #fef2f2;
+  --shadow: 0 1px 2px rgb(15 23 42 / 0.06), 0 1px 3px rgb(15 23 42 / 0.04);
 }
 
-/* =============================================
-   ESTILOS BASE GLOBALES
-   ============================================= */
-*, *::before, *::after {
-  box-sizing: border-box;
+/* Claro u oscuro según el sistema, salvo que la persona elija uno (data-theme) */
+@supports (color: light-dark(#000, #fff)) {
+  :root {
+    color-scheme: light dark;
+    --bg: light-dark(#ffffff, #0b1120);
+    --surface: light-dark(#f6f8fa, #111a2c);
+    --raised: light-dark(#ffffff, #152036);
+    --line: light-dark(#e3e8ef, #23304a);
+    --line-strong: light-dark(#7b8698, #64748b);
+    --fg: light-dark(#0f172a, #e6ebf2);
+    --muted: light-dark(#475569, #a9b4c4);
+    --subtle: light-dark(#5b6779, #929eb2);
+    --accent: light-dark(#1d4ed8, #7cb0ff);
+    --accent-hover: light-dark(#1e40af, #a5c8ff);
+    --accent-fg: light-dark(#ffffff, #0b1120);
+    --accent-soft: light-dark(#eef4ff, #132442);
+    --success: light-dark(#047857, #4ade80);
+    --success-soft: light-dark(#ecfdf5, #0f2a1f);
+    --danger: light-dark(#b91c1c, #fb8c8c);
+    --danger-soft: light-dark(#fef2f2, #3a1418);
+    --shadow: light-dark(0 1px 2px rgb(15 23 42 / 0.06), none);
+  }
+
+  :root[data-theme='light'] {
+    color-scheme: light;
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-  font-family: var(--font-sans);
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
+/* Alto contraste: negro, blanco y amarillo (opción del menú de accesibilidad) */
+:root[data-contrast='high'] {
+  color-scheme: dark;
+  --bg: #000000;
+  --surface: #000000;
+  --raised: #000000;
+  --line: #ffffff;
+  --line-strong: #ffffff;
+  --fg: #ffffff;
+  --muted: #ffffff;
+  --subtle: #ffffff;
+  --accent: #ffff00;
+  --accent-hover: #ffff66;
+  --accent-fg: #000000;
+  --accent-soft: #000000;
+  --success: #00ff7f;
+  --success-soft: #000000;
+  --danger: #ff8080;
+  --danger-soft: #000000;
+  --shadow: none;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+/* Filtros de corrección para daltonismo (definidos en components/layout/ColorFilters.astro).
+   Van en <html>: en el elemento raíz no rompen los elementos fijos o pegajosos. */
+:root[data-color-filter='protanopia'] {
+  filter: url('#a11y-protanopia');
 }
 
-/* Foco visible para teclado – WCAG 2.1 */
-:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
-  outline-offset: 3px;
-  border-radius: 4px;
+:root[data-color-filter='deuteranopia'] {
+  filter: url('#a11y-deuteranopia');
 }
 
-/* Utilidades de acento */
-.text-accent {
-  color: var(--color-accent-primary);
+:root[data-color-filter='tritanopia'] {
+  filter: url('#a11y-tritanopia');
 }
 
-.bg-card {
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+
+  /* Tamaño de texto del menú de accesibilidad (relativo al del navegador) */
+  html[data-text-size='small'] {
+    font-size: 87.5%;
+  }
+
+  html[data-text-size='large'] {
+    font-size: 118.75%;
+  }
+
+  body {
+    display: flex;
+    min-height: 100dvh;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+
+@layer components {
+  /* Texto con HTML en línea de src/i18n/ (<strong>, <em>, <a>) */
+  .rich-text strong {
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  .rich-text a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .rich-text a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  /* Etiqueta pequeña sobre los títulos */
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+}
+
+@media print {
+  [data-print='hide'] {
+    display: none !important;
+  }
+
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --raised: #ffffff;
+    --fg: #000000;
+    --muted: #333333;
+    --subtle: #333333;
+    --accent: #000000;
+    --line: #cccccc;
+    filter: none !important;
+  }
+
+  main a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    color: #555555;
+  }
 }

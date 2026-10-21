@@ -1,0 +1,30 @@
+---
+import ButtonLink from '../components/ui/ButtonLink.astro';
+import { pageHref } from '../data/pages';
+import { getDictionary, type Lang } from '../i18n';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang).notFound;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${t.title} | Daniel Carrasco García`}
+  description={t.description}
+  canonicalPath={pageHref(lang, 'index')}
+  noindex
+>
+  <section class="mx-auto flex max-w-6xl flex-col items-start px-5 py-24 sm:px-8 md:py-32">
+    <p class="eyebrow">404</p>
+    <h1 class="mt-4 text-4xl font-semibold tracking-tight text-fg sm:text-5xl">{t.title}</h1>
+    <p class="mt-5 max-w-xl text-lg text-muted">{t.description}</p>
+    <ButtonLink href={pageHref(lang, 'index')} class="mt-10" icon="arrow-right">
+      {t.backHome}
+    </ButtonLink>
+  </section>
+</BaseLayout>

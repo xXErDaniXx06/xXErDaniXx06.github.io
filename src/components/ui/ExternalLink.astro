@@ -1,0 +1,19 @@
+---
+// Enlace que se abre en otra pestaña, con aviso para lectores de pantalla.
+import type { HTMLAttributes } from 'astro/types';
+import { getDictionary, type Lang } from '../../i18n';
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'target' | 'rel'> {
+  href: string;
+  /** Idioma del aviso «se abre en una pestaña nueva». */
+  locale: Lang;
+}
+
+const { locale, ...attributes } = Astro.props;
+const t = getDictionary(locale);
+---
+
+<a {...attributes} target="_blank" rel="noopener noreferrer">
+  <slot />
+  <span class="sr-only"> {t.common.opensInNewTab}</span>
+</a>

@@ -1,0 +1,30 @@
+---
+import AchievementList from '../components/achievements/AchievementList.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import { pageHref } from '../data/pages';
+import { getDictionary, type Lang } from '../i18n';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAchievements, getAchievementsSummary } from '../portfolio';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const meta = getDictionary(lang).pages.logros;
+const summary = getAchievementsSummary(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  page="logros"
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={pageHref(lang, 'logros')}
+>
+  <PageHeader eyebrow={summary.tag} title={summary.title} description={summary.summary} />
+  <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8 lg:py-16">
+    <AchievementList achievements={getAchievements(lang)} />
+    <p class="mt-10 text-center text-sm text-subtle">{summary.footer}</p>
+  </div>
+</BaseLayout>
