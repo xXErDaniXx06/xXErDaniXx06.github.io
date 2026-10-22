@@ -585,6 +585,8 @@ export const en: Dictionary = {
         hourlyLimit: 'You have exceeded the hourly message limit.',
         dailyLimit: 'The daily message limit has been reached. Please write to me by email instead.',
         verification: 'We could not verify that you are a person. Please try again or write to me by email.',
+        blocked:
+          'The Cloudflare check could not load; a browser extension may be blocking it. Allow it on this site or write to me by email.',
         sending: 'Error sending message. Please try again.',
       },
     },

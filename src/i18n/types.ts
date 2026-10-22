@@ -166,6 +166,8 @@ export interface Dictionary {
         hourlyLimit: string;
         dailyLimit: string;
         verification: string;
+        /** No se pudo cargar Turnstile (p. ej. lo bloquea una extensión). */
+        blocked: string;
         sending: string;
       };
     };

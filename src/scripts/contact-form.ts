@@ -12,7 +12,15 @@ interface Messages {
   verify: string;
   success: string;
   errors: Record<
-    'required' | 'invalidEmail' | 'tooLong' | 'rateLimit' | 'hourlyLimit' | 'dailyLimit' | 'verification' | 'sending',
+    | 'required'
+    | 'invalidEmail'
+    | 'tooLong'
+    | 'rateLimit'
+    | 'hourlyLimit'
+    | 'dailyLimit'
+    | 'verification'
+    | 'blocked'
+    | 'sending',
     string
   >;
 }
@@ -68,6 +76,9 @@ const ERROR_MESSAGES: Record<ContactError, keyof Messages['errors']> = {
 };
 
 class ContactFormError extends Error {}
+
+/** El script de Turnstile no se pudo cargar (sin red o bloqueado por una extensión). */
+class TurnstileUnavailable extends Error {}
 
 const STATUS_STYLES = {
   success: 'bg-success-soft text-success',
@@ -148,10 +159,10 @@ class TurnstileChallenge {
       // Con Trusted Types la URL tiene que pasar por la política (src/scripts/trusted-types.ts)
       script.src = trustedScriptUrl(`${TURNSTILE_SCRIPT}?render=explicit`);
       script.async = true;
-      script.onload = () => (window.turnstile ? resolve(window.turnstile) : reject(new Error('turnstile')));
+      script.onload = () => (window.turnstile ? resolve(window.turnstile) : reject(new TurnstileUnavailable()));
       script.onerror = () => {
         this.#loading = undefined;
-        reject(new Error('turnstile'));
+        reject(new TurnstileUnavailable());
       };
       document.head.append(script);
     });
@@ -211,9 +222,11 @@ function setUp(form: HTMLFormElement): void {
       let token: string;
       try {
         token = await challenge.token();
-      } catch {
+      } catch (error) {
         challenge.reset();
-        throw new ContactFormError(messages.errors.verification);
+        throw new ContactFormError(
+          error instanceof TurnstileUnavailable ? messages.errors.blocked : messages.errors.verification,
+        );
       }
       const response = await fetch(form.action, {
         method: 'POST',
